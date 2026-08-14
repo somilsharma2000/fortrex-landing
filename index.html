@@ -28,9 +28,7 @@
         <div class="logo-face logo-face-front">
           <img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX">
         </div>
-        <div class="logo-face logo-face-back">
-          <span>FX</span>
-        </div>
+        <div class="logo-face logo-face-back"><span>FX</span></div>
       </div>
     </div>
     <span class="nav-brand-text">FORTREX</span>
@@ -48,19 +46,43 @@
 
 <main id="top">
 
-  <!-- HERO -->
+  <!-- HERO with FOMO counter -->
   <section class="hero">
-    <div class="hero-eyebrow">By Invitation Only · Limited to 10,000</div>
+    <div class="hero-eyebrow"><span class="live-dot"></span> By Invitation Only · Limited to 10,000</div>
     <h1>Something is coming<br>for traders who <span class="gold-accent">refuse to settle.</span></h1>
-    <p class="hero-sub">A new kind of platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
+    <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
+    
+    <!-- LIVE FOMO COUNTER — directly in hero -->
+    <div class="hero-counter" id="hero-counter">
+      <div class="hero-counter-stats">
+        <div class="hero-counter-main">
+          <span class="hero-counter-num" id="reg-count">0</span>
+          <span class="hero-counter-divider">/</span>
+          <span class="hero-counter-total">10,000</span>
+        </div>
+        <div class="hero-counter-label">TRADERS SECURED</div>
+      </div>
+      <div class="hero-counter-bar-wrap">
+        <div class="hero-counter-bar" id="reg-bar"></div>
+      </div>
+      <div class="hero-counter-meta">
+        <span id="reg-pct">0% claimed</span>
+        <span class="gold-text" id="reg-remaining">10,000 spots remaining</span>
+      </div>
+    </div>
+
     <div class="hero-cta-row">
-      <a href="#register" class="btn-primary">Reserve Your Spot →</a>
+      <a href="#register" class="btn-primary">Reserve Your Spot — Free →</a>
       <a href="#community" class="btn-ghost">Join the Citadel</a>
     </div>
-    <div class="hero-scroll-hint">Scroll to discover</div>
+    <div class="hero-trust">
+      <span>✓ No payment required</span>
+      <span>✓ 30 seconds to register</span>
+      <span>✓ First 10,000 get Genesis status forever</span>
+    </div>
   </section>
 
-  <!-- THE QUESTION (Psychological hook) -->
+  <!-- THE QUESTION -->
   <section class="question-section" id="about">
     <div class="container">
       <div class="section-label reveal">The Truth Nobody Tells Traders</div>
@@ -73,7 +95,7 @@
     </div>
   </section>
 
-  <!-- REX HINT (Curiosity gap) -->
+  <!-- REX HINT -->
   <section class="rex-section" id="rex">
     <div class="container">
       <div class="section-label reveal">A New Currency is Coming</div>
@@ -95,51 +117,18 @@
     </div>
   </section>
 
-  <!-- LIVE COUNTER (Social proof) -->
-  <section class="counter-section">
-    <div class="container">
-      <div class="section-label reveal">Live Registration Board</div>
-      <h2 class="section-heading reveal" style="margin: 0 auto 24px; text-align: center;">You're not alone.</h2>
-      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Traders are securing their spots right now. The first 10,000 get exclusive Genesis access with the highest REX multiplier. After that, the gates close.</p>
-      
-      <div class="counter-card reveal">
-        <div class="counter-header">
-          <span class="live-dot"></span>
-          <span class="counter-title">TRADERS SECURED</span>
-        </div>
-        <div class="counter-body">
-          <span class="counter-current" id="reg-count">0</span>
-          <span class="counter-divider">/</span>
-          <span class="counter-target">10,000</span>
-        </div>
-        <div class="counter-bar-wrap">
-          <div class="counter-bar" id="reg-bar"></div>
-        </div>
-        <div class="counter-footer">
-          <span id="reg-pct">0% claimed</span>
-          <span class="gold-text" id="reg-remaining">10,000 spots remaining</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LEADERBOARD (Invite & Earn) -->
+  <!-- LEADERBOARD -->
   <section class="leaderboard-section" id="leaderboard">
     <div class="container">
       <div class="section-label reveal">The Top Builders</div>
-      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">The best traders don't just trade. They build.</h2>
-      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Bring your people. Climb the ranks. The top referrers earn bonus REX at launch. No reward for clicking — only for delivering real traders.</p>
+      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">The best traders don't just trade.<br>They build.</h2>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Bring your people. Climb the ranks. Top referrers earn bonus REX at launch. No reward for clicking — only for delivering real traders.</p>
       
       <div class="leaderboard reveal">
         <div class="leaderboard-header">
-          <span>#</span>
-          <span>Trader</span>
-          <span>Invited</span>
-          <span class="col-reward">REX Bonus</span>
+          <span>#</span><span>Trader</span><span>Invited</span><span class="col-reward">REX Bonus</span>
         </div>
-        <div id="leaderboard-rows">
-          <!-- Populated by JS -->
-        </div>
+        <div id="leaderboard-rows"></div>
       </div>
       <p class="leaderboard-note reveal">Register below to get your referral link and start climbing.</p>
     </div>
@@ -154,7 +143,10 @@
       
       <div class="register-card reveal">
         <div id="form-wrapper">
-          <h3>Reserve Your Spot</h3>
+          <div class="register-header">
+            <h3>Reserve Your Spot</h3>
+            <div class="register-spots-badge"><span id="spots-left">10,000</span> spots left</div>
+          </div>
           <p>It takes 30 seconds. No payment. No commitment. Just your spot in line.</p>
           
           <form id="register-form">
@@ -178,14 +170,16 @@
             </div>
             <div class="form-error" id="form-error"></div>
             <button type="submit" class="btn-submit" id="submit-btn">Reserve My Spot →</button>
+            <div class="form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
           </form>
         </div>
         
         <div class="form-success" id="form-success">
-          <h3>✓ You're in.</h3>
+          <div class="success-check">✓</div>
+          <h3>You're in.</h3>
           <p>Your spot is reserved. Welcome to the first 10,000.<br>Now join the Citadel and claim your referral link.</p>
-          <div class="referral-link-box" style="text-align: left;">
-            <label>Your Referral Link</label>
+          <div class="referral-link-box">
+            <label>Your Referral Link — Share to climb the leaderboard</label>
             <div class="referral-link">
               <input type="text" id="ref-link" readonly>
               <button class="btn-copy" id="copy-btn">Copy</button>
@@ -212,18 +206,15 @@
         </a>
         <a href="https://youtube.com" target="_blank" class="social-card yt">
           <svg viewBox="0 0 24 24" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg>
-          <span>YouTube</span>
-          <small>Trade Content</small>
+          <span>YouTube</span><small>Trade Content</small>
         </a>
         <a href="https://instagram.com" target="_blank" class="social-card insta">
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.68.94 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38c.66-.67 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.4-10.4a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg>
-          <span>Instagram</span>
-          <small>Daily Updates</small>
+          <span>Instagram</span><small>Daily Updates</small>
         </a>
         <a href="https://threads.net" target="_blank" class="social-card threads">
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.3 9.5c-.1-.05-.2-.1-.3-.14-.2-3.1-1.7-4.5-4.3-4.5-1.3 0-2.4.5-3.1 1.4l1.1 1c.5-.6 1.2-.9 2-.9 1.4 0 2.2.9 2.4 2.5-.5-.1-1-.1-1.5-.1-2.3 0-3.9 1.3-3.9 3.2 0 .8.3 1.5.9 2 .6.5 1.3.8 2.1.8 1.2 0 2.1-.5 2.7-1.3.4-.6.7-1.3.8-2.2.5.3.9.7 1.1 1.2.4.8.4 1.7 0 2.5-.5 1-1.5 1.6-2.8 1.6-1.2 0-2.1-.4-2.7-1.2l-1.2.9c.8 1.1 2.1 1.7 3.9 1.7 2 0 3.4-.9 4.1-2.4.5-1.1.5-2.3-.1-3.4-.4-.7-1-1.2-1.7-1.5z" fill="#fff"/></svg>
-          <span>Threads</span>
-          <small>Real-time</small>
+          <span>Threads</span><small>Real-time</small>
         </a>
       </div>
     </div>
@@ -231,7 +222,6 @@
 
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">FORTREX FX</div>
   <div class="footer-tagline">Where traders rise.</div>

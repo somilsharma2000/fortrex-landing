@@ -1,11 +1,11 @@
 /* ===== FORTREX FX — LANDING PAGE JS ===== */
-/* Counter animation, form handling, scroll reveals, particles, leaderboard */
+/* FOMO counter, form handling, scroll reveals, particles, leaderboard */
+/* Optimized for maximum conversion — counter animates IMMEDIATELY on load */
 
 // ===== CONFIG =====
-// Replace with your Google Apps Script Web App URL
 const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 const REG_TARGET = 10000;
-const BASE_COUNT = 847; // Simulated start — replaced by real data when connected
+const BASE_COUNT = 847;
 
 // ===== SCROLL REVEAL =====
 const revealObserver = new IntersectionObserver((entries) => {
@@ -13,24 +13,31 @@ const revealObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       const delay = parseInt(entry.target.dataset.delay || 0);
       setTimeout(() => entry.target.classList.add('visible'), delay);
+      revealObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.15 });
-
 document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserver.observe(el));
 
-// ===== LIVE REGISTRATION COUNTER =====
+// ===== NAV SCROLL EFFECT =====
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav');
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// ===== HERO FOMO COUNTER — animates on page load =====
 (function() {
   const el = document.getElementById('reg-count');
   const bar = document.getElementById('reg-bar');
   const pctEl = document.getElementById('reg-pct');
   const remainingEl = document.getElementById('reg-remaining');
+  const spotsLeftEl = document.getElementById('spots-left');
   if (!el) return;
 
-  // Try to fetch real count, fall back to simulated
-  let currentCount = 0;
   let targetCount = BASE_COUNT;
+  let currentCount = 0;
 
+  // Try to fetch real count
   async function fetchRealCount() {
     try {
       const res = await fetch(APPS_SCRIPT_URL + '?action=count');
@@ -43,25 +50,32 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
 
   function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
 
-  function animate(now, startTime) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / 2500, 1);
-    const eased = easeOutQuart(progress);
-    currentCount = Math.round(targetCount * eased);
+  function animate() {
+    const duration = 2200;
+    const startTime = performance.now();
 
-    el.textContent = currentCount.toLocaleString();
-    const pct = (currentCount / REG_TARGET) * 100;
-    if (bar) bar.style.width = pct + '%';
-    if (pctEl) pctEl.textContent = pct.toFixed(1) + '% claimed';
-    if (remainingEl) remainingEl.textContent = (REG_TARGET - currentCount).toLocaleString() + ' spots remaining';
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuart(progress);
+      currentCount = Math.round(targetCount * eased);
 
-    if (progress < 1) {
-      requestAnimationFrame((n) => animate(n, startTime));
-    } else {
-      el.classList.add('bump');
-      setTimeout(() => el.classList.remove('bump'), 500);
-      startTrickle();
+      el.textContent = currentCount.toLocaleString();
+      const pct = (currentCount / REG_TARGET) * 100;
+      if (bar) bar.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct.toFixed(1) + '% claimed';
+      if (remainingEl) remainingEl.textContent = (REG_TARGET - currentCount).toLocaleString() + ' spots remaining';
+      if (spotsLeftEl) spotsLeftEl.textContent = (REG_TARGET - currentCount).toLocaleString();
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.classList.add('bump');
+        setTimeout(() => el.classList.remove('bump'), 500);
+        startTrickle();
+      }
     }
+    requestAnimationFrame(tick);
   }
 
   function startTrickle() {
@@ -76,28 +90,22 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
         if (bar) bar.style.width = p + '%';
         if (pctEl) pctEl.textContent = p.toFixed(1) + '% claimed';
         if (remainingEl) remainingEl.textContent = (REG_TARGET - live).toLocaleString() + ' spots remaining';
+        if (spotsLeftEl) spotsLeftEl.textContent = (REG_TARGET - live).toLocaleString();
       }
-    }, 8000 + Math.random() * 12000);
+    }, 6000 + Math.random() * 10000);
   }
 
-  // Start when visible
-  const obs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      fetchRealCount().then(() => {
-        requestAnimationFrame((n) => animate(n, n));
-      });
-      obs.disconnect();
-    }
-  }, { threshold: 0.3 });
-  obs.observe(el);
+  // Start immediately on load — FOMO from second 1
+  fetchRealCount().then(() => {
+    setTimeout(animate, 600); // Slight delay for counter card entrance animation
+  });
 })();
 
-// ===== LEADERBOARD =====
+// ===== LEADERBOARD with staggered animation =====
 (function() {
   const container = document.getElementById('leaderboard-rows');
   if (!container) return;
 
-  // Simulated leaderboard data — replaced by real data from backend
   const leaderboard = [
     { name: 'Aarav K.', invites: 47, rex: '2,350' },
     { name: 'Marcus T.', invites: 39, rex: '1,950' },
@@ -111,7 +119,6 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
     { name: 'Anonymous', invites: 3, rex: '150' },
   ];
 
-  // Try to fetch real leaderboard
   async function fetchLeaderboard() {
     try {
       const res = await fetch(APPS_SCRIPT_URL + '?action=leaderboard');
@@ -125,14 +132,25 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
   function renderLeaderboard(data) {
     container.innerHTML = data.map((row, i) => {
       const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
+      const top3Class = i < 3 ? 'top-3 ' + rankClass : '';
       return `
-        <div class="leaderboard-row">
+        <div class="leaderboard-row ${top3Class}" style="transition-delay: ${i * 60}ms;">
           <span class="lb-rank ${rankClass}">${i + 1}</span>
           <span class="lb-name">${row.name}</span>
           <span class="lb-invites">${row.invites}</span>
           <span class="lb-reward">${row.rex} REX</span>
         </div>`;
     }).join('');
+
+    // Trigger staggered reveal
+    const rows = container.querySelectorAll('.leaderboard-row');
+    const lbObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        rows.forEach(r => r.classList.add('visible'));
+        lbObserver.disconnect();
+      }
+    }, { threshold: 0.1 });
+    lbObserver.observe(container);
   }
 
   renderLeaderboard(leaderboard);
@@ -150,7 +168,6 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
   const copyBtn = document.getElementById('copy-btn');
   if (!form) return;
 
-  // Check for referral param in URL
   const urlParams = new URLSearchParams(window.location.search);
   const refBy = urlParams.get('ref') || '';
 
@@ -163,74 +180,65 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
     const phone = document.getElementById('phone').value.trim();
     const pincode = document.getElementById('pincode').value.trim();
 
-    // Validation
     if (!name || name.length < 2) {
       errorDiv.textContent = 'Please enter your full name.';
-      errorDiv.style.display = 'block';
-      return;
+      errorDiv.style.display = 'block'; return;
     }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errorDiv.textContent = 'Please enter a valid email address.';
-      errorDiv.style.display = 'block';
-      return;
+      errorDiv.style.display = 'block'; return;
     }
     if (!phone || phone.length < 10) {
       errorDiv.textContent = 'Please enter a valid phone number.';
-      errorDiv.style.display = 'block';
-      return;
+      errorDiv.style.display = 'block'; return;
     }
-    if (!pincode || pincode.length < 6) {
+    if (!pincode || pincode.length < 5) {
       errorDiv.textContent = 'Please enter a valid pincode.';
-      errorDiv.style.display = 'block';
-      return;
+      errorDiv.style.display = 'block'; return;
     }
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Reserving...';
 
-    // Generate referral code from email
     const refCode = btoa(email).substring(0, 8).replace(/=/g, '');
     const refUrl = window.location.origin + window.location.pathname + '?ref=' + refCode;
 
-    // Submit to Google Sheet via Apps Script
     try {
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
         await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
+          method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            name, email, phone, pincode,
-            refBy, refCode,
-            timestamp: new Date().toISOString()
-          })
+          body: JSON.stringify({ name, email, phone, pincode, refBy, refCode, timestamp: new Date().toISOString() })
         });
       }
-    } catch (e) { /* Proceed to success anyway — don't block user */ }
+    } catch (e) { /* Don't block user */ }
 
-    // Store locally
     const registrations = JSON.parse(localStorage.getItem('fortrex_registrations') || '[]');
     registrations.push({ name, email, phone, pincode, refCode, refBy, timestamp: new Date().toISOString() });
     localStorage.setItem('fortrex_registrations', JSON.stringify(registrations));
     localStorage.setItem('fortrex_user_refcode', refCode);
 
-    // Show success
-    formWrapper.style.display = 'none';
-    successDiv.style.display = 'block';
+    // Smooth transition to success
+    formWrapper.style.opacity = '0';
+    formWrapper.style.transition = 'opacity 0.3s';
+    setTimeout(() => {
+      formWrapper.style.display = 'none';
+      successDiv.style.display = 'block';
+      successDiv.style.opacity = '0';
+      successDiv.style.transition = 'opacity 0.5s';
+      requestAnimationFrame(() => { successDiv.style.opacity = '1'; });
+    }, 300);
+
     if (refLink) refLink.value = refUrl;
   });
 
-  // Copy referral link
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
       refLink.select();
       document.execCommand('copy');
       copyBtn.textContent = 'Copied!';
       copyBtn.classList.add('copied');
-      setTimeout(() => {
-        copyBtn.textContent = 'Copy';
-        copyBtn.classList.remove('copied');
-      }, 2000);
+      setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
     });
   }
 })();
@@ -243,31 +251,22 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
   let particles = [];
   let w, h;
 
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
 
-  // Create particles
-  const count = Math.min(40, Math.floor(w / 30));
+  const count = Math.min(40, Math.floor(window.innerWidth / 30));
   for (let i = 0; i < count; i++) {
     particles.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.15,
-      r: Math.random() * 1.5 + 0.3,
-      opacity: Math.random() * 0.4 + 0.1,
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.15, vy: (Math.random() - 0.5) * 0.15,
+      r: Math.random() * 1.5 + 0.3, opacity: Math.random() * 0.4 + 0.1,
     });
   }
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
     particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x += p.vx; p.y += p.vy;
       if (p.x < 0 || p.x > w) p.vx *= -1;
       if (p.y < 0 || p.y > h) p.vy *= -1;
       ctx.beginPath();
@@ -275,8 +274,6 @@ document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserve
       ctx.fillStyle = `rgba(229, 193, 88, ${p.opacity})`;
       ctx.fill();
     });
-
-    // Draw connections
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
