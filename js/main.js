@@ -55,42 +55,8 @@ if (isRegistered) {
   }, { passive: true });
 })();
 
-// HERO COUNTER
+// Counter removed — only show gate notice now
 let currentLiveCount = BASE_COUNT;
-(function() {
-  const el = document.getElementById('reg-count');
-  if (!el) return;
-  const bar = document.getElementById('reg-bar');
-  const pctEl = document.getElementById('reg-pct');
-  const remainingEl = document.getElementById('reg-remaining');
-  const spotsLeftEl = document.getElementById('spots-left');
-  const stickySpots = document.getElementById('sticky-spots');
-  let targetCount = BASE_COUNT;
-  async function fetchRealCount() {
-    try { const res = await fetch(APPS_SCRIPT_URL + '?action=count'); if (res.ok) { const data = await res.json(); if (data && data.count) targetCount = data.count; } } catch (e) {}
-  }
-  function updateUI(count) {
-    el.textContent = count.toLocaleString();
-    const pct = (count / REG_TARGET) * 100;
-    if (bar) bar.style.width = pct + '%';
-    if (pctEl) pctEl.textContent = pct.toFixed(1) + '% claimed';
-    if (remainingEl) remainingEl.textContent = (REG_TARGET - count).toLocaleString() + ' spots remaining';
-    if (spotsLeftEl) spotsLeftEl.textContent = (REG_TARGET - count).toLocaleString();
-    if (stickySpots) stickySpots.textContent = (REG_TARGET - count).toLocaleString();
-  }
-  function animate() {
-    const duration = 2000, startTime = performance.now();
-    function tick(now) {
-      const progress = Math.min((now - startTime) / duration, 1);
-      currentLiveCount = Math.round(targetCount * (1 - Math.pow(1 - progress, 4)));
-      updateUI(currentLiveCount);
-      if (progress < 1) requestAnimationFrame(tick);
-      else { el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 500); }
-    }
-    requestAnimationFrame(tick);
-  }
-  fetchRealCount().then(() => setTimeout(animate, 500));
-})();
 
 // REX GOLD DUST PARTICLES
 (function() {
@@ -226,8 +192,6 @@ let currentLiveCount = BASE_COUNT;
     }, 300);
     // Update counter
     currentLiveCount++;
-    const el = document.getElementById('reg-count');
-    if (el) { el.textContent = currentLiveCount.toLocaleString(); el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 500); }
   });
 })();
 
