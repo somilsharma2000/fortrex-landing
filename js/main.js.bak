@@ -1,4 +1,5 @@
-/* ===== FORTREX FX — WEB3 MASTERPIECE JS ===== */
+/* ===== FORTREX FX — LANDING PAGE JS ===== */
+/* Real data. Bot protection. REX animations. Country code. Staggered reveals. */
 const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 const REG_TARGET = 10000;
 const BASE_COUNT = 847;
@@ -13,14 +14,14 @@ const revealObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .question-line, .rex-pill').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .question-line, .rex-stat').forEach(el => revealObserver.observe(el));
 
 // NAV SCROLL
 window.addEventListener('scroll', () => {
-  document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
+  document.querySelector('.nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 
-// LOGO CLICK GLOW
+// LOGO CLICK GLOW ANIMATION
 (function() {
   const logo = document.getElementById('logo-click');
   const glow = document.getElementById('logo-click-glow');
@@ -28,8 +29,9 @@ window.addEventListener('scroll', () => {
   logo.addEventListener('click', (e) => {
     e.preventDefault();
     glow.classList.remove('active');
-    void glow.offsetWidth;
+    void glow.offsetWidth; // force reflow
     glow.classList.add('active');
+    // Also trigger a burst of particles from logo
     const canvas = document.getElementById('particle-canvas');
     if (canvas && canvas._addBurst) canvas._addBurst(e.clientX, e.clientY);
     setTimeout(() => glow.classList.remove('active'), 1200);
@@ -79,28 +81,24 @@ let currentLiveCount = BASE_COUNT;
   const barEl = document.getElementById('live-reg-bar');
   const pctEl = document.getElementById('live-reg-pct');
   const spotsEl = document.getElementById('live-reg-spots');
-  const stickySpots = document.getElementById('sticky-spots');
-
-  function updateDisplay(val) {
-    if (countEl) countEl.textContent = val.toLocaleString();
-    if (barEl) barEl.style.width = (val / REG_TARGET * 100) + '%';
-    if (pctEl) pctEl.textContent = (val / REG_TARGET * 100).toFixed(1) + '% filled';
-    if (spotsEl) spotsEl.textContent = (REG_TARGET - val).toLocaleString() + ' spots remaining';
-    if (stickySpots) stickySpots.textContent = (REG_TARGET - val).toLocaleString() + ' spots left';
-  }
-
+  
   function animateCount(from, to, duration) {
     const start = performance.now();
     function tick(now) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      updateDisplay(Math.floor(from + (to - from) * eased));
+      const val = Math.floor(from + (to - from) * eased);
+      if (countEl) countEl.textContent = val.toLocaleString();
+      if (barEl) barEl.style.width = (val / REG_TARGET * 100) + '%';
+      if (pctEl) pctEl.textContent = (val / REG_TARGET * 100).toFixed(1) + '%';
+      if (spotsEl) spotsEl.textContent = (REG_TARGET - val).toLocaleString() + ' spots left';
       if (progress < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
-
+  
+  // Animate from 0 to current count on scroll into view
   let animated = false;
   const obs = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !animated) {
@@ -110,8 +108,8 @@ let currentLiveCount = BASE_COUNT;
     }
   }, { threshold: 0.3 });
   obs.observe(board);
-
-  // Simulate live growth
+  
+  // Simulate live growth (subtle, +1 every 8-15 seconds)
   setInterval(() => {
     currentLiveCount++;
     if (countEl) {
@@ -120,13 +118,12 @@ let currentLiveCount = BASE_COUNT;
       setTimeout(() => countEl.classList.remove('bump'), 500);
     }
     if (barEl) barEl.style.width = (currentLiveCount / REG_TARGET * 100) + '%';
-    if (pctEl) pctEl.textContent = (currentLiveCount / REG_TARGET * 100).toFixed(1) + '% filled';
-    if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots remaining';
-    if (stickySpots) stickySpots.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots left';
+    if (pctEl) pctEl.textContent = (currentLiveCount / REG_TARGET * 100).toFixed(1) + '%';
+    if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots left';
   }, 8000 + Math.random() * 7000);
 })();
 
-// REX GOLD DUST
+// REX GOLD DUST PARTICLES
 (function() {
   const container = document.getElementById('rex-dust');
   if (!container) return;
@@ -137,27 +134,28 @@ let currentLiveCount = BASE_COUNT;
     dust.style.animationDuration = (3 + Math.random() * 4) + 's';
     dust.style.animationDelay = Math.random() * 2 + 's';
     dust.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
-    const size = 1 + Math.random() * 3;
-    dust.style.width = size + 'px';
-    dust.style.height = size + 'px';
+    dust.style.width = (1 + Math.random() * 3) + 'px';
+    dust.style.height = dust.style.width;
     dust.style.opacity = 0.3 + Math.random() * 0.4;
     container.appendChild(dust);
     setTimeout(() => dust.remove(), 8000);
   }
+  // Create dust only when REX section is visible
   const rexSection = document.getElementById('rex');
   let dustInterval = null;
   const rexObserver = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting) {
+      // Initial burst
       for (let i = 0; i < 15; i++) setTimeout(createDust, i * 200);
       dustInterval = setInterval(createDust, 400);
     } else {
       if (dustInterval) { clearInterval(dustInterval); dustInterval = null; }
     }
   }, { threshold: 0.2 });
-  if (rexSection) rexObserver.observe(rexSection);
+  rexObserver.observe(rexSection);
 })();
 
-// LEADERBOARD — Architects' Circle
+// LEADERBOARD with ripple + expand
 (function() {
   const container = document.getElementById('leaderboard-rows');
   if (!container) return;
@@ -176,7 +174,7 @@ let currentLiveCount = BASE_COUNT;
   function render(data) {
     container.innerHTML = data.map((row, i) => {
       const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay:${i * 60}ms">
+      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay: ${i * 60}ms;">
         <span class="lb-rank ${rankClass}">${i + 1}</span>
         <span class="lb-name">${row.name}</span>
         <span class="lb-invites">${row.invites}</span>
@@ -229,10 +227,15 @@ let currentLiveCount = BASE_COUNT;
     const email = document.getElementById('email').value.trim();
     const phoneInput = document.getElementById('phone');
     let phone = '';
-    if (window.itiInstance) { phone = window.itiInstance.getNumber(); } else { phone = phoneInput.value.trim(); }
+    if (window.itiInstance) {
+      phone = window.itiInstance.getNumber();
+    } else {
+      phone = phoneInput.value.trim();
+    }
     if (!name || name.length < 2) { errorDiv.textContent = 'Please enter your full name.'; errorDiv.style.display = 'block'; return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorDiv.textContent = 'Please enter a valid email.'; errorDiv.style.display = 'block'; return; }
     if (!phone || phone.length < 6) { errorDiv.textContent = 'Please enter a valid phone number.'; errorDiv.style.display = 'block'; return; }
+    // BOT PROTECTION
     const honeypot = document.querySelector('input[name="website"]')?.value || '';
     if (honeypot) { return; }
     const formTimeMs = Date.now() - pageLoadTime;
@@ -247,25 +250,29 @@ let currentLiveCount = BASE_COUNT;
       }
     } catch (e) {}
     localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    // Smooth transition with animations
     registerCard.style.opacity = '0'; registerCard.style.transition = 'opacity 0.3s';
     setTimeout(() => {
       registerCard.style.display = 'none';
       successCard.style.display = 'block'; successCard.style.opacity = '0'; successCard.style.transition = 'opacity 0.5s';
       requestAnimationFrame(() => { successCard.style.opacity = '1'; });
     }, 300);
+    // Update counter
     currentLiveCount++;
   });
 })();
 
-// INTL-TEL-INPUT
+// INITIALIZE INTL-TEL-INPUT
 (function() {
   const phoneInput = document.getElementById('phone');
   if (!phoneInput || typeof intlTelInput === 'undefined') return;
   window.itiInstance = intlTelInput(phoneInput, {
     initialCountry: 'auto',
     geoIpLookup: function(callback) {
+      // Auto-detect country from browser timezone/locale
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       const locale = navigator.language || 'en-US';
+      // Map common timezones to country codes
       const tzMap = { 'Asia/Kolkata':'in','Asia/Calcutta':'in','America/New_York':'us','America/Chicago':'us','America/Los_Angeles':'us','America/Toronto':'ca','Europe/London':'gb','Asia/Dubai':'ae','Asia/Singapore':'sg','Australia/Sydney':'au','Europe/Berlin':'de','Africa/Lagos':'ng','Africa/Johannesburg':'za','Asia/Kuala_Lumpur':'my','Asia/Jakarta':'id','Asia/Manila':'ph','Asia/Riyadh':'sa','Asia/Karachi':'pk','Asia/Dhaka':'bd','Asia/Kathmandu':'np','Asia/Colombo':'lk','Asia/Qatar':'qa','Asia/Kuwait':'kw','Asia/Muscat':'om','Atlantic/Reykjavik':'is' };
       const country = tzMap[tz] || locale.split('-')[1]?.toLowerCase() || 'in';
       callback(country);
@@ -288,29 +295,31 @@ let currentLiveCount = BASE_COUNT;
   resize(); window.addEventListener('resize', resize);
   const count = Math.min(35, Math.floor(window.innerWidth / 35));
   for (let i = 0; i < count; i++) { particles.push({ x: Math.random()*w, y: Math.random()*h, vx:(Math.random()-0.5)*0.12, vy:(Math.random()-0.5)*0.12, r: Math.random()*1.3+0.3, opacity: Math.random()*0.35+0.08 }); }
+  // Expose burst function for logo click
   canvas._addBurst = function(cx, cy) {
     for (let i = 0; i < 12; i++) {
       const angle = (Math.PI * 2 * i) / 12;
       const speed = 2 + Math.random() * 2;
-      particles.push({ x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: Math.random()*2+1, opacity: 0.6, burst: true, life: 1 });
+      particles.push({
+        x: cx, y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: Math.random() * 2 + 1,
+        opacity: 0.6,
+        burst: true,
+        life: 1
+      });
     }
   };
   function draw() {
     ctx.clearRect(0,0,w,h);
     particles = particles.filter(p => {
       if (p.burst) { p.life -= 0.02; p.opacity = p.life * 0.6; return p.life > 0; }
+      p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1;
       return true;
     });
-    particles.forEach(p => {
-      if (!p.burst) { p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1; }
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = `rgba(234,179,8,${p.opacity})`; ctx.fill();
-    });
-    for (let i=0; i<particles.length; i++) {
-      for (let j=i+1; j<particles.length; j++) {
-        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy);
-        if (dist<110) { ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(234,179,8,${(1-dist/110)*0.07})`; ctx.lineWidth=0.5; ctx.stroke(); }
-      }
-    }
+    particles.forEach(p => { if (!p.burst) { p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1; } ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = `rgba(229,193,88,${p.opacity})`; ctx.fill(); });
+    for (let i=0; i<particles.length; i++) { for (let j=i+1; j<particles.length; j++) { const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy); if (dist<110) { ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(229,193,88,${(1-dist/110)*0.07})`; ctx.lineWidth=0.5; ctx.stroke(); } } }
     requestAnimationFrame(draw);
   }
   draw();

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORTREX FX — Something is coming for traders.</title>
+<meta name="description" content="Only the first 10,000 will enter. Reserve your spot before the gates close.">
+<meta property="og:title" content="FORTREX FX — Where Traders Rise">
+<meta property="og:description" content="Something is coming for traders who refuse to settle. Reserve your spot before the gates close.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.6/build/css/intlTelInput.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particle-canvas"></canvas>
+<nav class="nav">
+  <a href="#top" class="nav-brand-wrap" id="logo-click">
+    <div class="logo-flip"><div class="logo-flip-inner">
+      <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+      <div class="logo-face logo-face-back"><span>FX</span></div>
+    </div></div>
+    <span class="nav-brand-text">FORTREX</span>
+    <div class="logo-click-glow" id="logo-click-glow"></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about" class="nav-link">The Mission</a></li>
+    <li><a href="#rex" class="nav-link">REX</a></li>
+    <li><a href="#leaderboard" class="nav-link">The Circle</a></li>
+    <li><a href="#community" class="nav-link">Community</a></li>
+  </ul>
+  <div class="nav-cta" id="nav-cta"><a href="#register" class="nav-cta-btn" id="nav-cta-btn">Reserve Spot</a></div>
+</nav>
+<main id="top">
+  <section class="hero">
+    <!-- Logo glow animation wrapper -->
+    <div class="hero-logo-glow"></div>
+    <div class="hero-eyebrow"><span class="live-dot"></span> By Invitation Only · Limited to 10,000</div>
+    <h1>Something is coming<br>for traders who <span class="gold-accent">refuse to settle.</span></h1>
+    <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
+    <div class="hero-cta-row" id="hero-cta"><a href="#register" class="btn-primary" id="hero-register-btn">Reserve Your Spot — Free →</a></div>
+    <div class="hero-trust" id="hero-trust"><span>✓ No payment required</span><span>✓ 30 seconds to register</span><span>✓ First 10,000 get Genesis status forever</span></div>
+    <div class="hero-registered" id="hero-registered" style="display:none;">
+      <div class="hero-registered-badge">✓ You're in. Genesis Member #<span id="hero-member-num">848</span></div>
+      <a href="profile.html" class="btn-primary">View Your Profile →</a>
+      <p class="hero-registered-text">We'll notify you when the gates open.</p>
+    </div>
+    <div class="live-reg-board" id="live-reg-board">
+      <div class="live-reg-header"><span class="live-reg-dot"></span><span class="live-reg-label">Live Registration Board</span></div>
+      <div class="live-reg-numbers">
+        <span class="live-reg-count" id="live-reg-count">0</span>
+        <span class="live-reg-divider">/</span>
+        <span class="live-reg-total">10,000</span>
+      </div>
+      <div class="live-reg-bar-wrap"><div class="live-reg-bar" id="live-reg-bar" style="width:0%"></div></div>
+      <div class="live-reg-meta"><span class="gold-text" id="live-reg-pct">0.0%</span><span id="live-reg-spots">10,000 spots left</span></div>
+    </div>
+    <p class="hero-gate-notice">When the 10,000th trader secures their spot, the gates open. No exceptions.</p>
+  </section>
+  <section class="question-section" id="about">
+    <div class="container">
+      <div class="section-label reveal">The Truth Nobody Tells Traders</div>
+      <p class="question-line" data-delay="0">You've spent years mastering the markets.</p>
+      <p class="question-line" data-delay="200">Hours of analysis. Thousands of candles. Countless strategies tested.</p>
+      <p class="question-line strike" data-delay="400">And your broker thanks you for the spreads.</p>
+      <p class="question-line strike" data-delay="600">And the "gurus" thank you for the courses.</p>
+      <p class="question-line" data-delay="800">But what has your skill actually gotten you?</p>
+      <p class="question-final reveal" data-delay="1000">What if your skill finally meant something?</p>
+      <p class="question-regret reveal" data-delay="1200">Every trader who came late to something big<br>wished they were first. Don't be late this time.</p>
+    </div>
+  </section>
+  <section class="rex-section" id="rex">
+    <!-- REX gold dust particles -->
+    <div class="rex-dust-container" id="rex-dust"></div>
+    <!-- Rotating glow behind REX -->
+    <div class="rex-aura"></div>
+    <div class="container">
+      <div class="section-label reveal">A New Currency is Coming</div>
+      <div class="rex-glyph-wrap">
+        <div class="rex-glyph reveal" id="rex-text">REX</div>
+      </div>
+      <p class="section-text reveal" style="margin: 0 auto 32px; text-align: center;">Some currencies are earned. Some are bought.<br><strong style="color: var(--gold-light);">REX is neither.</strong><br>Only one thing determines how much you earn.<br>And it's not money.</p>
+      <div class="reveal rex-pills-anim" style="margin-top: 24px;" id="rex-pills">
+        <span class="rex-stat">Earn through <strong>skill</strong></span><span class="rex-stat">Limited to <strong>10,000</strong> traders</span><span class="rex-stat">First access = <strong>highest multiplier</strong></span><span class="rex-stat">Permanent for <strong>Genesis members</strong></span>
+      </div>
+      <p class="section-text reveal" style="margin: 32px auto 0; text-align: center; font-size: 15px;">That's all we can tell you. For now.</p>
+    </div>
+  </section>
+  <section class="leaderboard-section" id="leaderboard">
+    <div class="container">
+      <div class="section-label reveal">The Architects' Circle</div>
+      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">Great traders trade.<br>Exceptional traders <span class="gold-accent">architect the future.</span></h2>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">This is not a referral program. This is an invitation to build something that outlasts you. Every architect who brings skilled traders into the inner circle earns permanent recognition — etched into the foundation of FORTREX forever.</p>
+      <div class="leaderboard reveal">
+        <div class="leaderboard-header"><span>#</span><span>Architect</span><span>Circle</span><span class="col-reward">Recognition</span></div>
+        <div id="leaderboard-rows"></div>
+      </div>
+      <p class="leaderboard-note reveal">The top architects will be forever remembered as Genesis pioneers. Your circle begins the moment you register.</p>
+    </div>
+  </section>
+  <section class="register-section" id="register">
+    <div class="container">
+      <div class="section-label reveal">Claim Your Spot</div>
+      <h2 class="section-heading reveal" style="margin: 0 auto 16px; text-align: center;">Before the gates close.</h2>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">First 10,000 traders get Genesis access — the highest REX multiplier, priority entry, and exclusive status. Forever. After that, it's gone.</p>
+      <div class="register-card reveal" id="register-card">
+        <div class="register-header"><h3>Reserve Your Spot</h3><div class="register-spots-badge">10,000 spots · Genesis access</div></div>
+        <p>It takes 30 seconds. No payment. No commitment. Just your spot in line.</p>
+        <form id="register-form">
+          <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true"><label>Website (leave empty)</label><input type="text" name="website" tabindex="-1" autocomplete="off" value=""></div>
+          <div class="form-group"><label>Full Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
+          <div class="form-group"><label>Email</label><input type="email" id="email" name="email" placeholder="you@example.com" required></div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Mobile number" required>
+          </div>
+          <div class="form-error" id="form-error"></div>
+          <button type="submit" class="btn-submit" id="submit-btn">Reserve My Spot →</button>
+          <div class="form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
+        </form>
+      </div>
+      <div class="register-card reveal community-card" id="success-card" style="display:none;">
+        <div class="success-glow-burst"></div>
+        <div class="success-check"><svg viewBox="0 0 52 52" width="52" height="52"><circle cx="26" cy="26" r="24" fill="none" stroke="#E5C158" stroke-width="2" class="success-circle-anim"/><path d="M16 26 L23 33 L37 18" fill="none" stroke="#E5C158" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check-anim"/></svg></div>
+        <h3 style="text-align:center;">You're in. Welcome to Genesis.</h3>
+        <p style="text-align:center;">Your spot is secured. You're now part of the first 10,000.<br>The gates will open soon.</p>
+        <div class="community-welcome">
+          <div class="community-welcome-glow"></div>
+          <div class="community-welcome-text">Stay connected. The movement is just beginning.</div>
+          <div class="community-welcome-sub">Join our inner circle. Be the first to know when the gates open.</div>
+          <div class="community-social-grid">
+            <a href="https://discord.gg/propchampions" target="_blank" class="community-social-card discord-anim" style="--delay:0">
+              <div class="community-social-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg></div>
+              <div class="community-social-name">Join the Citadel</div>
+              <div class="community-social-desc">Discord Server</div>
+              <div class="community-social-arrow">→</div>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="community-social-card yt-anim" style="--delay:1">
+              <div class="community-social-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg></div>
+              <div class="community-social-name">YouTube</div>
+              <div class="community-social-desc">Trade Content</div>
+              <div class="community-social-arrow">→</div>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="community-social-card insta-anim" style="--delay:2">
+              <div class="community-social-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg></div>
+              <div class="community-social-name">Instagram</div>
+              <div class="community-social-desc">Daily Updates</div>
+              <div class="community-social-arrow">→</div>
+            </a>
+            <a href="https://threads.net" target="_blank" class="community-social-card threads-anim" style="--delay:3">
+              <div class="community-social-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M17.3 11.2c-.1-.05-.2-.1-.3-.14-.2-4.2-2.5-6.6-6.4-6.6-2.3 0-4.1 1-5.3 2.8l2.1 1.5c.9-1.3 2.1-1.6 3.2-1.6 1.3 0 2.3.5 3 1.4.4.6.6 1.3.7 2.2-.9-.2-1.8-.3-2.9-.3-3.4 0-5.5 2-5.4 4.5.1 1.3.7 2.4 1.7 3.2 1 .7 2.2 1.1 3.5 1 .1.7.1 1.2.1 1.2s2.5-.3 4-2c.3 2 .3 2 .3 2s.4-1 .2-2.8c1.1-1.3 1.9-3.1 2-5.4z" fill="#fff"/></svg></div>
+              <div class="community-social-name">Threads</div>
+              <div class="community-social-desc">Real-time Posts</div>
+              <div class="community-social-arrow">→</div>
+            </a>
+          </div>
+          <a href="profile.html" class="btn-ghost" style="margin-top: 24px; display: inline-flex;">Explore Your Profile →</a>
+        </div>
+      </div>
+      <div class="register-card reveal" id="already-registered" style="display:none;">
+        <div class="already-icon">✓</div>
+        <h3 style="text-align:center;">You're already in.</h3>
+        <p style="text-align:center;">You're Genesis Member #<span id="already-member-num">848</span>.<br>Your spot is secured. The gates will open soon.</p>
+        <div class="community-welcome" style="margin-top:24px;">
+          <div class="community-welcome-text">Stay connected. You're part of the inner circle now.</div>
+          <div class="community-social-grid" style="margin-top:16px;">
+            <a href="https://discord.gg/propchampions" target="_blank" class="community-social-card discord-anim" style="--delay:0"><div class="community-social-name">Join the Citadel</div><div class="community-social-arrow">→</div></a>
+            <a href="https://youtube.com" target="_blank" class="community-social-card yt-anim" style="--delay:1"><div class="community-social-name">YouTube</div><div class="community-social-arrow">→</div></a>
+            <a href="https://instagram.com" target="_blank" class="community-social-card insta-anim" style="--delay:2"><div class="community-social-name">Instagram</div><div class="community-social-arrow">→</div></a>
+          </div>
+        </div>
+        <a href="profile.html" class="btn-primary" style="margin-top: 24px;">View Your Profile →</a>
+      </div>
+    </div>
+  </section>
+  <section class="community-section" id="community">
+    <div class="container">
+      <div class="section-label reveal">The Citadel Awaits</div>
+      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">Where the top traders gather.</h2>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Join the community. Follow the movement. Be first to know when the gates open.</p>
+      <div class="social-row reveal">
+        <a href="https://discord.gg/propchampions" target="_blank" class="social-card discord"><svg viewBox="0 0 24 24" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg><span>Join the Citadel</span><small>Discord Server</small></a>
+        <a href="https://youtube.com" target="_blank" class="social-card yt"><svg viewBox="0 0 24 24" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg><span>YouTube</span><small>Trade Content</small></a>
+        <a href="https://instagram.com" target="_blank" class="social-card insta"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.68.94 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38c.66-.67 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.4-10.4a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg><span>Instagram</span><small>Daily Updates</small></a>
+        <a href="https://threads.net" target="_blank" class="social-card threads"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.3 9.5c-.1-.05-.2-.1-.3-.14-.2-3.1-1.7-4.5-4.3-4.5-1.3 0-2.4.5-3.1 1.4l1.1 1c.5-.6 1.2-.9 2-.9 1.4 0 2.2.9 2.4 2.5-.5-.1-1-.1-1.5-.1-2.3 0-3.9 1.3-3.9 3.2 0 .8.3 1.5.9 2 .6.5 1.3.8 2.1.8 1.2 0 2.1-.5 2.7-1.3.4-.6.7-1.3.8-2.2.5.3.9.7 1.1 1.2.4.8.4 1.7 0 2.5-.5 1-1.5 1.6-2.8 1.6-1.2 0-2.1-.4-2.7-1.2l-1.2.9c.8 1.1 2.1 1.7 3.9 1.7 2 0 3.4-.9 4.1-2.4.5-1.1.5-2.3-.1-3.4-.4-.7-1-1.2-1.7-1.5z" fill="#fff"/></svg><span>Threads</span><small>Real-time</small></a>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="sticky-cta" id="sticky-cta"><a href="#register" class="btn-primary sticky-btn" id="sticky-btn">Reserve Spot →</a></div>
+<footer><div class="footer-logo">FORTREX FX</div><div class="footer-tagline">Where traders rise.</div><div class="footer-copy">© 2026 FORTREX FX. All rights reserved. By invitation only.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.6/build/js/intlTelInput.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
