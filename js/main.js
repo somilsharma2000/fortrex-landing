@@ -20,6 +20,23 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 
+
+// NAV LINK ACTIVE HIGHLIGHT
+(function() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 100;
+      if (window.scrollY >= top) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold-light)' : '';
+    });
+  }, { passive: true });
+})();
+
 // LOGO CLICK GLOW
 (function() {
   const logo = document.getElementById('logo-click');
@@ -211,11 +228,27 @@ let currentLiveCount = BASE_COUNT;
   fetchReal();
 })();
 
-// REGISTRATION FORM
+// REGISTRATION FORM — Legacy inline form (modal handles registration now)
 (function() {
-  if (isRegistered) return;
+  // Modal flow handles all registration. This is kept for backward compatibility.
   const form = document.getElementById('register-form');
   if (!form) return;
+  // Forward any inline form submission to the modal flow
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Copy values to modal and submit
+    const name = document.getElementById('name')?.value?.trim() || '';
+    const email = document.getElementById('email')?.value?.trim() || '';
+    const phone = document.getElementById('phone')?.value?.trim() || '';
+    const modalName = document.getElementById('modal-name');
+    const modalEmail = document.getElementById('modal-email');
+    const modalPhone = document.getElementById('modal-phone');
+    if (modalName) modalName.value = name;
+    if (modalEmail) modalEmail.value = email;
+    if (modalPhone) modalPhone.value = phone;
+    if (name && email) submitRegModal(e);
+  });
+  return;
   const errorDiv = document.getElementById('form-error');
   const submitBtn = document.getElementById('submit-btn');
   const registerCard = document.getElementById('register-card');
@@ -300,6 +333,8 @@ function openRegModal() {
   if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots remaining';
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  // Focus first input for accessibility
+  setTimeout(() => { document.getElementById('modal-name')?.focus(); }, 300);
   // Initialize intl-tel-input on modal phone
   setTimeout(() => {
     const phoneInput = document.getElementById('modal-phone');
@@ -357,6 +392,9 @@ function submitRegModal(e) {
   const formTimeMs = Date.now() - pageLoadTime;
   if (formTimeMs < 3000) { showRegError('Please take a moment to review your details.'); return; }
 
+  // Disable button + show loading
+  const submitBtn = document.getElementById('modal-submit-btn');
+  if (submitBtn) { submitBtn.style.pointerEvents = 'none'; submitBtn.style.opacity = '0.7'; }
   // Transition to State 2: Verification
   showRegState('verify');
   runTerminalSequence().then(() => {

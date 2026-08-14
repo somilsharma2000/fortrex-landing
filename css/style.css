@@ -312,7 +312,7 @@ footer{padding:50px 32px 80px;text-align:center;border-top:1px solid var(--glass
 .reg-modal-backdrop{position:absolute;inset:0;background:rgba(6,6,8,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 
 /* CONTAINER */
-.reg-modal-container{position:relative;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;background:rgba(12,12,15,0.9);border:1px solid var(--glass-border);border-radius:20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 24px 80px rgba(6,6,8,0.6),0 0 0 1px rgba(234,179,8,0.05);animation:modal-slide-up 0.5s var(--spring) forwards;overflow:hidden}
+.reg-modal-container{position:relative;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;background:rgba(12,12,15,0.9);border:1px solid var(--glass-border);border-radius:20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 24px 80px rgba(6,6,8,0.6),0 0 0 1px rgba(234,179,8,0.05);animation:modal-slide-up 0.5s var(--spring) forwards}
 @keyframes modal-slide-up{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 
 /* STATE MANAGEMENT */
@@ -440,3 +440,9 @@ footer{padding:50px 32px 80px;text-align:center;border-top:1px solid var(--glass
   .reg-copy-btn{width:100%;text-align:center}
   .reg-input-group .iti--allow-dropdown input{padding-left:64px !important;font-size:13px}
 }
+
+/* MODAL SCROLLBAR STYLING */
+.reg-modal-container::-webkit-scrollbar{width:4px}
+.reg-modal-container::-webkit-scrollbar-track{background:transparent}
+.reg-modal-container::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:100px}
+.reg-modal-container::-webkit-scrollbar-thumb:hover{background:var(--gold-glow)}
