@@ -131,7 +131,9 @@ section{padding:80px 32px;position:relative}
 .form-group input::placeholder{color:var(--text-dim)}
 /* INTL-TEL-INPUT — dark theme override */
 .iti{width:100%;display:block}
-.iti--allow-dropdown input{padding-left:52px !important}
+.iti--allow-dropdown input{padding-left:72px !important}
+.iti--separate-dial-code .iti__selected-dial-code{color:var(--gold-light) !important;font-weight:600 !important;font-family:'JetBrains Mono',monospace !important;font-size:14px !important;padding-left:6px !important}
+.iti--separate-dial-code .iti__flag-container{border-right:1px solid var(--border) !important}
 .iti__country-list{background:#0A0B0F;border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 50px rgba(6,7,10,0.6);max-width:300px}
 .iti__country-list--dropup{bottom:auto}
 .iti__country{padding:8px 14px;font-size:13px;color:var(--text);transition:background 0.2s}
@@ -201,7 +203,8 @@ section{padding:50px 16px}.hero{padding:50px 16px 80px}.hero-counter{padding:16p
 .hero-trust{font-size:10px;gap:10px}
 .register-header{flex-direction:column;gap:10px;align-items:flex-start}
 .sticky-cta.show{display:flex}
-.iti--allow-dropdown input{padding-left:48px !important;font-size:13px}
+.iti--allow-dropdown input{padding-left:64px !important;font-size:13px}
+.iti--separate-dial-code .iti__selected-dial-code{font-size:13px !important}
 .hero-gate-notice{font-size:12px;padding:0 16px}
 }
 @media(min-width:769px){.sticky-cta{display:none!important}}

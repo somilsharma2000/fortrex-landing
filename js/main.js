@@ -277,7 +277,7 @@ let currentLiveCount = BASE_COUNT;
       const country = tzMap[tz] || locale.split('-')[1]?.toLowerCase() || 'in';
       callback(country);
     },
-    separateDialCode: false,
+    separateDialCode: true,
     showSearch: true,
     formatOnDisplay: true,
     autoPlaceholder: 'aggressive',
