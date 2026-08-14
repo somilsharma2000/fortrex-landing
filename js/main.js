@@ -1,6 +1,7 @@
 /* ===== FORTREX FX — LANDING PAGE JS ===== */
 /* Real data only. No fake notifications. */
 const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const pageLoadTime = Date.now(); // Bot protection: track time from page load to form submit
 const REG_TARGET = 10000;
 const BASE_COUNT = 847;
 
@@ -186,9 +187,32 @@ let currentLiveCount = BASE_COUNT;
     submitBtn.disabled = true; submitBtn.textContent = 'Reserving...';
     const refCode = btoa(email).substring(0, 8).replace(/=/g, '');
     const spotNumber = currentLiveCount + 1;
+    
+    // ===== BOT PROTECTION DATA =====
+    // Honeypot: if filled, it's a bot
+    const honeypot = document.querySelector('input[name="website"]')?.value || '';
+    if (honeypot) { return; } // Silent reject — don't show error, just stop
+    
+    // Time trap: measure time from page load to submit
+    const formTimeMs = Date.now() - pageLoadTime;
+    if (formTimeMs < 4000) { 
+      errorDiv.textContent = 'Please take a moment to review your details.'; 
+      errorDiv.style.display = 'block'; 
+      submitBtn.disabled = false; submitBtn.textContent = 'Reserve My Spot →';
+      return; 
+    }
+    
+    // Browser fingerprint (basic — screen, timezone, language, platform)
+    const fingerprint = btoa([
+      navigator.userAgent, navigator.language, navigator.platform,
+      screen.width + 'x' + screen.height, screen.colorDepth,
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+      new Date().getTimezoneOffset()
+    ].join('|')).substring(0, 32);
+    
     try {
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, pincode, refBy, refCode, spotNumber, timestamp: new Date().toISOString() }) });
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, pincode, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), website: honeypot, formTimeMs, fingerprint }) });
       }
     } catch (e) {}
     localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, pincode, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
