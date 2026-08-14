@@ -47,6 +47,8 @@ window.addEventListener('scroll', () => {
     glow.classList.remove('active');
     void glow.offsetWidth;
     glow.classList.add('active');
+    const logoFlip = logo.querySelector('.logo-flip');
+    if (logoFlip) { logoFlip.classList.remove('clicked'); void logoFlip.offsetWidth; logoFlip.classList.add('clicked'); setTimeout(() => logoFlip.classList.remove('clicked'), 600); }
     const canvas = document.getElementById('particle-canvas');
     if (canvas && canvas._addBurst) canvas._addBurst(e.clientX, e.clientY);
     setTimeout(() => glow.classList.remove('active'), 1200);
@@ -193,7 +195,7 @@ let currentLiveCount = BASE_COUNT;
   function render(data) {
     container.innerHTML = data.map((row, i) => {
       const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay:${i * 60}ms">
+      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay:${i * 60}ms"><div class="lb-sweep"></div>
         <span class="lb-rank ${rankClass}">${i + 1}</span>
         <span class="lb-name">${row.name}</span>
         <span class="lb-invites">${row.invites}</span>
