@@ -60,7 +60,7 @@ tailwind.config = {
     <a href="#leaderboard" class="nav-link">The Circle</a>
     <a href="#community" class="nav-link">Community</a>
   </div>
-  <div class="nav-cta" id="nav-cta"><a href="#register" class="nav-cta-btn" id="nav-cta-btn">Reserve Spot</a></div>
+  <div class="nav-cta" id="nav-cta"><a href="javascript:void(0)" class="nav-cta-btn" id="nav-cta-btn" onclick="openRegModal()">Reserve Spot</a></div>
 </nav>
 
 <main id="top">
@@ -89,7 +89,7 @@ tailwind.config = {
 
     <!-- CTA ROWS -->
     <div class="hero-cta-row" id="hero-cta">
-      <a href="#register" class="btn-gold-shimmer" id="hero-register-btn">Reserve Your Spot — Free →</a>
+      <a href="javascript:void(0)" class="btn-gold-shimmer" id="hero-register-btn" onclick="openRegModal()">Reserve Your Spot — Free →</a>
     </div>
     <div class="hero-trust" id="hero-trust">
       <span>✓ No payment required</span>
@@ -179,24 +179,22 @@ tailwind.config = {
       <p class="section-text reveal" style="margin:0 auto;text-align:center;">
         First 10,000 traders get Genesis access — the highest REX multiplier, priority entry, and exclusive status. Forever. After that, it's gone.
       </p>
+      <div class="reveal" style="text-align:center;margin-top:36px">
+        <button class="btn-gold-shimmer" onclick="openRegModal()" style="border:none;font-family:inherit;cursor:pointer">Reserve Your Spot — Free →</button>
+        <p class="hero-trust" style="margin-top:16px"><span>✓ No payment required</span><span>✓ 30 seconds</span><span>✓ Genesis status forever</span></p>
+      </div>
 
-      <!-- FORM CARD -->
-      <div class="register-card reveal" id="register-card">
-        <div class="register-header">
-          <h3>Reserve Your Spot</h3>
-          <div class="register-spots-badge">10,000 spots · Genesis access</div>
-        </div>
-        <p class="register-sub">It takes 30 seconds. No payment. No commitment. Just your spot in line.</p>
+      <!-- HIDDEN FORM (for modal submission) -->
+      <div style="display:none" id="register-card">
         <form id="register-form">
           <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
             <label>Website (leave empty)</label><input type="text" name="website" tabindex="-1" autocomplete="off" value="">
           </div>
-          <div class="form-group"><label>Full Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
-          <div class="form-group"><label>Email</label><input type="email" id="email" name="email" placeholder="you@example.com" required></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" id="phone" name="phone" placeholder="Mobile number" required></div>
+          <input type="text" id="name" name="name" placeholder="Your name">
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+          <input type="tel" id="phone" name="phone" placeholder="Mobile number">
           <div class="form-error" id="form-error"></div>
           <button type="submit" class="btn-submit" id="submit-btn">Reserve My Spot →</button>
-          <div class="form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
         </form>
       </div>
 
@@ -284,12 +282,135 @@ tailwind.config = {
       </div>
     </div>
   </section>
+
+<!-- REGISTRATION MODAL — 3-State Flow -->
+<div class="reg-modal-overlay" id="reg-modal">
+  <div class="reg-modal-backdrop" onclick="closeRegModal()"></div>
+  <div class="reg-modal-container">
+
+    <!-- STATE 1: SEAMLESS ENTRY -->
+    <div class="reg-modal-state active" id="reg-state-entry">
+      <button class="reg-modal-close" onclick="closeRegModal()">✕</button>
+      <div class="reg-modal-glow"></div>
+      <div class="reg-allocation-badge">
+        <span class="reg-allocation-dot"></span>
+        <span class="reg-allocation-text">Genesis Allocation Live</span>
+        <span class="reg-allocation-spots" id="modal-spots-remaining">9,153 spots remaining</span>
+      </div>
+      <div class="reg-modal-brand">
+        <div class="logo-flip" style="width:48px;height:48px"><div class="logo-flip-inner">
+          <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+          <div class="logo-face logo-face-back"><span>FX</span></div>
+        </div></div>
+        <span class="reg-modal-brand-text">FORTREX FX</span>
+      </div>
+      <h2 class="reg-modal-title">Reserve Your Genesis Spot</h2>
+      <p class="reg-modal-sub">You're 30 seconds away from permanent Genesis status. No payment. No commitment.</p>
+      <div class="reg-modal-form">
+        <div class="reg-input-group">
+          <label>Full Name</label>
+          <input type="text" id="modal-name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="reg-input-group">
+          <label>Email Address</label>
+          <input type="email" id="modal-email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="reg-input-group">
+          <label>Phone Number</label>
+          <input type="tel" id="modal-phone" placeholder="Mobile number" autocomplete="tel">
+        </div>
+        <div class="reg-form-error" id="modal-form-error"></div>
+        <button class="btn-gold-shimmer reg-submit-btn" id="modal-submit-btn" onclick="submitRegModal(event)">
+          <span>Claim My Genesis Spot →</span>
+        </button>
+        <div class="reg-form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
+      </div>
+    </div>
+
+    <!-- STATE 2: SMART VERIFICATION -->
+    <div class="reg-modal-state" id="reg-state-verify">
+      <div class="reg-verify-spinner">
+        <div class="reg-spinner-ring"></div>
+        <div class="reg-spinner-ring reg-spinner-ring-2"></div>
+        <div class="reg-spinner-core"></div>
+      </div>
+      <div class="reg-verify-terminal" id="verify-terminal">
+        <div class="reg-terminal-line" data-delay="0"><span class="reg-terminal-check">✓</span> Verifying spot in pool<span class="reg-terminal-dots">...</span></div>
+        <div class="reg-terminal-line" data-delay="300"><span class="reg-terminal-check">✓</span> Assigning Genesis Member ID<span class="reg-terminal-dots">...</span></div>
+        <div class="reg-terminal-line" data-delay="600"><span class="reg-terminal-check">✓</span> Multiplier locked<span class="reg-terminal-dots">...</span></div>
+      </div>
+    </div>
+
+    <!-- STATE 3: GENESIS PASS REVEAL -->
+    <div class="reg-modal-state" id="reg-state-pass">
+      <button class="reg-modal-close" onclick="closeRegModal()">✕</button>
+      <div class="reg-pass-glow-burst"></div>
+
+      <!-- HOLOGRAPHIC PASS -->
+      <div class="genesis-pass">
+        <div class="genesis-pass-shimmer"></div>
+        <div class="genesis-pass-header">
+          <div class="genesis-pass-brand">
+            <div class="logo-flip" style="width:32px;height:32px"><div class="logo-flip-inner">
+              <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+            </div></div>
+            <span>FORTREX FX</span>
+          </div>
+          <div class="genesis-pass-type">GENESIS PASS</div>
+        </div>
+        <div class="genesis-pass-body">
+          <div class="genesis-pass-id">
+            <div class="genesis-pass-id-label">MEMBER ID</div>
+            <div class="genesis-pass-id-value" id="pass-member-id">#0000848</div>
+          </div>
+          <div class="genesis-pass-status">
+            <div class="genesis-pass-status-icon">✓</div>
+            <div class="genesis-pass-status-text">
+              <div class="genesis-pass-status-main">VERIFIED & LOCKED</div>
+              <div class="genesis-pass-status-sub">Genesis allocation secured</div>
+            </div>
+          </div>
+          <div class="genesis-pass-multiplier">
+            <div class="genesis-pass-mult-label">REX MULTIPLIER</div>
+            <div class="genesis-pass-mult-value">1.25<span>x</span></div>
+            <div class="genesis-pass-mult-tier">Genesis Tier · Early Access</div>
+          </div>
+        </div>
+        <div class="genesis-pass-footer">
+          <div class="genesis-pass-footer-item"><span class="genesis-pass-footer-label">JOINED</span><span class="genesis-pass-footer-value" id="pass-joined-date">AUG 2026</span></div>
+          <div class="genesis-pass-footer-item"><span class="genesis-pass-footer-label">STATUS</span><span class="genesis-pass-footer-value gold-text">PERMANENT</span></div>
+        </div>
+      </div>
+
+      <!-- VIRAL GROWTH ENGINE -->
+      <div class="reg-pass-viral">
+        <div class="reg-viral-title">⚡ Boost Your Multiplier</div>
+        <div class="reg-viral-desc">Invite traders to upgrade your tier. Every architect who joins your circle increases your REX earnings at launch.</div>
+        <div class="reg-referral-row">
+          <input type="text" class="reg-referral-input" id="pass-referral-link" readonly>
+          <button class="reg-copy-btn" id="pass-copy-btn" onclick="copyReferralLink()">Copy Link</button>
+        </div>
+        <div class="reg-viral-actions">
+          <a href="#" class="reg-share-btn reg-share-x" id="pass-share-x" target="_blank">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share to X
+          </a>
+          <a href="https://discord.gg/propchampions" target="_blank" class="reg-share-btn reg-share-discord">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>
+            Enter the Citadel
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 </main>
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta" id="sticky-cta">
   <div class="sticky-cta-info"><span class="sticky-spots" id="sticky-spots">10,000 spots left</span></div>
-  <a href="#register" class="btn-gold-shimmer sticky-btn" id="sticky-btn">Reserve Spot →</a>
+  <a href="javascript:void(0)" class="btn-gold-shimmer sticky-btn" id="sticky-btn" onclick="openRegModal()">Reserve Spot →</a>
 </div>
 
 <!-- FOOTER -->

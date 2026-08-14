@@ -302,3 +302,141 @@ footer{padding:50px 32px 80px;text-align:center;border-top:1px solid var(--glass
   .community-welcome{padding:24px 16px}
 }
 @media(min-width:769px){.sticky-cta{display:none !important}}
+
+/* ===== REGISTRATION MODAL — 3-STATE FLOW ===== */
+
+/* OVERLAY */
+.reg-modal-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.reg-modal-overlay.active{display:flex;animation:modal-fade-in 0.3s var(--spring) forwards}
+@keyframes modal-fade-in{from{opacity:0}to{opacity:1}}
+.reg-modal-backdrop{position:absolute;inset:0;background:rgba(6,6,8,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* CONTAINER */
+.reg-modal-container{position:relative;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;background:rgba(12,12,15,0.9);border:1px solid var(--glass-border);border-radius:20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 24px 80px rgba(6,6,8,0.6),0 0 0 1px rgba(234,179,8,0.05);animation:modal-slide-up 0.5s var(--spring) forwards;overflow:hidden}
+@keyframes modal-slide-up{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* STATE MANAGEMENT */
+.reg-modal-state{display:none;padding:40px 36px;position:relative}
+.reg-modal-state.active{display:block;animation:state-enter 0.4s var(--spring) forwards}
+@keyframes state-enter{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* CLOSE BUTTON */
+.reg-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:var(--glass-surface);border:1px solid var(--glass-border);color:var(--text-muted);font-size:14px;cursor:pointer;transition:all 0.3s var(--spring);z-index:10;display:flex;align-items:center;justify-content:center}
+.reg-modal-close:hover{background:var(--gold-dim);border-color:var(--gold-dim);color:var(--gold-light);transform:rotate(90deg)}
+
+/* MODAL GLOW */
+.reg-modal-glow{position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,var(--gold-glow),transparent 60%);pointer-events:none;opacity:0.4;animation:modal-glow-pulse 4s ease-in-out infinite}
+@keyframes modal-glow-pulse{0%,100%{opacity:0.3;transform:translateX(-50%) scale(0.8)}50%{opacity:0.6;transform:translateX(-50%) scale(1.1)}}
+
+/* ALLOCATION BADGE */
+.reg-allocation-badge{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--glass-surface);border:1px solid var(--glass-border);border-radius:100px;margin-bottom:24px;font-size:12px;position:relative;z-index:2}
+.reg-allocation-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:live-green 1.5s ease-in-out infinite;flex-shrink:0}
+.reg-allocation-text{color:var(--gold-light);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase}
+.reg-allocation-spots{color:var(--text-muted);font-size:11px;margin-left:auto;font-family:'JetBrains Mono',monospace}
+
+/* MODAL BRAND */
+.reg-modal-brand{display:flex;align-items:center;gap:10px;margin-bottom:20px;position:relative;z-index:2}
+.reg-modal-brand-text{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.15em;color:var(--text);text-transform:uppercase}
+
+/* MODAL TITLE */
+.reg-modal-title{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin-bottom:8px;position:relative;z-index:2}
+.reg-modal-sub{font-size:13px;color:var(--text-muted);margin-bottom:28px;position:relative;z-index:2;line-height:1.5}
+
+/* MODAL FORM */
+.reg-modal-form{position:relative;z-index:2}
+.reg-input-group{margin-bottom:16px;text-align:left}
+.reg-input-group label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;font-weight:500}
+.reg-input-group input{width:100%;padding:14px 16px;background:var(--glass-surface);border:1px solid var(--glass-border);border-radius:12px;color:var(--text);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.25s var(--spring);outline:none}
+.reg-input-group input:focus{border-color:var(--gold-dim);background:rgba(234,179,8,0.02);box-shadow:0 0 0 3px rgba(234,179,8,0.05)}
+.reg-input-group input::placeholder{color:var(--text-dim)}
+
+/* INTL-TEL-INPUT inside modal */
+.reg-input-group .iti{width:100%}
+.reg-input-group .iti--allow-dropdown input{padding-left:72px !important}
+.reg-input-group .iti__country-list{background:var(--obsidian-800);border:1px solid var(--glass-border);border-radius:10px;box-shadow:0 16px 50px rgba(6,6,8,0.6)}
+
+.reg-form-error{font-size:12px;color:#ef4444;margin:8px 0;display:none}
+.reg-submit-btn{width:100%;border:none;padding:15px;margin-top:8px;font-family:'Plus Jakarta Sans',sans-serif;justify-content:center}
+.reg-form-trust{text-align:center;font-size:11px;color:var(--text-dim);margin-top:14px;padding-top:14px;border-top:1px solid rgba(234,179,8,0.06)}
+
+/* STATE 2: VERIFICATION */
+.reg-verify-spinner{position:relative;width:80px;height:80px;margin:40px auto 32px}
+.reg-spinner-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--gold-light);animation:spinner-rotate 1s linear infinite}
+.reg-spinner-ring-2{inset:8px;border-top-color:var(--gold-deep);animation:spinner-rotate 1.5s linear reverse infinite}
+.reg-spinner-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--gold-light);box-shadow:0 0 20px var(--gold-glow);animation:spinner-core-pulse 1s ease-in-out infinite}
+@keyframes spinner-rotate{to{transform:rotate(360deg)}}
+@keyframes spinner-core-pulse{0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(0.8)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}}
+
+/* TERMINAL */
+.reg-verify-terminal{font-family:'JetBrains Mono',monospace;font-size:13px;text-align:left;max-width:320px;margin:0 auto;padding:20px;background:rgba(0,0,0,0.2);border:1px solid var(--glass-border);border-radius:12px}
+.reg-terminal-line{display:flex;align-items:center;gap:8px;margin-bottom:10px;opacity:0;transform:translateX(-10px);color:var(--text-muted)}
+.reg-terminal-line.visible{opacity:1;transform:translateX(0);transition:all 0.3s var(--spring)}
+.reg-terminal-line:last-child{margin-bottom:0}
+.reg-terminal-check{color:#4ade80;font-size:14px;flex-shrink:0}
+.reg-terminal-dots{color:var(--text-dim)}
+
+/* STATE 3: GENESIS PASS */
+.reg-pass-glow-burst{position:absolute;top:0;left:50%;transform:translateX(-50%);width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(234,179,8,0.12),transparent 60%);pointer-events:none;animation:success-burst 1.2s ease-out forwards}
+
+/* HOLOGRAPHIC PASS CARD */
+.genesis-pass{position:relative;max-width:380px;margin:0 auto 24px;background:linear-gradient(135deg,rgba(234,179,8,0.06),rgba(12,12,15,0.9),rgba(234,179,8,0.04));border:1px solid var(--gold-dim);border-radius:20px;overflow:hidden;backdrop-filter:blur(16px);box-shadow:0 16px 50px rgba(6,6,8,0.5),inset 0 0 30px rgba(234,179,8,0.03);animation:pass-reveal 0.8s var(--spring) 0.2s both}
+@keyframes pass-reveal{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.genesis-pass-shimmer{position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(234,179,8,0.08),transparent);animation:pass-shimmer 3s ease-in-out infinite;pointer-events:none}
+@keyframes pass-shimmer{0%{left:-100%}50%{left:100%}100%{left:100%}}
+
+.genesis-pass-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--glass-border)}
+.genesis-pass-brand{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;color:var(--text);text-transform:uppercase}
+.genesis-pass-type{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--gold-light);text-transform:uppercase;padding:4px 10px;background:var(--gold-dim);border-radius:100px}
+
+.genesis-pass-body{padding:24px 20px}
+.genesis-pass-id{text-align:center;margin-bottom:24px}
+.genesis-pass-id-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px}
+.genesis-pass-id-value{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800;color:var(--gold-light);letter-spacing:0.05em;text-shadow:0 0 20px rgba(250,204,21,0.3)}
+
+.genesis-pass-status{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:12px;margin-bottom:16px}
+.genesis-pass-status-icon{width:28px;height:28px;border-radius:50%;background:rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;color:#4ade80;font-size:14px;font-weight:700;flex-shrink:0}
+.genesis-pass-status-main{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#4ade80;letter-spacing:0.1em}
+.genesis-pass-status-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+.genesis-pass-multiplier{text-align:center;padding:16px;background:var(--glass-surface);border:1px solid var(--gold-dim);border-radius:12px}
+.genesis-pass-mult-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px}
+.genesis-pass-mult-value{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--gold-light);line-height:1}
+.genesis-pass-mult-value span{font-size:18px;color:var(--gold-deep)}
+.genesis-pass-mult-tier{font-size:11px;color:var(--text-muted);margin-top:4px}
+
+.genesis-pass-footer{display:flex;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--glass-border);font-family:'JetBrains Mono',monospace}
+.genesis-pass-footer-item{display:flex;flex-direction:column;gap:2px}
+.genesis-pass-footer-label{font-size:9px;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase}
+.genesis-pass-footer-value{font-size:12px;font-weight:600;color:var(--text)}
+.genesis-pass-footer-value.gold-text{color:var(--gold-light)}
+
+/* VIRAL GROWTH ENGINE */
+.reg-pass-viral{position:relative;z-index:2;text-align:center}
+.reg-viral-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--gold-light);margin-bottom:6px}
+.reg-viral-desc{font-size:12px;color:var(--text-muted);margin-bottom:16px;line-height:1.5}
+.reg-referral-row{display:flex;gap:8px;margin-bottom:14px}
+.reg-referral-input{flex:1;padding:12px 14px;background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);border-radius:10px;color:var(--gold-light);font-size:12px;font-family:'JetBrains Mono',monospace;outline:none;min-width:0}
+.reg-copy-btn{padding:12px 18px;background:var(--gold-dim);border:1px solid var(--gold-dim);border-radius:10px;color:var(--gold-light);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s var(--spring);white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif}
+.reg-copy-btn:hover{background:rgba(234,179,8,0.2);transform:translateY(-1px)}
+.reg-copy-btn.copied{background:rgba(74,222,128,0.15);color:#4ade80;border-color:rgba(74,222,128,0.3)}
+
+.reg-viral-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.reg-share-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 20px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:all 0.3s var(--spring);font-family:'Plus Jakarta Sans',sans-serif}
+.reg-share-btn:hover{transform:translateY(-2px) scale(1.03)}
+.reg-share-x{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.15)}
+.reg-share-x:hover{background:rgba(255,255,255,0.1)}
+.reg-share-discord{background:rgba(88,101,242,0.15);color:#8181ff;border:1px solid rgba(88,101,242,0.3)}
+.reg-share-discord:hover{background:rgba(88,101,242,0.25)}
+
+/* MOBILE MODAL */
+@media(max-width:768px){
+  .reg-modal-overlay{padding:16px}
+  .reg-modal-state{padding:32px 24px}
+  .reg-modal-title{font-size:20px}
+  .genesis-pass{max-width:100%}
+  .genesis-pass-id-value{font-size:24px}
+  .genesis-pass-mult-value{font-size:30px}
+  .reg-referral-row{flex-direction:column}
+  .reg-copy-btn{width:100%;text-align:center}
+  .reg-input-group .iti--allow-dropdown input{padding-left:64px !important;font-size:13px}
+}

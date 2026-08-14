@@ -278,6 +278,223 @@ let currentLiveCount = BASE_COUNT;
   });
 })();
 
+
+// ===== REGISTRATION MODAL — 3-STATE FLOW =====
+let modalIti = null;
+let modalState = 'entry'; // entry | verify | pass
+
+function openRegModal() {
+  const modal = document.getElementById('reg-modal');
+  if (!modal) return;
+  // If already registered, skip to pass
+  if (isRegistered) {
+    showRegState('pass');
+    populatePassFromStorage();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    return;
+  }
+  showRegState('entry');
+  // Update spots remaining
+  const spotsEl = document.getElementById('modal-spots-remaining');
+  if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots remaining';
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Initialize intl-tel-input on modal phone
+  setTimeout(() => {
+    const phoneInput = document.getElementById('modal-phone');
+    if (phoneInput && !modalIti && typeof intlTelInput !== 'undefined') {
+      modalIti = intlTelInput(phoneInput, {
+        initialCountry: 'auto',
+        geoIpLookup: function(callback) {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+          const tzMap = { 'Asia/Kolkata':'in','Asia/Calcutta':'in','America/New_York':'us','America/Chicago':'us','America/Los_Angeles':'us','America/Toronto':'ca','Europe/London':'gb','Asia/Dubai':'ae','Asia/Singapore':'sg','Australia/Sydney':'au','Europe/Berlin':'de','Africa/Lagos':'ng','Africa/Johannesburg':'za','Asia/Kuala_Lumpur':'my','Asia/Jakarta':'id','Asia/Manila':'ph','Asia/Riyadh':'sa','Asia/Karachi':'pk','Asia/Dhaka':'bd','Asia/Kathmandu':'np','Asia/Colombo':'lk','Asia/Qatar':'qa','Asia/Kuwait':'kw','Asia/Muscat':'om' };
+          callback(tzMap[tz] || 'in');
+        },
+        separateDialCode: true,
+        showSearch: true,
+        formatOnDisplay: true,
+        autoPlaceholder: 'aggressive',
+      });
+    }
+  }, 100);
+}
+
+function closeRegModal() {
+  const modal = document.getElementById('reg-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  // Reset to entry state after close animation
+  setTimeout(() => {
+    if (!isRegistered) showRegState('entry');
+  }, 400);
+}
+
+function showRegState(state) {
+  modalState = state;
+  document.querySelectorAll('.reg-modal-state').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('reg-state-' + state);
+  if (el) el.classList.add('active');
+}
+
+function submitRegModal(e) {
+  if (e) e.preventDefault();
+  const errorDiv = document.getElementById('modal-form-error');
+  if (errorDiv) errorDiv.style.display = 'none';
+
+  const name = document.getElementById('modal-name').value.trim();
+  const email = document.getElementById('modal-email').value.trim();
+  let phone = '';
+  if (modalIti) { phone = modalIti.getNumber(); }
+  else { phone = document.getElementById('modal-phone').value.trim(); }
+
+  if (!name || name.length < 2) { showRegError('Please enter your full name.'); return; }
+  if (!email || !/^[^s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('Please enter a valid email.'); return; }
+  if (!phone || phone.length < 6) { showRegError('Please enter a valid phone number.'); return; }
+
+  // Bot protection
+  const formTimeMs = Date.now() - pageLoadTime;
+  if (formTimeMs < 3000) { showRegError('Please take a moment to review your details.'); return; }
+
+  // Transition to State 2: Verification
+  showRegState('verify');
+  runTerminalSequence().then(() => {
+    // Save user data
+    const refCode = btoa(email).substring(0, 8).replace(/=/g, '');
+    const spotNumber = currentLiveCount + 1;
+    const fingerprint = btoa([navigator.userAgent, navigator.language, navigator.platform, screen.width + 'x' + screen.height].join('|')).substring(0, 32);
+    const refBy = new URLSearchParams(window.location.search).get('ref') || '';
+
+    // Submit to backend (if configured)
+    try {
+      if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), fingerprint }) });
+      }
+    } catch (err) {}
+
+    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    currentLiveCount++;
+
+    // Transition to State 3: Genesis Pass
+    showRegState('pass');
+    populatePass(name, email, spotNumber, refCode);
+  });
+}
+
+function showRegError(msg) {
+  const errorDiv = document.getElementById('modal-form-error');
+  if (errorDiv) { errorDiv.textContent = msg; errorDiv.style.display = 'block'; }
+}
+
+function runTerminalSequence() {
+  return new Promise(resolve => {
+    const lines = document.querySelectorAll('.reg-terminal-line');
+    lines.forEach(l => l.classList.remove('visible'));
+    lines.forEach((line, i) => {
+      const delay = parseInt(line.dataset.delay || (i * 300));
+      setTimeout(() => line.classList.add('visible'), delay);
+    });
+    // Total duration ~0.9s + small buffer
+    setTimeout(resolve, 1000);
+  });
+}
+
+function populatePass(name, email, spotNumber, refCode) {
+  // Member ID
+  const idEl = document.getElementById('pass-member-id');
+  if (idEl) idEl.textContent = '#' + String(spotNumber).padStart(7, '0');
+
+  // Joined date
+  const dateEl = document.getElementById('pass-joined-date');
+  if (dateEl) {
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const now = new Date();
+    dateEl.textContent = months[now.getMonth()] + ' ' + now.getFullYear();
+  }
+
+  // Referral link
+  const refEl = document.getElementById('pass-referral-link');
+  if (refEl) {
+    const baseUrl = window.location.origin + window.location.pathname.replace('profile.html', '');
+    refEl.value = baseUrl + '?ref=' + refCode;
+  }
+
+  // Share to X
+  const shareX = document.getElementById('pass-share-x');
+  if (shareX) {
+    const refUrl = refEl ? encodeURIComponent(refEl.value) : '';
+    const text = encodeURIComponent("I just secured my Genesis Pass on FORTREX FX — something big is coming for traders. Only 10,000 spots. Reserve yours:");
+    shareX.href = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + refUrl;
+  }
+
+  // Update nav + hero for registered state
+  updateRegisteredUI(spotNumber);
+}
+
+function populatePassFromStorage() {
+  const data = JSON.parse(localStorage.getItem('fortrex_user') || 'null');
+  if (!data) return;
+  const idEl = document.getElementById('pass-member-id');
+  if (idEl) idEl.textContent = '#' + String(data.spotNumber || 848).padStart(7, '0');
+  const dateEl = document.getElementById('pass-joined-date');
+  if (dateEl && data.registeredAt) {
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const d = new Date(data.registeredAt);
+    dateEl.textContent = months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  const refEl = document.getElementById('pass-referral-link');
+  if (refEl) {
+    const baseUrl = window.location.origin + window.location.pathname.replace('profile.html', '');
+    refEl.value = baseUrl + '?ref=' + (data.refCode || '');
+  }
+  const shareX = document.getElementById('pass-share-x');
+  if (shareX) {
+    const refUrl = refEl ? encodeURIComponent(refEl.value) : '';
+    const text = encodeURIComponent("I just secured my Genesis Pass on FORTREX FX — something big is coming for traders. Only 10,000 spots. Reserve yours:");
+    shareX.href = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + refUrl;
+  }
+}
+
+function updateRegisteredUI(spotNumber) {
+  const navBtn = document.getElementById('nav-cta-btn');
+  if (navBtn) { navBtn.textContent = 'Enter the Citadel →'; navBtn.setAttribute('onclick', 'closeRegModal(); window.location.href="https://discord.gg/propchampions"'); navBtn.classList.add('discord-mode'); }
+  const heroCta = document.getElementById('hero-cta');
+  const heroTrust = document.getElementById('hero-trust');
+  const heroRegistered = document.getElementById('hero-registered');
+  const heroMemberNum = document.getElementById('hero-member-num');
+  if (heroCta) heroCta.style.display = 'none';
+  if (heroTrust) heroTrust.style.display = 'none';
+  if (heroRegistered) { heroRegistered.style.display = 'block'; if (heroMemberNum) heroMemberNum.textContent = spotNumber || '848'; }
+  const alreadyRegistered = document.getElementById('already-registered');
+  if (alreadyRegistered) { alreadyRegistered.style.display = 'block'; const numEl = document.getElementById('already-member-num'); if (numEl) numEl.textContent = spotNumber || '848'; }
+  const stickyBtn = document.getElementById('sticky-btn');
+  if (stickyBtn) { stickyBtn.textContent = 'View Profile →'; stickyBtn.setAttribute('onclick', 'window.location.href="profile.html"'); }
+}
+
+function copyReferralLink() {
+  const input = document.getElementById('pass-referral-link');
+  const btn = document.getElementById('pass-copy-btn');
+  if (!input || !btn) return;
+  input.select();
+  document.execCommand('copy');
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy Link'; btn.classList.remove('copied'); }, 2000);
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeRegModal();
+});
+
+// Expose globally
+window.openRegModal = openRegModal;
+window.closeRegModal = closeRegModal;
+window.submitRegModal = submitRegModal;
+window.copyReferralLink = copyReferralLink;
+
+
 // PARTICLES
 (function() {
   const canvas = document.getElementById('particle-canvas');
