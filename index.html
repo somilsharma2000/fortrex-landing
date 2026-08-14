@@ -28,13 +28,15 @@
   <ul class="nav-links">
     <li><a href="#about" class="nav-link">The Mission</a></li>
     <li><a href="#rex" class="nav-link">REX</a></li>
-    <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
+    <li><a href="#leaderboard" class="nav-link">The Circle</a></li>
     <li><a href="#community" class="nav-link">Community</a></li>
   </ul>
   <div class="nav-cta" id="nav-cta"><a href="#register" class="nav-cta-btn" id="nav-cta-btn">Reserve Spot</a></div>
 </nav>
 <main id="top">
   <section class="hero">
+    <!-- Logo glow animation wrapper -->
+    <div class="hero-logo-glow"></div>
     <div class="hero-eyebrow"><span class="live-dot"></span> By Invitation Only · Limited to 10,000</div>
     <h1>Something is coming<br>for traders who <span class="gold-accent">refuse to settle.</span></h1>
     <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
@@ -51,6 +53,7 @@
       <a href="profile.html" class="btn-primary">View Your Profile →</a>
       <p class="hero-registered-text">We'll notify you when the gates open.</p>
     </div>
+    <p class="hero-gate-notice">When the 10,000th trader secures their spot, the gates open. No exceptions.</p>
   </section>
   <section class="question-section" id="about">
     <div class="container">
@@ -65,11 +68,17 @@
     </div>
   </section>
   <section class="rex-section" id="rex">
+    <!-- REX gold dust particles -->
+    <div class="rex-dust-container" id="rex-dust"></div>
+    <!-- Rotating glow behind REX -->
+    <div class="rex-aura"></div>
     <div class="container">
       <div class="section-label reveal">A New Currency is Coming</div>
-      <div class="rex-glyph reveal">REX</div>
+      <div class="rex-glyph-wrap">
+        <div class="rex-glyph reveal" id="rex-text">REX</div>
+      </div>
       <p class="section-text reveal" style="margin: 0 auto 32px; text-align: center;">Some currencies are earned. Some are bought.<br><strong style="color: var(--gold-light);">REX is neither.</strong><br>Only one thing determines how much you earn.<br>And it's not money.</p>
-      <div class="reveal" style="margin-top: 24px;">
+      <div class="reveal" style="margin-top: 24px;" id="rex-pills">
         <span class="rex-stat">Earn through <strong>skill</strong></span><span class="rex-stat">Limited to <strong>10,000</strong> traders</span><span class="rex-stat">First access = <strong>highest multiplier</strong></span><span class="rex-stat">Permanent for <strong>Genesis members</strong></span>
       </div>
       <p class="section-text reveal" style="margin: 32px auto 0; text-align: center; font-size: 15px;">That's all we can tell you. For now.</p>
@@ -77,14 +86,14 @@
   </section>
   <section class="leaderboard-section" id="leaderboard">
     <div class="container">
-      <div class="section-label reveal">The Top Builders</div>
-      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">The best traders don't just trade.<br>They build.</h2>
-      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Traders who bring people get recognized. The top builders earn bonus REX at launch. No reward for clicking — only for delivering real traders.</p>
+      <div class="section-label reveal">The Builders' Circle</div>
+      <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">Great traders trade.<br>Exceptional traders <span class="gold-accent">build.</span></h2>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">The most connected traders earn the highest recognition at launch. Not through clicks. Not through schemes. Through bringing real traders into the inner circle.</p>
       <div class="leaderboard reveal">
-        <div class="leaderboard-header"><span>#</span><span>Trader</span><span>Invited</span><span class="col-reward">REX Bonus</span></div>
+        <div class="leaderboard-header"><span>#</span><span>Builder</span><span>Circle</span><span class="col-reward">Recognition</span></div>
         <div id="leaderboard-rows"></div>
       </div>
-      <p class="leaderboard-note reveal">Register to get your personal link and start climbing.</p>
+      <p class="leaderboard-note reveal">The top builders will be forever remembered as Genesis pioneers. Register to start building your circle.</p>
     </div>
   </section>
   <section class="register-section" id="register">
@@ -96,41 +105,65 @@
         <div class="register-header"><h3>Reserve Your Spot</h3><div class="register-spots-badge"><span id="spots-left">10,000</span> spots left</div></div>
         <p>It takes 30 seconds. No payment. No commitment. Just your spot in line.</p>
         <form id="register-form">
-          <!-- Honeypot — invisible to humans, bots fill this -->
-          <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-            <label>Website (leave empty)</label>
-            <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
-          </div>
+          <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true"><label>Website (leave empty)</label><input type="text" name="website" tabindex="-1" autocomplete="off" value=""></div>
           <div class="form-group"><label>Full Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
           <div class="form-group"><label>Email</label><input type="email" id="email" name="email" placeholder="you@example.com" required></div>
-          <div class="form-row">
-            <div class="form-group"><label>Phone Number</label><input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required></div>
-            <div class="form-group"><label>Pincode</label><input type="text" id="pincode" name="pincode" placeholder="400001" required maxlength="6"></div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <div class="phone-wrap">
+              <select id="country-code" class="country-select">
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+61">🇦🇺 +61</option>
+                <option value="+1">🇨🇦 +1</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+234">🇳🇬 +234</option>
+                <option value="+27">🇿🇦 +27</option>
+                <option value="+60">🇲🇾 +60</option>
+                <option value="+62">🇮🇩 +62</option>
+                <option value="+63">🇵🇭 +63</option>
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+974">🇶🇦 +974</option>
+                <option value="+92">🇵🇰 +92</option>
+                <option value="+880">🇧🇩 +880</option>
+                <option value="+977">🇳🇵 +977</option>
+                <option value="+94">🇱🇰 +94</option>
+                <option value="+968">🇴🇲 +968</option>
+                <option value="+971">🇧🇭 +973</option>
+                <option value="+974">🇰🇼 +965</option>
+              </select>
+              <input type="tel" id="phone" name="phone" placeholder="98765 43210" required>
+            </div>
           </div>
+          <div class="form-group"><label>Pincode / ZIP</label><input type="text" id="pincode" name="pincode" placeholder="400001" required maxlength="6"></div>
           <div class="form-error" id="form-error"></div>
           <button type="submit" class="btn-submit" id="submit-btn">Reserve My Spot →</button>
           <div class="form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
         </form>
       </div>
       <div class="register-card reveal" id="success-card" style="display:none;">
-        <div class="success-check">✓</div>
+        <div class="success-glow-burst"></div>
+        <div class="success-check"><svg viewBox="0 0 52 52" width="52" height="52"><circle cx="26" cy="26" r="24" fill="none" stroke="#E5C158" stroke-width="2" class="success-circle-anim"/><path d="M16 26 L23 33 L37 18" fill="none" stroke="#E5C158" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check-anim"/></svg></div>
         <h3>You're in. Welcome to Genesis.</h3>
-        <p>Your spot is secured. You're now part of the first 10,000.<br>We'll let you know when the gates open.</p>
+        <p>Your spot is secured. You're now part of the first 10,000.<br>The gates will open soon. Stay connected.</p>
         <div class="success-connect">
-          <div class="success-connect-title">Connect with us for updates</div>
+          <div class="success-connect-title">Join the movement. Be the first to know.</div>
           <div class="success-connect-buttons">
-            <a href="https://discord.gg/propchampions" target="_blank" class="connect-btn discord"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>Join the Citadel</a>
-            <a href="https://youtube.com" target="_blank" class="connect-btn yt">YouTube</a>
-            <a href="https://instagram.com" target="_blank" class="connect-btn insta">Instagram</a>
-            <a href="https://threads.net" target="_blank" class="connect-btn threads">Threads</a>
+            <a href="https://discord.gg/propchampions" target="_blank" class="connect-btn discord" style="--delay:0"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>Join the Citadel</a>
+            <a href="https://youtube.com" target="_blank" class="connect-btn yt" style="--delay:1">YouTube</a>
+            <a href="https://instagram.com" target="_blank" class="connect-btn insta" style="--delay:2">Instagram</a>
+            <a href="https://threads.net" target="_blank" class="connect-btn threads" style="--delay:3">Threads</a>
           </div>
         </div>
-        <a href="profile.html" class="btn-ghost" style="margin-top: 24px; display: inline-flex;">View Your Profile →</a>
+        <a href="profile.html" class="btn-ghost" style="margin-top: 24px; display: inline-flex;">Explore Your Profile →</a>
       </div>
       <div class="register-card reveal" id="already-registered" style="display:none;">
         <div class="already-icon">✓</div>
         <h3>You're already in.</h3>
-        <p>You're Genesis Member #<span id="already-member-num">848</span>.<br>Your spot is secured. We'll let you know when the gates open.</p>
+        <p>You're Genesis Member #<span id="already-member-num">848</span>.<br>Your spot is secured. The gates will open soon.</p>
         <a href="profile.html" class="btn-primary" style="margin-top: 24px;">View Your Profile →</a>
       </div>
     </div>

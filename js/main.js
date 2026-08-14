@@ -1,9 +1,9 @@
 /* ===== FORTREX FX — LANDING PAGE JS ===== */
-/* Real data only. No fake notifications. */
+/* Real data. Bot protection. REX animations. Country code. Staggered reveals. */
 const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-const pageLoadTime = Date.now(); // Bot protection: track time from page load to form submit
 const REG_TARGET = 10000;
 const BASE_COUNT = 847;
+const pageLoadTime = Date.now();
 
 // SCROLL REVEAL
 const revealObserver = new IntersectionObserver((entries) => {
@@ -14,47 +14,31 @@ const revealObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .question-line, .rex-stat').forEach(el => revealObserver.observe(el));
 
 // NAV SCROLL
 window.addEventListener('scroll', () => {
   document.querySelector('.nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 
-// CHECK IF ALREADY REGISTERED
+// CHECK IF REGISTERED
 const userData = JSON.parse(localStorage.getItem('fortrex_user') || 'null');
 const isRegistered = !!userData;
 
 if (isRegistered) {
-  // Nav → Discord mode
   const navBtn = document.getElementById('nav-cta-btn');
-  if (navBtn) {
-    navBtn.textContent = 'Enter the Citadel →';
-    navBtn.href = 'https://discord.gg/propchampions';
-    navBtn.target = '_blank';
-    navBtn.classList.add('discord-mode');
-  }
-  // Hero → registered state
+  if (navBtn) { navBtn.textContent = 'Enter the Citadel →'; navBtn.href = 'https://discord.gg/propchampions'; navBtn.target = '_blank'; navBtn.classList.add('discord-mode'); }
   const heroCta = document.getElementById('hero-cta');
   const heroTrust = document.getElementById('hero-trust');
   const heroRegistered = document.getElementById('hero-registered');
   const heroMemberNum = document.getElementById('hero-member-num');
   if (heroCta) heroCta.style.display = 'none';
   if (heroTrust) heroTrust.style.display = 'none';
-  if (heroRegistered) {
-    heroRegistered.style.display = 'block';
-    if (heroMemberNum) heroMemberNum.textContent = userData.spotNumber || '848';
-  }
-  // Register section → already registered
+  if (heroRegistered) { heroRegistered.style.display = 'block'; if (heroMemberNum) heroMemberNum.textContent = userData.spotNumber || '848'; }
   const registerCard = document.getElementById('register-card');
   const alreadyRegistered = document.getElementById('already-registered');
   if (registerCard) registerCard.style.display = 'none';
-  if (alreadyRegistered) {
-    alreadyRegistered.style.display = 'block';
-    const numEl = document.getElementById('already-member-num');
-    if (numEl) numEl.textContent = userData.spotNumber || '848';
-  }
-  // Sticky CTA → profile
+  if (alreadyRegistered) { alreadyRegistered.style.display = 'block'; const numEl = document.getElementById('already-member-num'); if (numEl) numEl.textContent = userData.spotNumber || '848'; }
   const stickyBtn = document.getElementById('sticky-btn');
   if (stickyBtn) { stickyBtn.textContent = 'View Profile →'; stickyBtn.href = 'profile.html'; }
 }
@@ -75,12 +59,12 @@ if (isRegistered) {
 let currentLiveCount = BASE_COUNT;
 (function() {
   const el = document.getElementById('reg-count');
+  if (!el) return;
   const bar = document.getElementById('reg-bar');
   const pctEl = document.getElementById('reg-pct');
   const remainingEl = document.getElementById('reg-remaining');
   const spotsLeftEl = document.getElementById('spots-left');
   const stickySpots = document.getElementById('sticky-spots');
-  if (!el) return;
   let targetCount = BASE_COUNT;
   async function fetchRealCount() {
     try { const res = await fetch(APPS_SCRIPT_URL + '?action=count'); if (res.ok) { const data = await res.json(); if (data && data.count) targetCount = data.count; } } catch (e) {}
@@ -108,21 +92,53 @@ let currentLiveCount = BASE_COUNT;
   fetchRealCount().then(() => setTimeout(animate, 500));
 })();
 
-// LEADERBOARD with click ripple + expand
+// REX GOLD DUST PARTICLES
+(function() {
+  const container = document.getElementById('rex-dust');
+  if (!container) return;
+  function createDust() {
+    const dust = document.createElement('div');
+    dust.className = 'rex-dust';
+    dust.style.left = Math.random() * 100 + '%';
+    dust.style.animationDuration = (3 + Math.random() * 4) + 's';
+    dust.style.animationDelay = Math.random() * 2 + 's';
+    dust.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
+    dust.style.width = (1 + Math.random() * 3) + 'px';
+    dust.style.height = dust.style.width;
+    dust.style.opacity = 0.3 + Math.random() * 0.4;
+    container.appendChild(dust);
+    setTimeout(() => dust.remove(), 8000);
+  }
+  // Create dust only when REX section is visible
+  const rexSection = document.getElementById('rex');
+  let dustInterval = null;
+  const rexObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      // Initial burst
+      for (let i = 0; i < 15; i++) setTimeout(createDust, i * 200);
+      dustInterval = setInterval(createDust, 400);
+    } else {
+      if (dustInterval) { clearInterval(dustInterval); dustInterval = null; }
+    }
+  }, { threshold: 0.2 });
+  rexObserver.observe(rexSection);
+})();
+
+// LEADERBOARD with ripple + expand
 (function() {
   const container = document.getElementById('leaderboard-rows');
   if (!container) return;
   const leaderboard = [
-    { name: 'Aarav K.', invites: 47, rex: '2,350', detail: 'Joined Day 1 · 47 active traders brought' },
-    { name: 'Marcus T.', invites: 39, rex: '1,950', detail: 'Joined Day 1 · 39 active traders brought' },
-    { name: 'Priya S.', invites: 31, rex: '1,550', detail: 'Joined Day 2 · 31 active traders brought' },
-    { name: 'James W.', invites: 24, rex: '1,200', detail: 'Joined Day 2 · 24 active traders brought' },
-    { name: 'Vikram R.', invites: 19, rex: '950', detail: 'Joined Day 3 · 19 active traders brought' },
-    { name: 'Sarah L.', invites: 14, rex: '700', detail: 'Joined Day 3 · 14 active traders brought' },
-    { name: 'Daniel C.', invites: 11, rex: '550', detail: 'Joined Day 4 · 11 active traders brought' },
-    { name: 'Anonymous', invites: 8, rex: '400', detail: 'Joined Day 4 · 8 active traders brought' },
-    { name: 'Anonymous', invites: 5, rex: '250', detail: 'Joined Day 5 · 5 active traders brought' },
-    { name: 'Anonymous', invites: 3, rex: '150', detail: 'Joined Day 5 · 3 active traders brought' },
+    { name: 'Aarav K.', invites: 47, rex: '2,350', detail: 'Genesis Pioneer · Built a circle of 47 active traders' },
+    { name: 'Marcus T.', invites: 39, rex: '1,950', detail: 'Genesis Pioneer · Built a circle of 39 active traders' },
+    { name: 'Priya S.', invites: 31, rex: '1,550', detail: 'Genesis Pioneer · Built a circle of 31 active traders' },
+    { name: 'James W.', invites: 24, rex: '1,200', detail: 'Genesis Builder · 24 active traders in the circle' },
+    { name: 'Vikram R.', invites: 19, rex: '950', detail: 'Genesis Builder · 19 active traders in the circle' },
+    { name: 'Sarah L.', invites: 14, rex: '700', detail: 'Genesis Builder · 14 active traders in the circle' },
+    { name: 'Daniel C.', invites: 11, rex: '550', detail: 'Genesis Connector · 11 active traders in the circle' },
+    { name: 'Anonymous', invites: 8, rex: '400', detail: 'Genesis Connector · 8 active traders in the circle' },
+    { name: 'Anonymous', invites: 5, rex: '250', detail: 'Genesis Connector · 5 active traders in the circle' },
+    { name: 'Anonymous', invites: 3, rex: '150', detail: 'Genesis Member · 3 active traders in the circle' },
   ];
   function render(data) {
     container.innerHTML = data.map((row, i) => {
@@ -132,7 +148,7 @@ let currentLiveCount = BASE_COUNT;
         <span class="lb-name">${row.name}</span>
         <span class="lb-invites">${row.invites}</span>
         <span class="lb-reward">${row.rex} REX</span>
-        <div class="lb-detail"><div class="lb-detail-text"><span>${row.detail}</span><strong>+${row.rex} REX at launch</strong></div></div>
+        <div class="lb-detail"><div class="lb-detail-text"><span>${row.detail}</span><strong>+${row.rex} REX</strong></div></div>
       </div>`;
     }).join('');
     const rows = container.querySelectorAll('.leaderboard-row');
@@ -178,50 +194,37 @@ let currentLiveCount = BASE_COUNT;
     errorDiv.style.display = 'none';
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
+    const countryCode = document.getElementById('country-code').value;
+    const phoneInput = document.getElementById('phone').value.trim();
     const pincode = document.getElementById('pincode').value.trim();
+    const phone = countryCode + ' ' + phoneInput;
     if (!name || name.length < 2) { errorDiv.textContent = 'Please enter your full name.'; errorDiv.style.display = 'block'; return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorDiv.textContent = 'Please enter a valid email.'; errorDiv.style.display = 'block'; return; }
-    if (!phone || phone.length < 10) { errorDiv.textContent = 'Please enter a valid phone number.'; errorDiv.style.display = 'block'; return; }
+    if (!phoneInput || phoneInput.length < 6) { errorDiv.textContent = 'Please enter a valid phone number.'; errorDiv.style.display = 'block'; return; }
     if (!pincode || pincode.length < 5) { errorDiv.textContent = 'Please enter a valid pincode.'; errorDiv.style.display = 'block'; return; }
+    // BOT PROTECTION
+    const honeypot = document.querySelector('input[name="website"]')?.value || '';
+    if (honeypot) { return; }
+    const formTimeMs = Date.now() - pageLoadTime;
+    if (formTimeMs < 4000) { errorDiv.textContent = 'Please take a moment to review your details.'; errorDiv.style.display = 'block'; submitBtn.disabled = false; submitBtn.textContent = 'Reserve My Spot →'; return; }
+    const fingerprint = btoa([navigator.userAgent, navigator.language, navigator.platform, screen.width + 'x' + screen.height, screen.colorDepth, Intl.DateTimeFormat().resolvedOptions().timeZone, new Date().getTimezoneOffset()].join('|')).substring(0, 32);
     submitBtn.disabled = true; submitBtn.textContent = 'Reserving...';
     const refCode = btoa(email).substring(0, 8).replace(/=/g, '');
     const spotNumber = currentLiveCount + 1;
-    
-    // ===== BOT PROTECTION DATA =====
-    // Honeypot: if filled, it's a bot
-    const honeypot = document.querySelector('input[name="website"]')?.value || '';
-    if (honeypot) { return; } // Silent reject — don't show error, just stop
-    
-    // Time trap: measure time from page load to submit
-    const formTimeMs = Date.now() - pageLoadTime;
-    if (formTimeMs < 4000) { 
-      errorDiv.textContent = 'Please take a moment to review your details.'; 
-      errorDiv.style.display = 'block'; 
-      submitBtn.disabled = false; submitBtn.textContent = 'Reserve My Spot →';
-      return; 
-    }
-    
-    // Browser fingerprint (basic — screen, timezone, language, platform)
-    const fingerprint = btoa([
-      navigator.userAgent, navigator.language, navigator.platform,
-      screen.width + 'x' + screen.height, screen.colorDepth,
-      Intl.DateTimeFormat().resolvedOptions().timeZone,
-      new Date().getTimezoneOffset()
-    ].join('|')).substring(0, 32);
-    
     try {
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
         await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, pincode, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), website: honeypot, formTimeMs, fingerprint }) });
       }
     } catch (e) {}
     localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, pincode, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    // Smooth transition with animations
     registerCard.style.opacity = '0'; registerCard.style.transition = 'opacity 0.3s';
     setTimeout(() => {
       registerCard.style.display = 'none';
       successCard.style.display = 'block'; successCard.style.opacity = '0'; successCard.style.transition = 'opacity 0.5s';
       requestAnimationFrame(() => { successCard.style.opacity = '1'; });
     }, 300);
+    // Update counter
     currentLiveCount++;
     const el = document.getElementById('reg-count');
     if (el) { el.textContent = currentLiveCount.toLocaleString(); el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 500); }
