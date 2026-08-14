@@ -20,7 +20,7 @@ function doGet(e) {
   const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Name', 'Email', 'Phone', 'Pincode', 'ReferralCode', 'ReferredBy', 'Timestamp', 'IP', 'Fingerprint', 'FormTimeMs']);
+    sheet.appendRow(['Name', 'Email', 'Phone', 'ReferralCode', 'ReferredBy', 'Timestamp', 'IP', 'Fingerprint', 'FormTimeMs']);
   }
   
   if (action === 'count') {
@@ -51,7 +51,7 @@ function doGet(e) {
     for (let i = 1; i < data.length; i++) {
       records.push({
         name: data[i][0], email: data[i][1], phone: data[i][2],
-        pincode: data[i][3], refCode: data[i][4], refBy: data[i][5],
+        refCode: data[i][4], refBy: data[i][5],
         timestamp: data[i][6], ip: data[i][7] || '', fingerprint: data[i][8] || ''
       });
     }
@@ -68,7 +68,7 @@ function doPost(e) {
     const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
     
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Name', 'Email', 'Phone', 'Pincode', 'ReferralCode', 'ReferredBy', 'Timestamp', 'IP', 'Fingerprint', 'FormTimeMs']);
+      sheet.appendRow(['Name', 'Email', 'Phone', 'ReferralCode', 'ReferredBy', 'Timestamp', 'IP', 'Fingerprint', 'FormTimeMs']);
     }
     
     // ===== BOT PROTECTION =====
@@ -130,16 +130,12 @@ function doPost(e) {
     if (!phoneClean || phoneClean.length < 10) {
       return jsonOutput({ status: 'error', message: 'Invalid phone.' });
     }
-    if (!data.pincode || data.pincode.length < 5) {
-      return jsonOutput({ status: 'error', message: 'Invalid pincode.' });
-    }
     
     // ===== SAVE REGISTRATION =====
     sheet.appendRow([
       data.name,
       data.email,
       data.phone,
-      data.pincode,
       data.refCode || '',
       data.refBy || '',
       data.timestamp || new Date().toISOString(),

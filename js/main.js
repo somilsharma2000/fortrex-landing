@@ -160,14 +160,16 @@ let currentLiveCount = BASE_COUNT;
     errorDiv.style.display = 'none';
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
-    const countryCode = document.getElementById('country-code').value;
-    const phoneInput = document.getElementById('phone').value.trim();
-    const pincode = document.getElementById('pincode').value.trim();
-    const phone = countryCode + ' ' + phoneInput;
+    const phoneInput = document.getElementById('phone');
+    let phone = '';
+    if (window.itiInstance) {
+      phone = window.itiInstance.getNumber();
+    } else {
+      phone = phoneInput.value.trim();
+    }
     if (!name || name.length < 2) { errorDiv.textContent = 'Please enter your full name.'; errorDiv.style.display = 'block'; return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorDiv.textContent = 'Please enter a valid email.'; errorDiv.style.display = 'block'; return; }
-    if (!phoneInput || phoneInput.length < 6) { errorDiv.textContent = 'Please enter a valid phone number.'; errorDiv.style.display = 'block'; return; }
-    if (!pincode || pincode.length < 5) { errorDiv.textContent = 'Please enter a valid pincode.'; errorDiv.style.display = 'block'; return; }
+    if (!phone || phone.length < 6) { errorDiv.textContent = 'Please enter a valid phone number.'; errorDiv.style.display = 'block'; return; }
     // BOT PROTECTION
     const honeypot = document.querySelector('input[name="website"]')?.value || '';
     if (honeypot) { return; }
@@ -179,10 +181,10 @@ let currentLiveCount = BASE_COUNT;
     const spotNumber = currentLiveCount + 1;
     try {
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, pincode, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), website: honeypot, formTimeMs, fingerprint }) });
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), website: honeypot, formTimeMs, fingerprint }) });
       }
     } catch (e) {}
-    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, pincode, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
     // Smooth transition with animations
     registerCard.style.opacity = '0'; registerCard.style.transition = 'opacity 0.3s';
     setTimeout(() => {
@@ -192,6 +194,29 @@ let currentLiveCount = BASE_COUNT;
     }, 300);
     // Update counter
     currentLiveCount++;
+  });
+})();
+
+// INITIALIZE INTL-TEL-INPUT
+(function() {
+  const phoneInput = document.getElementById('phone');
+  if (!phoneInput || typeof intlTelInput === 'undefined') return;
+  window.itiInstance = intlTelInput(phoneInput, {
+    initialCountry: 'auto',
+    geoIpLookup: function(callback) {
+      // Auto-detect country from browser timezone/locale
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const locale = navigator.language || 'en-US';
+      // Map common timezones to country codes
+      const tzMap = { 'Asia/Kolkata':'in','Asia/Calcutta':'in','America/New_York':'us','America/Chicago':'us','America/Los_Angeles':'us','America/Toronto':'ca','Europe/London':'gb','Asia/Dubai':'ae','Asia/Singapore':'sg','Australia/Sydney':'au','Europe/Berlin':'de','Africa/Lagos':'ng','Africa/Johannesburg':'za','Asia/Kuala_Lumpur':'my','Asia/Jakarta':'id','Asia/Manila':'ph','Asia/Riyadh':'sa','Asia/Karachi':'pk','Asia/Dhaka':'bd','Asia/Kathmandu':'np','Asia/Colombo':'lk','Asia/Qatar':'qa','Asia/Kuwait':'kw','Asia/Muscat':'om','Atlantic/Reykjavik':'is' };
+      const country = tzMap[tz] || locale.split('-')[1]?.toLowerCase() || 'in';
+      callback(country);
+    },
+    separateDialCode: false,
+    showSearch: true,
+    formatOnDisplay: true,
+    autoPlaceholder: 'aggressive',
+    customContainer: 'iti-container',
   });
 })();
 

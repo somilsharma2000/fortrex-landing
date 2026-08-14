@@ -74,7 +74,7 @@ tr:hover td { background: rgba(229,193,88,0.02); }
   <table id="data-table">
     <thead>
       <tr>
-        <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Pincode</th><th>Referral Code</th><th>Referred By</th><th>Registered</th>
+        <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Referral Code</th><th>Referred By</th><th>Registered</th>
       </tr>
     </thead>
     <tbody id="data-body">
@@ -104,11 +104,11 @@ async function loadData() {
 
 function showDemoData() {
   const demo = [
-    { name: 'Aarav Kapoor', email: 'aarav@example.com', phone: '+91 98765 43210', pincode: '400001', refCode: 'YWFyYXY', refBy: '', timestamp: '2026-08-14T10:30:00Z' },
-    { name: 'Marcus Turner', email: 'marcus@example.com', phone: '+1 555 0100', pincode: '10001', refCode: 'bWFyY3V', refBy: 'YWFyYXY', timestamp: '2026-08-14T09:15:00Z' },
-    { name: 'Priya Sharma', email: 'priya@example.com', phone: '+91 98123 45678', pincode: '110001', refCode: 'cHJpeWE', refBy: '', timestamp: '2026-08-14T08:45:00Z' },
-    { name: 'James Wilson', email: 'james@example.com', phone: '+44 7700 900123', pincode: 'SW1A1', refCode: 'amFtZXM', refBy: 'bWFyY3V', timestamp: '2026-08-13T14:20:00Z' },
-    { name: 'Vikram Rao', email: 'vikram@example.com', phone: '+91 90000 11111', pincode: '560001', refCode: 'dmlrcnJ', refBy: 'YWFyYXY', timestamp: '2026-08-13T11:00:00Z' },
+    { name: 'Aarav Kapoor', email: 'aarav@example.com', phone: '+91 98765 43210', refCode: 'YWFyYXY', refBy: '', timestamp: '2026-08-14T10:30:00Z' },
+    { name: 'Marcus Turner', email: 'marcus@example.com', phone: '+1 555 0100', refCode: 'bWFyY3V', refBy: 'YWFyYXY', timestamp: '2026-08-14T09:15:00Z' },
+    { name: 'Priya Sharma', email: 'priya@example.com', phone: '+91 98123 45678', refCode: 'cHJpeWE', refBy: '', timestamp: '2026-08-14T08:45:00Z' },
+    { name: 'James Wilson', email: 'james@example.com', phone: '+44 7700 900123', refCode: 'amFtZXM', refBy: 'bWFyY3V', timestamp: '2026-08-13T14:20:00Z' },
+    { name: 'Vikram Rao', email: 'vikram@example.com', phone: '+91 90000 11111', refCode: 'dmlrcnJ', refBy: 'YWFyYXY', timestamp: '2026-08-13T11:00:00Z' },
   ];
   allData = demo;
   renderTable(demo);
@@ -135,7 +135,6 @@ function renderTable(data) {
       <td>${r.name}</td>
       <td class="mono">${r.email}</td>
       <td class="mono">${r.phone}</td>
-      <td class="mono">${r.pincode}</td>
       <td class="mono gold">${r.refCode}</td>
       <td class="mono muted">${r.refBy || '—'}</td>
       <td class="mono muted">${new Date(r.timestamp).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' })}</td>
