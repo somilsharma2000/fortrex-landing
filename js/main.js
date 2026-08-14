@@ -281,7 +281,7 @@ let currentLiveCount = BASE_COUNT;
         await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), website: honeypot, formTimeMs, fingerprint }) });
       }
     } catch (e) {}
-    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, handle, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
     registerCard.style.opacity = '0'; registerCard.style.transition = 'opacity 0.3s';
     setTimeout(() => {
       registerCard.style.display = 'none';
@@ -335,26 +335,8 @@ function openRegModal() {
   if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots remaining';
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
-  // Focus first input for accessibility
-  setTimeout(() => { document.getElementById('modal-name')?.focus(); }, 300);
-  // Initialize intl-tel-input on modal phone
-  setTimeout(() => {
-    const phoneInput = document.getElementById('modal-phone');
-    if (phoneInput && !modalIti && typeof intlTelInput !== 'undefined') {
-      modalIti = intlTelInput(phoneInput, {
-        initialCountry: 'auto',
-        geoIpLookup: function(callback) {
-          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-          const tzMap = { 'Asia/Kolkata':'in','Asia/Calcutta':'in','America/New_York':'us','America/Chicago':'us','America/Los_Angeles':'us','America/Toronto':'ca','Europe/London':'gb','Asia/Dubai':'ae','Asia/Singapore':'sg','Australia/Sydney':'au','Europe/Berlin':'de','Africa/Lagos':'ng','Africa/Johannesburg':'za','Asia/Kuala_Lumpur':'my','Asia/Jakarta':'id','Asia/Manila':'ph','Asia/Riyadh':'sa','Asia/Karachi':'pk','Asia/Dhaka':'bd','Asia/Kathmandu':'np','Asia/Colombo':'lk','Asia/Qatar':'qa','Asia/Kuwait':'kw','Asia/Muscat':'om' };
-          callback(tzMap[tz] || 'in');
-        },
-        separateDialCode: true,
-        showSearch: true,
-        formatOnDisplay: true,
-        autoPlaceholder: 'aggressive',
-      });
-    }
-  }, 100);
+  // Focus email input for accessibility
+  setTimeout(() => { document.getElementById('modal-email')?.focus(); }, 300);
 }
 
 function closeRegModal() {
@@ -380,15 +362,12 @@ function submitRegModal(e) {
   const errorDiv = document.getElementById('modal-form-error');
   if (errorDiv) errorDiv.style.display = 'none';
 
-  const name = document.getElementById('modal-name').value.trim();
   const email = document.getElementById('modal-email').value.trim();
-  let phone = '';
-  if (modalIti) { phone = modalIti.getNumber(); }
-  else { phone = document.getElementById('modal-phone').value.trim(); }
+  const handle = (document.getElementById('modal-handle') || {}).value?.trim() || '';
+  // Derive display name from email prefix or handle
+  const name = handle ? handle.replace(/^@/, '') : email.split('@')[0];
 
-  if (!name || name.length < 2) { showRegError('Please enter your full name.'); return; }
-  if (!email || !/^[^s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('Please enter a valid email.'); return; }
-  if (!phone || phone.length < 6) { showRegError('Please enter a valid phone number.'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('Please enter a valid email.'); return; }
 
   // Bot protection
   const formTimeMs = Date.now() - pageLoadTime;
@@ -409,11 +388,11 @@ function submitRegModal(e) {
     // Submit to backend (if configured)
     try {
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, phone, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), fingerprint }) });
+        fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ name, email, handle, refBy, refCode, spotNumber, timestamp: new Date().toISOString(), fingerprint }) });
       }
     } catch (err) {}
 
-    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, phone, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
+    localStorage.setItem('fortrex_user', JSON.stringify({ name, email, handle, refCode, refBy, spotNumber, registeredAt: new Date().toISOString() }));
     currentLiveCount++;
 
     // Transition to State 3: Genesis Pass

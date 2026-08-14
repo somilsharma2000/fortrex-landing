@@ -310,22 +310,18 @@ tailwind.config = {
       <p class="reg-modal-sub">You're 30 seconds away from permanent Genesis status. No payment. No commitment.</p>
       <div class="reg-modal-form">
         <div class="reg-input-group">
-          <label>Full Name</label>
-          <input type="text" id="modal-name" placeholder="Your name" autocomplete="name">
-        </div>
-        <div class="reg-input-group">
           <label>Email Address</label>
-          <input type="email" id="modal-email" placeholder="you@example.com" autocomplete="email">
+          <input type="email" id="modal-email" placeholder="you@example.com" autocomplete="email" required>
         </div>
         <div class="reg-input-group">
-          <label>Phone Number</label>
-          <input type="tel" id="modal-phone" placeholder="Mobile number" autocomplete="tel">
+          <label>Discord / Telegram Handle <span class="reg-input-optional">optional</span></label>
+          <input type="text" id="modal-handle" placeholder="@username" autocomplete="username">
         </div>
         <div class="reg-form-error" id="modal-form-error"></div>
         <button class="btn-gold-shimmer reg-submit-btn" id="modal-submit-btn" onclick="submitRegModal(event)">
           <span>Claim My Genesis Spot →</span>
         </button>
-        <div class="reg-form-trust">🔒 Your data is safe. We never spam. Unsubscribe anytime.</div>
+        <div class="reg-form-trust">🔒 Zero spam. Instant verification.</div>
       </div>
     </div>
 

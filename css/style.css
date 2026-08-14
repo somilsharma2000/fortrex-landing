@@ -331,7 +331,7 @@ footer{padding:50px 32px 80px;text-align:center;border-top:1px solid var(--glass
 .reg-modal-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 .reg-modal-overlay.active{display:flex;animation:modal-fade-in 0.3s var(--spring) forwards}
 @keyframes modal-fade-in{from{opacity:0}to{opacity:1}}
-.reg-modal-backdrop{position:absolute;inset:0;background:rgba(6,6,8,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.reg-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 
 /* CONTAINER */
 .reg-modal-container{position:relative;max-width:440px;width:100%;max-height:85vh;overflow-y:auto;background:rgba(12,12,15,0.9);border:1px solid var(--glass-border);border-radius:20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 24px 80px rgba(6,6,8,0.6),0 0 0 1px rgba(234,179,8,0.05);animation:modal-slide-up 0.5s var(--spring) forwards}
@@ -369,7 +369,8 @@ footer{padding:50px 32px 80px;text-align:center;border-top:1px solid var(--glass
 .reg-input-group{margin-bottom:12px;text-align:left}
 .reg-input-group label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;font-weight:500}
 .reg-input-group input{width:100%;padding:12px 14px;background:var(--glass-surface);border:1px solid var(--glass-border);border-radius:10px;color:var(--text);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.25s var(--spring);outline:none}
-.reg-input-group input:focus{border-color:var(--gold-dim);background:rgba(234,179,8,0.02);box-shadow:0 0 0 3px rgba(234,179,8,0.05)}
+.reg-input-optional{font-size:9px;color:var(--text-dim);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px}
+.reg-input-group input:focus{border-color:var(--gold);background:rgba(234,179,8,0.04);box-shadow:0 0 0 3px rgba(234,179,8,0.1),0 0 20px rgba(234,179,8,0.08)}
 .reg-input-group input::placeholder{color:var(--text-dim)}
 
 /* INTL-TEL-INPUT inside modal */
