@@ -13,7 +13,7 @@ const revealObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .question-line, .rex-pill').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .question-line, ').forEach(el => revealObserver.observe(el));
 
 // NAV SCROLL
 window.addEventListener('scroll', () => {
@@ -178,56 +178,41 @@ let currentLiveCount = BASE_COUNT;
 
 // LEADERBOARD — Architects' Circle
 (function() {
-  const container = document.getElementById('leaderboard-rows');
+  var container = document.getElementById('leaderboard-rows');
   if (!container) return;
-  const leaderboard = [
-    { name: 'Aarav K.', invites: 47, rex: '2,350', detail: 'Genesis Pioneer · Built a circle of 47 active traders' },
-    { name: 'Marcus T.', invites: 39, rex: '1,950', detail: 'Genesis Pioneer · Built a circle of 39 active traders' },
-    { name: 'Priya S.', invites: 31, rex: '1,550', detail: 'Genesis Pioneer · Built a circle of 31 active traders' },
-    { name: 'James W.', invites: 24, rex: '1,200', detail: 'Genesis Builder · 24 active traders in the circle' },
-    { name: 'Vikram R.', invites: 19, rex: '950', detail: 'Genesis Builder · 19 active traders in the circle' },
-    { name: 'Sarah L.', invites: 14, rex: '700', detail: 'Genesis Builder · 14 active traders in the circle' },
-    { name: 'Daniel C.', invites: 11, rex: '550', detail: 'Genesis Connector · 11 active traders in the circle' },
-    { name: 'Anonymous', invites: 8, rex: '400', detail: 'Genesis Connector · 8 active traders in the circle' },
-    { name: 'Anonymous', invites: 5, rex: '250', detail: 'Genesis Connector · 5 active traders in the circle' },
-    { name: 'Anonymous', invites: 3, rex: '150', detail: 'Genesis Member · 3 active traders in the circle' },
+  var leaderboard = [
+    { id: '#00X4471', circle: 47, mult: '2.0x', rex: '~12,500' },
+    { id: '#00X3182', circle: 39, mult: '1.8x', rex: '~9,750' },
+    { id: '#00X2743', circle: 31, mult: '1.6x', rex: '~7,800' },
+    { id: '#00X1924', circle: 24, mult: '1.5x', rex: '~6,000' },
+    { id: '#00X1455', circle: 19, mult: '1.4x', rex: '~4,750' },
+    { id: '#00X1106', circle: 14, mult: '1.35x', rex: '~3,500' },
+    { id: '#00X0887', circle: 11, mult: '1.3x', rex: '~2,750' },
+    { id: '#00X0648', circle: 8, mult: '1.28x', rex: '~2,000' },
+    { id: '#00X0429', circle: 5, mult: '1.26x', rex: '~1,250' },
+    { id: '#00X0210', circle: 3, mult: '1.25x', rex: '~750' },
   ];
   function render(data) {
-    container.innerHTML = data.map((row, i) => {
-      const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay:${i * 60}ms"><div class="lb-sweep"></div>
-        <span class="lb-rank ${rankClass}">${i + 1}</span>
-        <span class="lb-name">${row.name}</span>
-        <span class="lb-invites">${row.invites}</span>
-        <span class="lb-reward">${row.rex} REX</span>
-        <div class="lb-detail"><div class="lb-detail-text"><span>${row.detail}</span><strong>+${row.rex} REX</strong></div></div>
-      </div>`;
+    container.innerHTML = data.map(function(row, i) {
+      var rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
+      return '<div class="leaderboard-row ' + rankClass + '" style="--climb-delay:' + (i * 0.06) + 's; transition-delay:' + (i * 50) + 'ms">' +
+        '<span class="lb-rank ' + rankClass + '">' + (i + 1) + '</span>' +
+        '<span class="lb-arch-id ' + rankClass + '">' + row.id + '</span>' +
+        '<span class="lb-circle">' + row.circle + '</span>' +
+        '<span class="lb-mult ' + rankClass + '">' + row.mult + '</span>' +
+        '<span class="lb-rex ' + rankClass + '">' + row.rex + '</span>' +
+      '</div>';
     }).join('');
-    const rows = container.querySelectorAll('.leaderboard-row');
-    const obs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) { rows.forEach(r => r.classList.add('visible')); obs.disconnect(); }
+    var rows = container.querySelectorAll('.leaderboard-row');
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        rows.forEach(function(r) { r.classList.add('visible'); });
+        obs.disconnect();
+      }
     }, { threshold: 0.1 });
     obs.observe(container);
-    rows.forEach(row => {
-      row.addEventListener('click', (e) => {
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        const rect = row.getBoundingClientRect();
-        ripple.style.left = (e.clientX - rect.left) + 'px';
-        ripple.style.top = (e.clientY - rect.top) + 'px';
-        row.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-        const wasExpanded = row.classList.contains('expanded');
-        rows.forEach(r => r.classList.remove('expanded'));
-        if (!wasExpanded) row.classList.add('expanded');
-      });
-    });
   }
   render(leaderboard);
-  async function fetchReal() {
-    try { const res = await fetch(APPS_SCRIPT_URL + '?action=leaderboard'); if (res.ok) { const data = await res.json(); if (data && data.length) render(data); } } catch (e) {}
-  }
-  fetchReal();
 })();
 
 // REGISTRATION FORM — Legacy inline form (modal handles registration now)

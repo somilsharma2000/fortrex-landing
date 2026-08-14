@@ -67,7 +67,7 @@ tailwind.config = {
     <a href="#leaderboard" class="nav-link">The Circle</a>
     <a href="#community" class="nav-link">Community</a>
   </div>
-  <div class="nav-cta" id="nav-cta"><a href="javascript:void(0)" class="nav-cta-btn" id="nav-cta-btn" onclick="openRegModal()">Reserve Spot</a></div>
+  <div class="nav-cta" id="nav-cta"><a href="javascript:void(0)" class="nav-cta-btn nav-cta-glass" id="nav-cta-btn" onclick="openRegModal()">Access Citadel Hub →</a></div>
 </nav>
 
 <main id="top">
@@ -81,7 +81,7 @@ tailwind.config = {
 
     <!-- LIVE REGISTRATION BOARD -->
     <div class="live-reg-board" id="live-reg-board">
-      <div class="live-reg-header"><span class="live-reg-dot"></span><span class="live-reg-label">Live Genesis Allocation</span></div>
+      <div class="live-reg-header"><span class="live-reg-dot"></span><span class="live-reg-label">Genesis Network Verification Flow</span></div>
       <div class="live-reg-numbers">
         <span class="live-reg-count" id="live-reg-count">0</span>
         <span class="live-reg-divider">/</span>
@@ -92,16 +92,17 @@ tailwind.config = {
         <span class="gold-text" id="live-reg-pct">0.0% filled</span>
         <span id="live-reg-spots">10,000 spots remaining</span>
       </div>
+      <div class="live-reg-subtext">Allocation shifts dynamically.</div>
     </div>
 
     <!-- CTA ROWS -->
     <div class="hero-cta-row" id="hero-cta">
-      <a href="javascript:void(0)" class="btn-gold-shimmer" id="hero-register-btn" onclick="openRegModal()">Reserve Your Spot — Free →</a>
+      <a href="javascript:void(0)" class="btn-gold-shimmer" id="hero-register-btn" onclick="openRegModal()">Lock In 1.25x REX Tier →</a>
     </div>
     <div class="hero-trust" id="hero-trust">
-      <span>✓ No payment required</span>
-      <span>✓ 30 seconds to register</span>
-      <span>✓ First 10,000 get Genesis status forever</span>
+      <span>✓ Zero cost. Zero friction.</span>
+      <span>✓ 30 seconds to clearance</span>
+      <span>✓ 1.25x REX multiplier locked forever</span>
     </div>
 
     <!-- REGISTERED STATE -->
@@ -138,16 +139,17 @@ tailwind.config = {
       <p class="section-text reveal" style="margin:0 auto 32px;text-align:center;">
         Some currencies are earned. Some are bought.<br>
         <strong style="color:var(--gold-pale);">REX is neither.</strong><br>
-        Only one thing determines how much you earn.<br>
-        And it's not money.
+        REX is the core asset of the Fortrex Terminal ecosystem.<br>
+        It cannot be purchased; it cannot be found. Only those accepted<br>
+        into the Genesis 10,000 can secure it. Only performance and<br>
+        circle expansion determine allocation density.
       </p>
-      <div class="reveal rex-pills-anim" style="margin-top:24px" id="rex-pills">
-        <span class="rex-pill"><span class="rex-pill-icon">⚡</span> Earn through <strong>skill</strong></span>
-        <span class="rex-pill"><span class="rex-pill-icon">◈</span> Limited to <strong>10,000</strong> traders</span>
-        <span class="rex-pill"><span class="rex-pill-icon">↑</span> First access = <strong>highest multiplier</strong></span>
-        <span class="rex-pill"><span class="rex-pill-icon">∞</span> Permanent for <strong>Genesis members</strong></span>
+      <div class="rex-stream reveal" id="rex-stream">
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 01</span><div class="rex-stream-bar" data-tier="1"></div><span class="rex-stream-val">1.25x</span></div>
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 02</span><div class="rex-stream-bar" data-tier="2"></div><span class="rex-stream-val">1.50x</span></div>
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 03</span><div class="rex-stream-bar" data-tier="3"></div><span class="rex-stream-val">2.00x</span></div>
       </div>
-      <p class="section-text reveal" style="margin:32px auto 0;text-align:center;font-size:15px;">That's all we can tell you. For now.</p>
+      <p class="section-text reveal" style="margin:28px auto 0;text-align:center;font-size:15px;">That's all we can show you. For now.</p>
     </div>
   </section>
 
@@ -155,26 +157,26 @@ tailwind.config = {
   <section class="leaderboard-section" id="leaderboard">
     <div class="container">
       <div class="section-label reveal">The Architects' Circle</div>
-      <h2 class="section-heading reveal" style="margin:0 auto 20px;text-align:center;">
-        Great traders trade.<br>Exceptional traders <span class="gold-shimmer-text">architect the future.</span>
-      </h2>
-      <p class="section-text reveal" style="margin:0 auto;text-align:center;">
-        This is not a referral program. This is an architectural program — where every builder who constructs their circle earns permanent equity in the FORTREX foundation.
-        The architects who build the largest circles don't just earn rewards. They become part of the architecture itself.
-        
-      </p>
-
+      <h2 class="section-heading reveal" style="margin:0 auto 16px;text-align:center;">Great traders trade.<br>Exceptional traders <span class="gold-shimmer-text">architect the future.</span></h2>
+      <p class="section-text reveal" style="margin:0 auto 24px;text-align:center;font-size:14px;">Allocation shifts in real time. The architects who build the largest circles claim the highest REX density.</p>
       <div class="leaderboard reveal">
         <div class="leaderboard-header">
-          <span>Rank</span><span>Architect</span><span>Circle</span><span class="col-reward">REX Multiplier</span>
+          <span>Rank</span><span>Architect ID</span><span>Circle</span><span>Mult</span><span class="col-reward">REX Alloc.</span>
         </div>
         <div id="leaderboard-rows"></div>
       </div>
-
-      <p class="leaderboard-note reveal">
-        The top architects will be forever remembered as Genesis pioneers.
-        Your circle begins the moment you register.
-      </p>
+      <div class="lb-keycard reveal" id="lb-keycard">
+        <div class="lb-keycard-header"><span class="lb-keycard-pulse"></span> YOUR GENESIS PASS</div>
+        <div class="lb-keycard-body">
+          <div class="lb-keycard-id">#0000848</div>
+          <div class="lb-keycard-stats">
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">CURRENT REX</span><span class="lb-keycard-stat-val">0</span></div>
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">MULTIPLIER</span><span class="lb-keycard-stat-val gold-text">1.25x</span></div>
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">CIRCLE</span><span class="lb-keycard-stat-val">0</span></div>
+          </div>
+        </div>
+        <div class="lb-keycard-hook">Bring <strong>2 verified traders</strong> into your Circle to upgrade permanently to <strong>2.0x REX Tier</strong> (5,000 REX immediate allocation). Keep climbing. The Top 3 Architects receive <strong>5,000 extra REX</strong> each on launch day. There are no limits for those who execute.</div>
+      </div>
     </div>
   </section>
 
@@ -187,8 +189,8 @@ tailwind.config = {
         The first 10,000 architects receive Genesis status — permanent REX multiplier, priority access, and a legacy etched into the foundation of FORTREX. This allocation will never reopen. Once the 10,000th seat is claimed, the blueprint is sealed forever.
       </p>
       <div class="reveal" style="text-align:center;margin-top:36px">
-        <button class="btn-gold-shimmer" onclick="openRegModal()" style="border:none;font-family:inherit;cursor:pointer">Reserve Your Spot — Free →</button>
-        <p class="hero-trust" style="margin-top:16px"><span>✓ No payment required</span><span>✓ 30 seconds</span><span>✓ Genesis status forever</span></p>
+        <button class="btn-gold-shimmer" onclick="openRegModal()" style="border:none;font-family:inherit;cursor:pointer">Lock In 1.25x REX Tier →</button>
+        <p class="hero-trust" style="margin-top:16px"><span>✓ Zero cost. Zero friction.</span><span>✓ 30 seconds</span><span>✓ Genesis status forever</span></p>
       </div>
 
       <!-- HIDDEN FORM (for modal submission) -->
@@ -319,7 +321,7 @@ tailwind.config = {
         </div>
         <div class="reg-form-error" id="modal-form-error"></div>
         <button class="btn-gold-shimmer reg-submit-btn" id="modal-submit-btn" onclick="submitRegModal(event)">
-          <span>Claim My Genesis Spot →</span>
+          <span>Claim Genesis Clearance →</span>
         </button>
         <div class="reg-form-trust">🔒 Zero spam. Instant verification.</div>
       </div>
@@ -427,7 +429,7 @@ tailwind.config = {
         <a href="https://discord.gg/propchampions" target="_blank" class="btn-gold-shimmer reg-terminal-cta">Enter Genesis Terminal →</a>
       </div>
   <div class="sticky-cta-info"><span class="sticky-spots" id="sticky-spots">10,000 spots left</span></div>
-  <a href="javascript:void(0)" class="btn-gold-shimmer sticky-btn" id="sticky-btn" onclick="openRegModal()">Reserve Spot →</a>
+  <a href="javascript:void(0)" class="btn-gold-shimmer sticky-btn" id="sticky-btn" onclick="openRegModal()">Lock In 1.25x REX Tier →</a>
 </div>
 
 <!-- FOOTER -->
