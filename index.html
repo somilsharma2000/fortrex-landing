@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FORTREX FX — Something is coming for traders.</title>
-<meta name="description" content="Something every trader has been waiting for. Only the first 10,000 will enter. Reserve your spot.">
+<meta name="description" content="Only the first 10,000 will enter. Traders are securing spots right now. Reserve yours before the gates close.">
 <meta property="og:title" content="FORTREX FX — Where Traders Rise">
 <meta property="og:description" content="Something is coming for traders who refuse to settle. Reserve your spot before the gates close.">
 <meta property="og:type" content="website">
@@ -19,6 +19,9 @@
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 <canvas id="particle-canvas"></canvas>
+
+<!-- SOCIAL PROOF TOAST NOTIFICATIONS -->
+<div id="toast-container"></div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -46,21 +49,18 @@
 
 <main id="top">
 
-  <!-- HERO with FOMO counter -->
+  <!-- HERO — FOMO COUNTER IS THE FIRST THING -->
   <section class="hero">
-    <div class="hero-eyebrow"><span class="live-dot"></span> By Invitation Only · Limited to 10,000</div>
-    <h1>Something is coming<br>for traders who <span class="gold-accent">refuse to settle.</span></h1>
-    <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
-    
-    <!-- LIVE FOMO COUNTER — directly in hero -->
+    <!-- Counter ABOVE headline = instant FOMO -->
     <div class="hero-counter" id="hero-counter">
-      <div class="hero-counter-stats">
-        <div class="hero-counter-main">
-          <span class="hero-counter-num" id="reg-count">0</span>
-          <span class="hero-counter-divider">/</span>
-          <span class="hero-counter-total">10,000</span>
-        </div>
-        <div class="hero-counter-label">TRADERS SECURED</div>
+      <div class="hero-counter-top">
+        <span class="live-dot"></span>
+        <span class="hero-counter-label">LIVE REGISTRATION</span>
+      </div>
+      <div class="hero-counter-main">
+        <span class="hero-counter-num" id="reg-count">0</span>
+        <span class="hero-counter-divider">/</span>
+        <span class="hero-counter-total">10,000</span>
       </div>
       <div class="hero-counter-bar-wrap">
         <div class="hero-counter-bar" id="reg-bar"></div>
@@ -69,6 +69,22 @@
         <span id="reg-pct">0% claimed</span>
         <span class="gold-text" id="reg-remaining">10,000 spots remaining</span>
       </div>
+    </div>
+
+    <div class="hero-eyebrow">By Invitation Only · Limited to 10,000</div>
+    <h1>Something is coming<br>for traders who <span class="gold-accent">refuse to settle.</span></h1>
+    <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
+    
+    <!-- COUNTDOWN TIMER — urgency -->
+    <div class="countdown-timer" id="countdown">
+      <div class="countdown-item"><span class="countdown-num" id="cd-days">00</span><span class="countdown-label">Days</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-label">Hours</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-label">Mins</span></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-label">Secs</span></div>
+      <div class="countdown-caption">UNTIL GATES CLOSE</div>
     </div>
 
     <div class="hero-cta-row">
@@ -82,7 +98,7 @@
     </div>
   </section>
 
-  <!-- THE QUESTION -->
+  <!-- THE QUESTION — Regret psychology -->
   <section class="question-section" id="about">
     <div class="container">
       <div class="section-label reveal">The Truth Nobody Tells Traders</div>
@@ -92,24 +108,26 @@
       <p class="question-line strike" data-delay="600">And the "gurus" thank you for the courses.</p>
       <p class="question-line" data-delay="800">But what has your skill actually gotten you?</p>
       <p class="question-final reveal" data-delay="1000">What if your skill finally meant something?</p>
+      <p class="question-regret reveal" data-delay="1200">Every trader who came late to something big<br>wished they were first. Don't be late this time.</p>
     </div>
   </section>
 
-  <!-- REX HINT -->
+  <!-- REX HINT — Pure curiosity, no "followers" -->
   <section class="rex-section" id="rex">
     <div class="container">
       <div class="section-label reveal">A New Currency is Coming</div>
       <div class="rex-glyph reveal">REX</div>
       <p class="section-text reveal" style="margin: 0 auto 32px; text-align: center;">
-        A currency that doesn't care who you are.<br>
-        How many followers you have. What your last name is.<br>
-        <strong style="color: var(--gold-light);">Only how good you are.</strong>
+        Some currencies are earned. Some are bought.<br>
+        <strong style="color: var(--gold-light);">REX is neither.</strong><br>
+        Only one thing determines how much you earn.<br>
+        And it's not money.
       </p>
       <div class="reveal" style="margin-top: 24px;">
         <span class="rex-stat">Earn through <strong>skill</strong></span>
-        <span class="rex-stat">Not through <strong>status</strong></span>
         <span class="rex-stat">Limited to <strong>10,000</strong> traders</span>
         <span class="rex-stat">First access = <strong>highest multiplier</strong></span>
+        <span class="rex-stat">Permanent for <strong>Genesis members</strong></span>
       </div>
       <p class="section-text reveal" style="margin: 32px auto 0; text-align: center; font-size: 15px;">
         That's all we can tell you. For now.
@@ -117,20 +135,36 @@
     </div>
   </section>
 
-  <!-- LEADERBOARD -->
+  <!-- LEADERBOARD — Viral competition -->
   <section class="leaderboard-section" id="leaderboard">
     <div class="container">
       <div class="section-label reveal">The Top Builders</div>
       <h2 class="section-heading reveal" style="margin: 0 auto 20px; text-align: center;">The best traders don't just trade.<br>They build.</h2>
-      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Bring your people. Climb the ranks. Top referrers earn bonus REX at launch. No reward for clicking — only for delivering real traders.</p>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">Every friend you invite moves you up the ranks. Top referrers earn bonus REX at launch. No reward for clicking — only for delivering real traders.</p>
       
       <div class="leaderboard reveal">
         <div class="leaderboard-header">
           <span>#</span><span>Trader</span><span>Invited</span><span class="col-reward">REX Bonus</span>
         </div>
         <div id="leaderboard-rows"></div>
+        <div class="leaderboard-your-row" id="your-row" style="display:none;">
+          <span class="lb-rank">—</span>
+          <span class="lb-name">YOU (0 invited)</span>
+          <span class="lb-invites">0</span>
+          <span class="lb-reward">0 REX</span>
+        </div>
       </div>
       <p class="leaderboard-note reveal">Register below to get your referral link and start climbing.</p>
+
+      <!-- Viral incentive -->
+      <div class="viral-incentive reveal">
+        <div class="viral-incentive-title">Invite friends. Jump the queue.</div>
+        <div class="viral-incentive-stats">
+          <div class="viral-stat"><span class="viral-num">3</span><span class="viral-label">friends = jump 150 spots</span></div>
+          <div class="viral-stat"><span class="viral-num">10</span><span class="viral-label">friends = top 100 priority</span></div>
+          <div class="viral-stat"><span class="viral-num">25</span><span class="viral-label">friends = guaranteed Genesis</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -139,7 +173,7 @@
     <div class="container">
       <div class="section-label reveal">Claim Your Spot</div>
       <h2 class="section-heading reveal" style="margin: 0 auto 16px; text-align: center;">Before the gates close.</h2>
-      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">First 10,000 traders get Genesis access — the highest REX multiplier, priority entry, and exclusive status. Forever.</p>
+      <p class="section-text reveal" style="margin: 0 auto; text-align: center;">First 10,000 traders get Genesis access — the highest REX multiplier, priority entry, and exclusive status. Forever. After that, it's gone.</p>
       
       <div class="register-card reveal">
         <div id="form-wrapper">
@@ -176,15 +210,32 @@
         
         <div class="form-success" id="form-success">
           <div class="success-check">✓</div>
-          <h3>You're in.</h3>
-          <p>Your spot is reserved. Welcome to the first 10,000.<br>Now join the Citadel and claim your referral link.</p>
-          <div class="referral-link-box">
-            <label>Your Referral Link — Share to climb the leaderboard</label>
-            <div class="referral-link">
-              <input type="text" id="ref-link" readonly>
-              <button class="btn-copy" id="copy-btn">Copy</button>
+          <h3>You're in. Welcome to Genesis.</h3>
+          <p>Your spot is reserved. You're now part of the first 10,000.<br>Now invite your friends to climb the leaderboard and lock in your Genesis status.</p>
+          
+          <!-- Viral share section -->
+          <div class="viral-share">
+            <div class="viral-share-title">📤 Share your link to climb the leaderboard</div>
+            <div class="referral-link-box">
+              <div class="referral-link">
+                <input type="text" id="ref-link" readonly>
+                <button class="btn-copy" id="copy-btn">Copy</button>
+              </div>
+            </div>
+            <div class="viral-share-buttons">
+              <a href="#" id="share-whatsapp" class="share-btn whatsapp">WhatsApp</a>
+              <a href="#" id="share-telegram" class="share-btn telegram">Telegram</a>
+              <a href="#" id="share-twitter" class="share-btn twitter">X / Twitter</a>
+            </div>
+            <div class="viral-progress">
+              <div class="viral-progress-text">Invite 3 friends to jump 150 spots</div>
+              <div class="viral-progress-bar-wrap">
+                <div class="viral-progress-bar" id="viral-bar"></div>
+              </div>
+              <div class="viral-progress-count"><span id="viral-count">0</span> / 3 invited</div>
             </div>
           </div>
+
           <a href="#community" class="btn-primary" style="margin-top: 24px; display: inline-flex;">Join the Citadel →</a>
         </div>
       </div>
@@ -201,8 +252,7 @@
       <div class="social-row reveal">
         <a href="https://discord.gg/propchampions" target="_blank" class="social-card discord">
           <svg viewBox="0 0 24 24" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>
-          <span>Join the Citadel</span>
-          <small>Discord Server</small>
+          <span>Join the Citadel</span><small>Discord Server</small>
         </a>
         <a href="https://youtube.com" target="_blank" class="social-card yt">
           <svg viewBox="0 0 24 24" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg>
@@ -221,6 +271,15 @@
   </section>
 
 </main>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta-info">
+    <span class="sticky-spots"><span id="sticky-spots">10,000</span> spots left</span>
+    <span class="sticky-timer" id="sticky-timer">Closing soon</span>
+  </div>
+  <a href="#register" class="btn-primary sticky-btn">Reserve Spot →</a>
+</div>
 
 <footer>
   <div class="footer-logo">FORTREX FX</div>
