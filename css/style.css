@@ -205,3 +205,142 @@ section{padding:50px 16px}.hero{padding:50px 16px 80px}.hero-counter{padding:16p
 .hero-gate-notice{font-size:12px;padding:0 16px}
 }
 @media(min-width:769px){.sticky-cta{display:none!important}}
+
+/* ===== PREMIUM UPGRADES ===== */
+
+/* LOGO CLICK GLOW — triggered on click */
+.logo-click-glow{position:absolute;inset:-20px;border-radius:50%;pointer-events:none;opacity:0;transition:opacity 0.3s}
+.logo-click-glow.active{animation:logo-click-burst 1.2s ease-out forwards}
+@keyframes logo-click-burst{
+  0%{opacity:0;transform:scale(0.5);box-shadow:0 0 0 0 rgba(229,193,88,0.6)}
+  30%{opacity:1;transform:scale(1.2);box-shadow:0 0 40px 20px rgba(229,193,88,0.4),0 0 80px 40px rgba(229,193,88,0.2)}
+  100%{opacity:0;transform:scale(2);box-shadow:0 0 0 0 rgba(229,193,88,0)}
+}
+.logo-click-glow.active::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--gold-light);animation:logo-ring-expand 1.2s ease-out forwards}
+@keyframes logo-ring-expand{
+  0%{transform:scale(0.3);opacity:1;border-width:3px}
+  100%{transform:scale(3);opacity:0;border-width:0.5px}
+}
+.nav-brand-wrap{position:relative}
+
+/* LEADERBOARD — premium climb animation */
+.leaderboard-row{position:relative;overflow:hidden}
+.leaderboard-row::after{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),var(--gold-light));opacity:0;transition:opacity 0.4s}
+.leaderboard-row:hover::after{opacity:0.6}
+.leaderboard-row.top-1::after{opacity:0.8;background:linear-gradient(180deg,#FFD700,#FFA500)}
+.leaderboard-row.top-2::after{opacity:0.5;background:linear-gradient(180deg,#C0C0C0,#E8E8E8)}
+.leaderboard-row.top-3::after{opacity:0.4;background:linear-gradient(180deg,#CD7F32,#D4A574)}
+
+/* Rank climb animation — slides in from left with a subtle bounce */
+.leaderboard-row.visible .lb-rank{animation:rank-climb 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;animation-delay:var(--climb-delay,0s);opacity:0}
+@keyframes rank-climb{
+  0%{opacity:0;transform:translateX(-20px) scale(0.8)}
+  100%{opacity:1;transform:translateX(0) scale(1)}
+}
+/* Name slides in from right */
+.leaderboard-row.visible .lb-name{animation:name-slide-in 0.5s ease-out forwards;animation-delay:var(--climb-delay,0s);opacity:0}
+@keyframes name-slide-in{
+  0%{opacity:0;transform:translateX(20px)}
+  100%{opacity:1;transform:translateX(0)}
+}
+/* Invites count up */
+.leaderboard-row.visible .lb-invites{animation:count-pop 0.4s ease-out forwards;animation-delay:calc(var(--climb-delay,0s) + 0.1s);opacity:0}
+@keyframes count-pop{
+  0%{opacity:0;transform:scale(0.5)}
+  60%{opacity:1;transform:scale(1.15)}
+  100%{opacity:1;transform:scale(1)}
+}
+/* Reward fades in with shimmer */
+.leaderboard-row.visible .lb-reward{animation:reward-shimmer 0.5s ease-out forwards;animation-delay:calc(var(--climb-delay,0s) + 0.15s);opacity:0}
+@keyframes reward-shimmer{
+  0%{opacity:0;transform:translateY(8px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+
+/* Premium badge hover effects */
+.lb-rank.top-1,.lb-rank.top-2,.lb-rank.top-3{transition:all 0.3s}
+.leaderboard-row:hover .lb-rank.top-1{transform:scale(1.2);text-shadow:0 0 12px rgba(255,215,0,0.6)}
+.leaderboard-row:hover .lb-rank.top-2{transform:scale(1.15);text-shadow:0 0 8px rgba(192,192,192,0.5)}
+.leaderboard-row:hover .lb-rank.top-3{transform:scale(1.1);text-shadow:0 0 8px rgba(205,127,50,0.5)}
+
+/* Leaderboard row glow on hover — premium feel */
+.leaderboard-row{transition:all 0.35s cubic-bezier(0.4,0,0.2,1)}
+.leaderboard-row:hover{transform:translateX(4px);background:rgba(229,193,88,0.04);box-shadow:0 4px 20px rgba(6,7,10,0.4),inset 0 0 30px rgba(229,193,88,0.03)}
+.leaderboard-row.top-1:hover{box-shadow:0 4px 20px rgba(6,7,10,0.4),inset 0 0 30px rgba(255,215,0,0.06)}
+
+/* Leaderboard header subtle glow */
+.leaderboard-header{position:relative}
+.leaderboard-header::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+
+/* COMMUNITY CARD — post-registration */
+.community-card{max-width:560px !important;padding:44px 36px !important}
+.community-welcome{position:relative;margin-top:28px;text-align:center;overflow:hidden;border-radius:16px;padding:32px 24px;background:linear-gradient(135deg,rgba(212,175,55,0.04),rgba(212,175,55,0.01));border:1px solid rgba(229,193,88,0.1)}
+.community-welcome-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,0.08),transparent 60%);pointer-events:none;animation:community-glow-pulse 4s ease-in-out infinite}
+@keyframes community-glow-pulse{0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(0.8)}50%{opacity:0.7;transform:translate(-50%,-50%) scale(1.2)}}
+.community-welcome-text{font-size:18px;font-weight:700;color:var(--gold-light);position:relative;z-index:2;animation:welcome-text-glow 3s ease-in-out infinite}
+@keyframes welcome-text-glow{0%,100%{text-shadow:0 0 8px rgba(229,193,88,0.2)}50%{text-shadow:0 0 20px rgba(229,193,88,0.5)}}
+.community-welcome-sub{font-size:13px;color:var(--text-muted);margin-top:8px;position:relative;z-index:2}
+
+/* Community social grid — animated cards */
+.community-social-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;position:relative;z-index:2}
+.community-social-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 16px;background:rgba(11,12,14,0.6);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.4s cubic-bezier(0.4,0,0.2,1);opacity:0;transform:translateY(20px);animation:social-card-in 0.5s cubic-bezier(0.4,0,0.2,1) forwards;animation-delay:calc(0.3s + var(--delay) * 0.12s);position:relative;overflow:hidden}
+@keyframes social-card-in{to{opacity:1;transform:translateY(0)}}
+.community-social-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s}
+.community-social-card:hover{transform:translateY(-4px) scale(1.03);border-color:rgba(229,193,88,0.3);box-shadow:0 12px 40px rgba(6,7,10,0.4)}
+.community-social-card:hover::before{opacity:1}
+.discord-anim::before{background:radial-gradient(circle at 50% 50%,rgba(88,101,242,0.08),transparent 70%)}
+.yt-anim::before{background:radial-gradient(circle at 50% 50%,rgba(255,0,0,0.06),transparent 70%)}
+.insta-anim::before{background:radial-gradient(circle at 50% 50%,rgba(225,48,108,0.06),transparent 70%)}
+.threads-anim::before{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,0.04),transparent 70%)}
+.community-social-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);transition:transform 0.3s}
+.community-social-card:hover .community-social-icon{transform:scale(1.1) rotate(-5deg)}
+.community-social-name{font-size:13px;font-weight:600;color:var(--text)}
+.community-social-desc{font-size:11px;color:var(--text-muted)}
+.community-social-arrow{font-size:16px;color:var(--gold-light);opacity:0;transform:translateX(-8px);transition:all 0.3s}
+.community-social-card:hover .community-social-arrow{opacity:1;transform:translateX(0)}
+
+/* REX SECTION — subtle dark animations */
+.rex-section{background:linear-gradient(180deg,transparent,rgba(6,7,10,0.5) 30%,rgba(6,7,10,0.5) 70%,transparent)}
+.rex-aura{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,0.04),transparent 60%);pointer-events:none;animation:rex-aura-rotate 20s linear infinite}
+@keyframes rex-aura-rotate{0%{transform:translate(-50%,-50%) rotate(0deg) scale(1)}50%{transform:translate(-50%,-50%) rotate(180deg) scale(1.1)}100%{transform:translate(-50%,-50%) rotate(360deg) scale(1)}}
+.rex-glyph{transition:all 0.5s}
+.rex-glyph.visible{animation:rex-glyph-glow 3s ease-in-out infinite}
+@keyframes rex-glyph-glow{0%,100%{text-shadow:0 0 20px rgba(229,193,88,0.2),0 0 40px rgba(229,193,88,0.1)}50%{text-shadow:0 0 30px rgba(229,193,88,0.4),0 0 60px rgba(229,193,88,0.2)}}
+.rex-pills-anim .rex-stat{transition:all 0.4s}
+.rex-pills-anim.visible .rex-stat{animation:rex-pill-float 0.6s ease-out forwards;animation-delay:calc(var(--pill-delay,0s))}
+.rex-pills-anim.visible .rex-stat:nth-child(1){--pill-delay:0s}
+.rex-pills-anim.visible .rex-stat:nth-child(2){--pill-delay:0.1s}
+.rex-pills-anim.visible .rex-stat:nth-child(3){--pill-delay:0.2s}
+.rex-pills-anim.visible .rex-stat:nth-child(4){--pill-delay:0.3s}
+@keyframes rex-pill-float{
+  0%{opacity:0;transform:translateY(15px) scale(0.9)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+.rex-stat:hover{transform:translateY(-2px) scale(1.05);border-color:rgba(229,193,88,0.3);box-shadow:0 8px 24px rgba(212,175,55,0.1)}
+
+/* LIVE REGISTRATION BOARD — real-time animated data */
+.live-reg-board{max-width:440px;margin:0 auto 40px;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:28px 32px;backdrop-filter:blur(12px);box-shadow:0 16px 50px rgba(6,7,10,0.4);position:relative;overflow:hidden;z-index:2}
+.live-reg-board::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent)}
+.live-reg-header{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+.live-reg-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:live-pulse-green 1.5s ease-in-out infinite}
+@keyframes live-pulse-green{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,0.5)}50%{opacity:0.6;box-shadow:0 0 0 6px rgba(74,222,128,0)}}
+.live-reg-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light);font-weight:600}
+.live-reg-numbers{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:16px}
+.live-reg-count{font-family:'JetBrains Mono',monospace;font-size:clamp(36px,5vw,48px);font-weight:800;color:var(--gold-light);line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 20px rgba(229,193,88,0.3)}
+.live-reg-divider{font-size:20px;color:var(--text-dim);font-weight:300}
+.live-reg-total{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--text-muted);font-weight:600}
+.live-reg-bar-wrap{background:rgba(255,255,255,0.06);border-radius:100px;height:6px;overflow:hidden;margin-bottom:12px}
+.live-reg-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,rgba(229,193,88,0.5),var(--gold-light),rgba(229,193,88,0.9));background-size:200% 100%;transition:width 2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 0 12px rgba(229,193,88,0.4);animation:bar-shimmer 3s linear infinite}
+.live-reg-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted)}
+.live-reg-meta .gold-text{color:var(--gold-light)}
+@keyframes count-bump{0%{transform:scale(1)}50%{transform:scale(1.1);text-shadow:0 0 30px rgba(229,193,88,0.6)}100%{transform:scale(1)}}
+.live-reg-count.bump{animation:count-bump 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+
+/* MOBILE community grid */
+@media(max-width:768px){
+  .community-social-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .community-social-card{padding:16px 12px}
+  .community-social-icon{width:40px;height:40px}
+  .community-welcome{padding:24px 16px}
+  .live-reg-board{padding:20px 24px;margin:0 auto 28px}
+}

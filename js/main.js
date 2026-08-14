@@ -21,6 +21,23 @@ window.addEventListener('scroll', () => {
   document.querySelector('.nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 
+// LOGO CLICK GLOW ANIMATION
+(function() {
+  const logo = document.getElementById('logo-click');
+  const glow = document.getElementById('logo-click-glow');
+  if (!logo || !glow) return;
+  logo.addEventListener('click', (e) => {
+    e.preventDefault();
+    glow.classList.remove('active');
+    void glow.offsetWidth; // force reflow
+    glow.classList.add('active');
+    // Also trigger a burst of particles from logo
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas && canvas._addBurst) canvas._addBurst(e.clientX, e.clientY);
+    setTimeout(() => glow.classList.remove('active'), 1200);
+  });
+})();
+
 // CHECK IF REGISTERED
 const userData = JSON.parse(localStorage.getItem('fortrex_user') || 'null');
 const isRegistered = !!userData;
@@ -55,8 +72,56 @@ if (isRegistered) {
   }, { passive: true });
 })();
 
-// Counter removed — only show gate notice now
+// LIVE REGISTRATION BOARD — animated count-up
 let currentLiveCount = BASE_COUNT;
+(function() {
+  const board = document.getElementById('live-reg-board');
+  if (!board) return;
+  const countEl = document.getElementById('live-reg-count');
+  const barEl = document.getElementById('live-reg-bar');
+  const pctEl = document.getElementById('live-reg-pct');
+  const spotsEl = document.getElementById('live-reg-spots');
+  
+  function animateCount(from, to, duration) {
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const val = Math.floor(from + (to - from) * eased);
+      if (countEl) countEl.textContent = val.toLocaleString();
+      if (barEl) barEl.style.width = (val / REG_TARGET * 100) + '%';
+      if (pctEl) pctEl.textContent = (val / REG_TARGET * 100).toFixed(1) + '%';
+      if (spotsEl) spotsEl.textContent = (REG_TARGET - val).toLocaleString() + ' spots left';
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  
+  // Animate from 0 to current count on scroll into view
+  let animated = false;
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !animated) {
+      animated = true;
+      animateCount(0, currentLiveCount, 2000);
+      obs.disconnect();
+    }
+  }, { threshold: 0.3 });
+  obs.observe(board);
+  
+  // Simulate live growth (subtle, +1 every 8-15 seconds)
+  setInterval(() => {
+    currentLiveCount++;
+    if (countEl) {
+      countEl.textContent = currentLiveCount.toLocaleString();
+      countEl.classList.add('bump');
+      setTimeout(() => countEl.classList.remove('bump'), 500);
+    }
+    if (barEl) barEl.style.width = (currentLiveCount / REG_TARGET * 100) + '%';
+    if (pctEl) pctEl.textContent = (currentLiveCount / REG_TARGET * 100).toFixed(1) + '%';
+    if (spotsEl) spotsEl.textContent = (REG_TARGET - currentLiveCount).toLocaleString() + ' spots left';
+  }, 8000 + Math.random() * 7000);
+})();
 
 // REX GOLD DUST PARTICLES
 (function() {
@@ -109,7 +174,7 @@ let currentLiveCount = BASE_COUNT;
   function render(data) {
     container.innerHTML = data.map((row, i) => {
       const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="transition-delay: ${i * 60}ms;">
+      return `<div class="leaderboard-row ${rankClass}" data-index="${i}" style="--climb-delay:${i * 0.08}s; transition-delay: ${i * 60}ms;">
         <span class="lb-rank ${rankClass}">${i + 1}</span>
         <span class="lb-name">${row.name}</span>
         <span class="lb-invites">${row.invites}</span>
@@ -230,9 +295,30 @@ let currentLiveCount = BASE_COUNT;
   resize(); window.addEventListener('resize', resize);
   const count = Math.min(35, Math.floor(window.innerWidth / 35));
   for (let i = 0; i < count; i++) { particles.push({ x: Math.random()*w, y: Math.random()*h, vx:(Math.random()-0.5)*0.12, vy:(Math.random()-0.5)*0.12, r: Math.random()*1.3+0.3, opacity: Math.random()*0.35+0.08 }); }
+  // Expose burst function for logo click
+  canvas._addBurst = function(cx, cy) {
+    for (let i = 0; i < 12; i++) {
+      const angle = (Math.PI * 2 * i) / 12;
+      const speed = 2 + Math.random() * 2;
+      particles.push({
+        x: cx, y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: Math.random() * 2 + 1,
+        opacity: 0.6,
+        burst: true,
+        life: 1
+      });
+    }
+  };
   function draw() {
     ctx.clearRect(0,0,w,h);
-    particles.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = `rgba(229,193,88,${p.opacity})`; ctx.fill(); });
+    particles = particles.filter(p => {
+      if (p.burst) { p.life -= 0.02; p.opacity = p.life * 0.6; return p.life > 0; }
+      p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1;
+      return true;
+    });
+    particles.forEach(p => { if (!p.burst) { p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>w) p.vx*=-1; if (p.y<0||p.y>h) p.vy*=-1; } ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = `rgba(229,193,88,${p.opacity})`; ctx.fill(); });
     for (let i=0; i<particles.length; i++) { for (let j=i+1; j<particles.length; j++) { const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy); if (dist<110) { ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(229,193,88,${(1-dist/110)*0.07})`; ctx.lineWidth=0.5; ctx.stroke(); } } }
     requestAnimationFrame(draw);
   }
