@@ -60,21 +60,58 @@ const userData = JSON.parse(localStorage.getItem('fortrex_user') || 'null');
 const isRegistered = !!userData;
 
 if (isRegistered) {
-  const navBtn = document.getElementById('nav-cta-btn');
-  if (navBtn) { navBtn.textContent = 'Enter the Citadel →'; navBtn.href = 'https://discord.gg/propchampions'; navBtn.target = '_blank'; navBtn.classList.add('discord-mode'); }
-  const heroCta = document.getElementById('hero-cta');
-  const heroTrust = document.getElementById('hero-trust');
-  const heroRegistered = document.getElementById('hero-registered');
-  const heroMemberNum = document.getElementById('hero-member-num');
+  var memberNum = '#' + String(userData.spotNumber || 848).padStart(7, '0');
+  var refCode = userData.refCode || '';
+  var baseUrl = window.location.origin + window.location.pathname.replace('profile.html', '');
+  var inviteUrl = baseUrl + '?ref=' + refCode;
+
+  // Nav button
+  var navBtn = document.getElementById('nav-cta-btn');
+  if (navBtn) { navBtn.textContent = 'Enter the Citadel'; navBtn.href = 'https://discord.gg/propchampions'; navBtn.target = '_blank'; navBtn.classList.add('discord-mode'); }
+
+  // Hero: hide CTA, show social section
+  var heroCta = document.getElementById('hero-cta');
+  var heroTrust = document.getElementById('hero-trust');
+  var heroRegistered = document.getElementById('hero-registered');
+  var heroMemberNum = document.getElementById('hero-member-num');
   if (heroCta) heroCta.style.display = 'none';
   if (heroTrust) heroTrust.style.display = 'none';
-  if (heroRegistered) { heroRegistered.style.display = 'block'; if (heroMemberNum) heroMemberNum.textContent = userData.spotNumber || '848'; }
-  const registerCard = document.getElementById('register-card');
-  const alreadyRegistered = document.getElementById('already-registered');
+  if (heroRegistered) {
+    heroRegistered.style.display = 'block';
+    if (heroMemberNum) heroMemberNum.textContent = memberNum;
+    // Populate invite link
+    var heroInvite = document.getElementById('hero-invite-link');
+    if (heroInvite) heroInvite.value = inviteUrl;
+    // Populate share X
+    var heroShareX = document.getElementById('hero-share-x');
+    if (heroShareX) {
+      var text = encodeURIComponent('I just secured Genesis Pass ' + memberNum + ' on FORTREX FX. Something big is coming for traders. Only 10,000 spots:');
+      heroShareX.href = 'https://twitter.com/intent/tweet?text=' + text + '&url=' + encodeURIComponent(inviteUrl);
+    }
+  }
+
+  // Already-registered: celebratory card
+  var registerCard = document.getElementById('register-card');
+  var alreadyRegistered = document.getElementById('already-registered');
   if (registerCard) registerCard.style.display = 'none';
-  if (alreadyRegistered) { alreadyRegistered.style.display = 'block'; const numEl = document.getElementById('already-member-num'); if (numEl) numEl.textContent = userData.spotNumber || '848'; }
-  const stickyBtn = document.getElementById('sticky-btn');
-  if (stickyBtn) { stickyBtn.textContent = 'View Profile →'; stickyBtn.href = 'profile.html'; }
+  if (alreadyRegistered) {
+    alreadyRegistered.style.display = 'block';
+    var numEl = document.getElementById('already-member-num');
+    if (numEl) numEl.textContent = memberNum;
+    var celebrateInvite = document.getElementById('celebrate-invite-link');
+    if (celebrateInvite) celebrateInvite.value = inviteUrl;
+    var celebrateShareX = document.getElementById('celebrate-share-x');
+    if (celebrateShareX) {
+      var text2 = encodeURIComponent('I just secured Genesis Pass ' + memberNum + ' on FORTREX FX. Something big is coming for traders. Only 10,000 spots:');
+      celebrateShareX.href = 'https://twitter.com/intent/tweet?text=' + text2 + '&url=' + encodeURIComponent(inviteUrl);
+    }
+    // Trigger confetti
+    triggerConfetti();
+  }
+
+  // Sticky button
+  var stickyBtn = document.getElementById('sticky-btn');
+  if (stickyBtn) { stickyBtn.textContent = 'View Profile'; stickyBtn.href = 'profile.html'; }
 }
 
 // STICKY MOBILE CTA
@@ -469,9 +506,9 @@ function updateRegisteredUI(spotNumber) {
   const heroMemberNum = document.getElementById('hero-member-num');
   if (heroCta) heroCta.style.display = 'none';
   if (heroTrust) heroTrust.style.display = 'none';
-  if (heroRegistered) { heroRegistered.style.display = 'block'; if (heroMemberNum) heroMemberNum.textContent = spotNumber || '848'; }
+  if (heroRegistered) { heroRegistered.style.display = 'block'; if (heroMemberNum) heroMemberNum.textContent = '#' + String(spotNumber || 848).padStart(7, '0'); }
   const alreadyRegistered = document.getElementById('already-registered');
-  if (alreadyRegistered) { alreadyRegistered.style.display = 'block'; const numEl = document.getElementById('already-member-num'); if (numEl) numEl.textContent = spotNumber || '848'; }
+  if (alreadyRegistered) { alreadyRegistered.style.display = 'block'; const numEl = document.getElementById('already-member-num'); if (numEl) numEl.textContent = '#' + String(spotNumber || 848).padStart(7, '0'); }
   const stickyBtn = document.getElementById('sticky-btn');
   if (stickyBtn) { stickyBtn.textContent = 'View Profile →'; stickyBtn.setAttribute('onclick', 'window.location.href="profile.html"'); }
 }
@@ -536,3 +573,41 @@ window.copyReferralLink = copyReferralLink;
   }
   draw();
 })();
+
+function triggerConfetti() {
+  var container = document.getElementById('celebrate-confetti');
+  if (!container) return;
+  container.innerHTML = '';
+  var colors = ['#D4AF37','#FFD700','#F5C842','#EAB308','#FDE687'];
+  for (var i = 0; i < 30; i++) {
+    var piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 1.5 + 's';
+    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+    if (Math.random() > 0.5) { piece.style.borderRadius = '50%'; }
+    container.appendChild(piece);
+  }
+}
+window.triggerConfetti = triggerConfetti;
+
+function copyHeroInvite() {
+  var input = document.getElementById('hero-invite-link');
+  if (!input) return;
+  input.select(); input.setSelectionRange(0, 99999);
+  try { navigator.clipboard.writeText(input.value); } catch(e) { document.execCommand('copy'); }
+  var btn = document.getElementById('hero-invite-copy');
+  if (btn) { var orig = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); }
+}
+window.copyHeroInvite = copyHeroInvite;
+
+function copyCelebrateInvite() {
+  var input = document.getElementById('celebrate-invite-link');
+  if (!input) return;
+  input.select(); input.setSelectionRange(0, 99999);
+  try { navigator.clipboard.writeText(input.value); } catch(e) { document.execCommand('copy'); }
+  var btn = document.getElementById('celebrate-copy-btn');
+  if (btn) { var orig = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); }
+}
+window.copyCelebrateInvite = copyCelebrateInvite;
