@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORTREX FX — Something is coming for traders.</title>
+<meta name="description" content="Only the first 10,000 will enter. Reserve your spot before the gates close.">
+<meta property="og:title" content="FORTREX FX — Where Traders Rise">
+<meta property="og:description" content="Something is coming for traders who refuse to settle. Reserve your spot before the gates close.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png">
+<meta property="og:url" content="https://somilsharma2000.github.io/fortrex-landing/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FORTREX FX — Where Traders Rise">
+<meta name="twitter:description" content="Something is coming for traders who refuse to settle. Reserve your spot before the gates close.">
+<meta name="twitter:image" content="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png">
+<meta name="theme-color" content="#060608">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.6/build/css/intlTelInput.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        obsidian: { 950: '#060608', 900: '#09090B', 800: '#0C0C0F', 700: '#141418' },
+        gold: { DEFAULT: '#EAB308', light: '#FACC15', deep: '#F59E0B', pale: '#FEF08A', dim: 'rgba(234,179,8,0.15)' },
+        glass: { surface: 'rgba(255,255,255,0.03)', border: 'rgba(255,255,255,0.08)' },
+        muted: { DEFAULT: '#71717A' },
+      },
+      fontFamily: {
+        display: ['Space Grotesk', 'sans-serif'],
+        body: ['Plus Jakarta Sans', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      transitionTimingFunction: { 'spring': 'cubic-bezier(0.16, 1, 0.3, 1)' },
+    }
+  }
+}
+</script>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ============================================================
+   ENHANCED MOTION & INTERACTION VARIANTS (A/B TEST VARIANT)
+   ============================================================ */
+
+/* 1. SCROLL PROGRESS BAR */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #F59E0B 0%, #FACC15 50%, #FEF08A 100%);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.9), 0 0 6px rgba(245, 158, 11, 0.6);
+  z-index: 99999;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* 2. CURSOR GLOW */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(245, 158, 11, 0.05) 40%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+.cursor-glow.active {
+  opacity: 1;
+}
+
+/* 3. SCROLL-TRIGGERED PARALLAX ON HERO ELEMENTS */
+.hero-eyebrow, .hero-headline, .hero-sub, #live-reg-board, #hero-cta, .hero-trust, .hero-logo-glow {
+  will-change: transform;
+  transition: transform 0.08s ease-out;
+}
+
+/* 4. TYPING ANIMATION CURSOR */
+.typing-cursor {
+  display: inline-block;
+  color: #FACC15;
+  font-weight: 300;
+  margin-left: 2px;
+  animation: cursor-blink 0.7s infinite alternate;
+  -webkit-text-fill-color: #FACC15 !important;
+}
+@keyframes cursor-blink {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.cursor-fade {
+  transition: opacity 1s ease;
+  opacity: 0 !important;
+}
+
+/* 5. ENHANCED SECTION TRANSITIONS (SCALE + BLUR TO FOCUS) */
+section, .reveal {
+  opacity: 0;
+  transform: translateY(35px) scale(0.96);
+  filter: blur(10px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+section.visible, .reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+}
+.hero-section {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* 6. MAGNETIC CTA BUTTONS & ATTENTION SHAKE */
+.btn-gold-shimmer {
+  will-change: transform, box-shadow;
+}
+@keyframes cta-shake-pulse {
+  0%, 100% { transform: translateX(0) scale(1); }
+  12% { transform: translateX(-6px) rotate(-1.5deg) scale(1.04); }
+  24% { transform: translateX(6px) rotate(1.5deg) scale(1.04); }
+  36% { transform: translateX(-5px) rotate(-1deg) scale(1.03); }
+  48% { transform: translateX(5px) rotate(1deg) scale(1.03); }
+  60% { transform: translateX(-3px) rotate(-0.5deg) scale(1.02); }
+  72% { transform: translateX(3px) rotate(0.5deg) scale(1.01); }
+  84% { transform: translateX(0) scale(1); }
+}
+.cta-attention-shake {
+  animation: cta-shake-pulse 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97) !important;
+  box-shadow: 0 0 35px rgba(250, 204, 21, 0.8), 0 8px 30px rgba(234, 179, 8, 0.5) !important;
+}
+
+/* 7. PROGRESS BAR SWEEP SHIMMER */
+.live-reg-bar {
+  position: relative !important;
+  overflow: hidden !important;
+}
+.live-reg-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 30%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.25) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: bar-sweep-shimmer 2.2s infinite linear;
+  pointer-events: none;
+}
+@keyframes bar-sweep-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* 8. ENHANCED FOMO BANNER BOUNCE & FADE TRANSITION */
+.fomo-banner {
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease !important;
+}
+.fomo-banner-text {
+  transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+  display: inline-block;
+}
+.fomo-text-fade-out {
+  opacity: 0;
+  transform: translateY(-6px);
+  filter: blur(4px);
+}
+.fomo-text-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+}
+</style>
+
+</head>
+<body class="bg-obsidian-950 text-zinc-100 font-body antialiased overflow-x-hidden">
+<div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+<div id="cursor-glow" class="cursor-glow"></div>
+
+
+<!-- AMBIENT BACKGROUND -->
+<div class="bg-mesh"></div>
+<div class="bg-radial-glow"></div>
+<canvas id="particle-canvas" class="particle-canvas"></canvas>
+
+<!-- NAVIGATION -->
+<nav class="nav-bar" id="nav">
+  <a href="#top" class="nav-brand" id="logo-click">
+    <div class="logo-flip"><div class="logo-flip-inner">
+      <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+      <div class="logo-face logo-face-back"><span>FX</span></div>
+    </div></div>
+    <span class="logo-3d" data-text="FORTREX">FORTREX</span>
+    <div class="logo-click-glow" id="logo-click-glow"></div>
+  </a>
+
+  <div class="nav-cta" id="nav-cta"><a href="javascript:void(0)" class="nav-cta-btn nav-cta-glass" id="nav-cta-btn" onclick="openRegModal()">Access Citadel Hub →</a></div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-logo-glow"></div>
+    <div class="hero-eyebrow"><span class="live-dot"></span> By Invitation Only · Limited to 10,000</div>
+    <h1 class="hero-headline">Something is coming<br>for traders who <span class="gold-shimmer-text">refuse to settle.</span></h1>
+    <p class="hero-sub">A platform built for the top 1% of traders. No gimmicks. No noise. Just skill, recognized and rewarded like never before.</p>
+
+    <!-- LIVE REGISTRATION BOARD -->
+    <div class="live-reg-board" id="live-reg-board">
+      <div class="live-reg-header"><span class="live-reg-dot"></span><span class="live-reg-label">Genesis Network Verification Flow</span></div>
+      <div class="live-reg-numbers">
+        <span class="live-reg-count" id="live-reg-count">0</span>
+        <span class="live-reg-divider">/</span>
+        <span class="live-reg-total">10,000</span>
+      </div>
+      <div class="live-reg-bar-wrap"><div class="live-reg-bar" id="live-reg-bar" style="width:0%"></div></div>
+      <div class="live-reg-meta">
+        <span class="gold-text" id="live-reg-pct">0.0% filled</span>
+        <span id="live-reg-spots">10,000 spots remaining</span>
+      </div>
+      <div class="live-reg-subtext">Allocation shifts dynamically.</div>
+    </div>
+
+    <!-- CTA ROWS -->
+    <div class="hero-cta-row" id="hero-cta">
+      <a href="javascript:void(0)" class="btn-gold-shimmer" id="hero-register-btn" onclick="openRegModal()">Lock In 1.25x REX Tier →</a>
+    </div>
+    <div class="hero-trust" id="hero-trust">
+      <span>✓ Zero cost. Zero friction.</span>
+      <span>✓ 30 seconds to clearance</span>
+      <span>✓ 1.25x REX multiplier locked forever</span>
+    </div>
+
+    <!-- REGISTERED STATE -->
+    <div class="hero-registered" id="hero-registered" style="display:none;">
+      <div class="genesis-badge">Genesis Member <span id="hero-member-num">#0000848</span> · LOCKED</div>
+      <div class="hero-social-section">
+        <div class="hero-social-label">Join the Community</div>
+        <div class="hero-social-row">
+          <a href="https://discord.gg/propchampions" target="_blank" class="hero-social-btn discord-btn">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>
+            <span>Discord</span>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="hero-social-btn instagram-btn">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg>
+            <span>Instagram</span>
+          </a>
+        </div>
+        <div class="hero-invite-row">
+          <input type="text" class="hero-invite-link" id="hero-invite-link" readonly>
+          <button class="hero-invite-copy" id="hero-invite-copy" onclick="copyHeroInvite()">Copy</button>
+        </div>
+        <a href="https://twitter.com/intent/tweet" target="_blank" class="hero-share-btn" id="hero-share-x">Share on X →</a>
+      </div>
+    </div>
+
+    <p class="hero-gate-notice">When the 10,000th trader secures their spot, the gates close. No exceptions.</p>
+  </section>
+
+  <!-- THE MISSION -->
+  <section class="question-section" id="about">
+    <div class="container">
+      <div class="section-label reveal">The Truth Nobody Tells Traders</div>
+      <p class="question-line" data-delay="0">You've spent years mastering the markets.</p>
+      <p class="question-line" data-delay="200">Hours of analysis. Thousands of candles. Countless strategies tested.</p>
+      <p class="question-line strike" data-delay="400">And your broker thanks you for the spreads.</p>
+      <p class="question-line strike" data-delay="600">And the "gurus" thank you for the courses.</p>
+      <p class="question-line" data-delay="800">But what has your skill actually gotten you?</p>
+      <p class="question-final reveal" data-delay="1000">What if your skill finally meant something?</p>
+      <p class="question-regret reveal" data-delay="1200">Every trader who came late to something big<br>wished they were first. Don't be late this time.</p>
+    </div>
+  </section>
+
+  <!-- REX CURRENCY REVEAL -->
+  <section class="rex-section" id="rex">
+    <div class="rex-dust-container" id="rex-dust"></div>
+    <div class="rex-aura"></div>
+    <div class="container">
+      <div class="section-label reveal">A New Currency is Coming</div>
+      <div class="rex-glyph-wrap"><div class="rex-glyph reveal" id="rex-text">REX</div></div>
+      <p class="section-text reveal" style="margin:0 auto 32px;text-align:center;">
+        Some currencies are earned. Some are bought.<br>
+        <strong style="color:var(--gold-pale);">REX is neither.</strong><br>
+        REX is the core asset of the Fortrex Terminal ecosystem.<br>
+        It cannot be purchased; it cannot be found. Only those accepted<br>
+        into the Genesis 10,000 can secure it. Only performance and<br>
+        circle expansion determine allocation density.
+      </p>
+      <div class="rex-stream reveal" id="rex-stream">
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 01</span><div class="rex-stream-bar" data-tier="1"></div><span class="rex-stream-val">1.25x</span></div>
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 02</span><div class="rex-stream-bar" data-tier="2"></div><span class="rex-stream-val">1.50x</span></div>
+        <div class="rex-stream-row"><span class="rex-stream-label">TIER 03</span><div class="rex-stream-bar" data-tier="3"></div><span class="rex-stream-val">2.00x</span></div>
+      </div>
+      <p class="section-text reveal" style="margin:28px auto 0;text-align:center;font-size:15px;">That's all we can show you. For now.</p>
+    </div>
+  </section>
+
+  <!-- ARCHITECTS' CIRCLE LEADERBOARD -->
+  <section class="leaderboard-section" id="leaderboard">
+    <div class="container">
+      <div class="section-label reveal">The Architects' Circle</div>
+      <h2 class="section-heading reveal" style="margin:0 auto 16px;text-align:center;">Great traders trade.<br>Exceptional traders <span class="gold-shimmer-text">architect the future.</span></h2>
+      <p class="section-text reveal" style="margin:0 auto 24px;text-align:center;font-size:14px;">Allocation shifts in real time. The architects who build the largest circles claim the highest REX density.</p>
+      <div class="leaderboard reveal">
+        <div class="leaderboard-header">
+          <span>Rank</span><span>Architect ID</span><span>Circle</span><span>Mult</span><span class="col-reward">REX Alloc.</span>
+        </div>
+        <div id="leaderboard-rows"></div>
+      </div>
+      <div class="lb-keycard reveal" id="lb-keycard">
+        <div class="lb-keycard-header"><span class="lb-keycard-pulse"></span> YOUR GENESIS PASS</div>
+        <div class="lb-keycard-body">
+          <div class="lb-keycard-id">#0000848</div>
+          <div class="lb-keycard-stats">
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">CURRENT REX</span><span class="lb-keycard-stat-val">0</span></div>
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">MULTIPLIER</span><span class="lb-keycard-stat-val gold-text">1.25x</span></div>
+            <div class="lb-keycard-stat"><span class="lb-keycard-stat-label">CIRCLE</span><span class="lb-keycard-stat-val">0</span></div>
+          </div>
+        </div>
+        <div class="lb-keycard-hook">Bring <strong>2 verified traders</strong> into your Circle to upgrade permanently to <strong>2.0x REX Tier</strong> (5,000 REX immediate allocation). Keep climbing. The Top 3 Architects receive <strong>5,000 extra REX</strong> each on launch day. There are no limits for those who execute.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION -->
+  <section class="register-section" id="register">
+    <div class="container">
+      <div class="section-label reveal">The Genesis Allocation</div>
+      <h2 class="section-heading reveal" style="margin:0 auto 16px;text-align:center;">Architecture rewards <span class="gold-shimmer-text">early builders.</span></h2>
+      <p class="section-text reveal" style="margin:0 auto;text-align:center;">
+        The first 10,000 architects receive Genesis status — permanent REX multiplier, priority access, and a legacy etched into the foundation of FORTREX. This allocation will never reopen. Once the 10,000th seat is claimed, the blueprint is sealed forever.
+      </p>
+      <div class="reveal" style="text-align:center;margin-top:36px">
+        <button class="btn-gold-shimmer" onclick="openRegModal()" style="border:none;font-family:inherit;cursor:pointer">Lock In 1.25x REX Tier →</button>
+        <p class="hero-trust" style="margin-top:16px"><span>✓ Zero cost. Zero friction.</span><span>✓ 30 seconds</span><span>✓ Genesis status forever</span></p>
+      </div>
+
+      <!-- HIDDEN FORM (for modal submission) -->
+      <div style="display:none" id="register-card">
+        <form id="register-form">
+          <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+            <label>Website (leave empty)</label><input type="text" name="website" tabindex="-1" autocomplete="off" value="">
+          </div>
+          <input type="text" id="name" name="name" placeholder="Your name">
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+          <input type="tel" id="phone" name="phone" placeholder="Mobile number">
+          <div class="form-error" id="form-error"></div>
+          <button type="submit" class="btn-submit" id="submit-btn">Reserve My Spot →</button>
+        </form>
+      </div>
+
+      <!-- SUCCESS → COMMUNITY -->
+      <div class="register-card community-card reveal" id="success-card" style="display:none;">
+        <div class="success-glow-burst"></div>
+        <div class="success-check"><svg viewBox="0 0 52 52" width="52" height="52"><circle cx="26" cy="26" r="24" fill="none" stroke="#FACC15" stroke-width="2" class="success-circle-anim"/><path d="M16 26 L23 33 L37 18" fill="none" stroke="#FACC15" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check-anim"/></svg></div>
+        <h3 style="text-align:center">You're in. Welcome to Genesis.</h3>
+        <p style="text-align:center">Your spot is secured. You're now part of the first 10,000.<br>The gates will open soon.</p>
+        <div class="community-social-grid">
+          <a href="https://discord.gg/propchampions" target="_blank" class="community-social-card discord-anim" style="--delay:0">
+            <div class="community-social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg></div>
+            <div class="community-social-name">Discord</div>
+            <div class="community-social-desc">VIP Channel</div>
+          </a>
+          <a href="https://youtube.com" target="_blank" class="community-social-card yt-anim" style="--delay:1">
+            <div class="community-social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg></div>
+            <div class="community-social-name">YouTube</div>
+            <div class="community-social-desc">Trade Media</div>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="community-social-card insta-anim" style="--delay:2">
+            <div class="community-social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg></div>
+            <div class="community-social-name">Instagram</div>
+            <div class="community-social-desc">Daily Alpha</div>
+          </a>
+        </div>
+        <a href="profile.html" class="btn-gold-shimmer profile-cta-btn">View Your Profile →</a>
+      </div>
+
+            <!-- CELEBRATORY REGISTRATION CARD -->
+      <div class="register-card reveal celebrate-card" id="already-registered" style="display:none;">
+        <div class="celebrate-burst"></div>
+        <div class="celebrate-confetti" id="celebrate-confetti"></div>
+        <div class="celebrate-header">
+          <div class="celebrate-icon">✓</div>
+          <h3 class="celebrate-title">Congratulations.</h3>
+          <p class="celebrate-sub">You're officially Genesis Member <span id="already-member-num">#0000848</span></p>
+        </div>
+        <div class="celebrate-body">
+          <div class="celebrate-invite-label">Your invite link — bring friends to climb the ranks:</div>
+          <div class="celebrate-invite-row">
+            <input type="text" class="celebrate-invite-link" id="celebrate-invite-link" readonly>
+            <button class="celebrate-copy-btn" id="celebrate-copy-btn" onclick="copyCelebrateInvite()">Copy</button>
+          </div>
+          <div class="celebrate-share-row">
+            <a href="https://twitter.com/intent/tweet" target="_blank" class="celebrate-share-btn" id="celebrate-share-x">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Share on X
+            </a>
+            <a href="https://discord.gg/propchampions" target="_blank" class="celebrate-share-btn discord-share">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03z" fill="#5865F2"/></svg>
+              Join Discord
+            </a>
+            <a href="https://instagram.com" target="_blank" class="celebrate-share-btn instagram-share">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITADEL COMMUNITY -->
+  <section class="community-section" id="community">
+    <div class="container">
+      <div class="section-label reveal">Stay Connected</div>
+      <h2 class="section-heading reveal" style="margin:0 auto 20px;text-align:center">You're not just joining a platform.<br>You're joining a <span class="gold-shimmer-text">movement.</span></h2>
+      <p class="section-text reveal" style="margin:0 auto;text-align:center">The conversation has already started. Connect with fellow architects, follow the movement, and be the first to know when the gates open. Your circle is waiting.</p>
+      <div class="social-row reveal">
+        <a href="https://discord.gg/propchampions" target="_blank" class="social-card discord-card">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg>
+          <span>Join the Citadel</span><small>Discord Server</small>
+        </a>
+        <a href="https://youtube.com" target="_blank" class="social-card yt-card">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg>
+          <span>YouTube</span><small>Trade Content</small>
+        </a>
+        <a href="https://instagram.com" target="_blank" class="social-card insta-card">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg>
+          <span>Instagram</span><small>Daily Updates</small>
+        </a>
+        <a href="https://threads.net" target="_blank" class="social-card threads-card">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M17.3 11.2c-.1-.05-.2-.1-.3-.14-.2-4.2-2.5-6.6-6.4-6.6-2.3 0-4.1 1-5.3 2.8l2.1 1.5c.9-1.3 2.1-1.6 3.2-1.6 1.3 0 2.3.5 3 1.4.4.6.6 1.3.7 2.2-.9-.2-1.8-.3-2.9-.3-3.4 0-5.5 2-5.4 4.5.1 1.3.7 2.4 1.7 3.2 1 .7 2.2 1.1 3.5 1 .1.7.1 1.2.1 1.2s2.5-.3 4-2c.3 2 .3 2 .3 2s.4-1 .2-2.8c1.1-1.3 1.9-3.1 2-5.4z" fill="#fff"/></svg>
+          <span>Threads</span><small>Real-time Posts</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- REGISTRATION MODAL — 3-State Flow -->
+<div class="reg-modal-overlay" id="reg-modal">
+  <div class="reg-modal-backdrop" onclick="closeRegModal()"></div>
+  <div class="reg-modal-container">
+
+    <!-- STATE 1: SEAMLESS ENTRY -->
+    <div class="reg-modal-state active" id="reg-state-entry">
+      <button class="reg-modal-close" onclick="closeRegModal()">✕</button>
+      <div class="reg-modal-glow"></div>
+      <div class="reg-allocation-badge">
+        <span class="reg-allocation-dot"></span>
+        <span class="reg-allocation-text">Genesis Allocation Live</span>
+        <span class="reg-allocation-spots" id="modal-spots-remaining">9,153 spots remaining</span>
+      </div>
+      <div class="reg-modal-brand">
+        <div class="logo-flip" style="width:48px;height:48px"><div class="logo-flip-inner">
+          <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+          <div class="logo-face logo-face-back"><span>FX</span></div>
+        </div></div>
+        <span class="reg-modal-brand-text">FORTREX FX</span>
+      </div>
+      <h2 class="reg-modal-title">Reserve Your Genesis Spot</h2>
+      <p class="reg-modal-sub">You're 30 seconds away from permanent Genesis status. No payment. No commitment.</p>
+      <div class="reg-modal-form">
+        <div class="reg-input-group">
+          <label>Email Address</label>
+          <input type="email" id="modal-email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="reg-input-group">
+          <label>Discord / Telegram Handle <span class="reg-input-optional">optional</span></label>
+          <input type="text" id="modal-handle" placeholder="@username" autocomplete="username">
+        </div>
+        <div class="reg-form-error" id="modal-form-error"></div>
+        <button class="btn-gold-shimmer reg-submit-btn" id="modal-submit-btn" onclick="submitRegModal(event)">
+          <span>Claim Genesis Clearance →</span>
+        </button>
+        <div class="reg-form-trust">🔒 Instant verification. Secure clearance.</div>
+      </div>
+    </div>
+
+    <!-- STATE 2: SMART VERIFICATION -->
+    <div class="reg-modal-state" id="reg-state-verify">
+      <div class="reg-verify-spinner">
+        <div class="reg-spinner-ring"></div>
+        <div class="reg-spinner-ring reg-spinner-ring-2"></div>
+        <div class="reg-spinner-core"></div>
+      </div>
+      <div class="reg-verify-terminal" id="verify-terminal">
+        <div class="reg-terminal-line" data-delay="0"><span class="reg-terminal-check">✓</span> Verifying spot in pool<span class="reg-terminal-dots">...</span></div>
+        <div class="reg-terminal-line" data-delay="300"><span class="reg-terminal-check">✓</span> Assigning Genesis Member ID<span class="reg-terminal-dots">...</span></div>
+        <div class="reg-terminal-line" data-delay="600"><span class="reg-terminal-check">✓</span> Multiplier locked<span class="reg-terminal-dots">...</span></div>
+      </div>
+    </div>
+
+    <!-- STATE 3: GENESIS PASS REVEAL -->
+    <div class="reg-modal-state" id="reg-state-pass">
+      <button class="reg-modal-close" onclick="closeRegModal()">✕</button>
+      <div class="reg-pass-glow-burst"></div>
+
+      <!-- HOLOGRAPHIC PASS -->
+      <div class="genesis-pass">
+        <div class="genesis-pass-shimmer"></div>
+        <div class="genesis-pass-header">
+          <div class="genesis-pass-brand">
+            <div class="logo-flip" style="width:32px;height:32px"><div class="logo-flip-inner">
+              <div class="logo-face logo-face-front"><img src="https://base44.app/api/apps/6a73016f9b626430a0d26f88/files/mp/public/6a73016f9b626430a0d26f88/78f5d4bc5_fortrex-icon-96.png" alt="FORTREX"></div>
+            </div></div>
+            <span>FORTREX FX</span>
+          </div>
+          <div class="genesis-pass-type">GENESIS PASS</div>
+        </div>
+        <div class="genesis-pass-body">
+          <div class="genesis-pass-id">
+            <div class="genesis-pass-id-label">MEMBER ID</div>
+            <div class="genesis-pass-id-value" id="pass-member-id">#0000848</div>
+          </div>
+          <div class="genesis-pass-status">
+            <div class="genesis-pass-status-icon">✓</div>
+            <div class="genesis-pass-status-text">
+              <div class="genesis-pass-status-main">VERIFIED & LOCKED</div>
+              <div class="genesis-pass-status-sub">Genesis allocation secured</div>
+            </div>
+          </div>
+          <div class="genesis-pass-multiplier">
+            <div class="genesis-pass-mult-label">REX MULTIPLIER</div>
+            <div class="genesis-pass-mult-value">1.25<span>x</span></div>
+            <div class="genesis-pass-mult-tier">Genesis Tier · Early Access</div>
+          </div>
+        </div>
+        <div class="genesis-pass-footer">
+          <div class="genesis-pass-footer-item"><span class="genesis-pass-footer-label">JOINED</span><span class="genesis-pass-footer-value" id="pass-joined-date">AUG 2026</span></div>
+          <div class="genesis-pass-footer-item"><span class="genesis-pass-footer-label">STATUS</span><span class="genesis-pass-footer-value gold-text">PERMANENT</span></div>
+        </div>
+      </div>
+
+      <!-- VIRAL GROWTH ENGINE — PREMIUM ARCHITECTURAL -->
+      <div class="reg-pass-viral">
+        <div class="reg-viral-header">
+          <div class="reg-viral-badge">
+            <span class="reg-viral-pulse"></span>
+            <span>Genesis Allocation #0000848 — Locked</span>
+          </div>
+          <h3 class="reg-viral-title">You're in the Inner Circle.</h3>
+          <p class="reg-viral-desc">Your multiplier is locked at <strong>1.25x REX</strong>. But the Inner Circle rewards builders.</p>
+        </div>
+        <div class="reg-viral-objective">
+          <div class="reg-viral-objective-icon">⚡</div>
+          <div class="reg-viral-objective-text">
+            <div class="reg-viral-objective-title">Arch-Network Access</div>
+            <div class="reg-viral-objective-desc">Bring <strong>2 verified traders</strong> into your Circle to upgrade to <strong>2.0x REX</strong> allocation.</div>
+          </div>
+        </div>
+        <div class="reg-referral-row">
+          <input type="text" class="reg-referral-input" id="pass-referral-link" readonly>
+          <button class="reg-copy-btn" id="pass-copy-btn" onclick="copyReferralLink()">Copy Pass Link</button>
+        </div>
+        <div class="reg-social-radar">
+          <div class="reg-radar-label">High-Stakes Social Radar</div>
+          <div class="reg-radar-grid">
+            <a href="https://discord.gg/propchampions" target="_blank" class="reg-radar-card">
+              <div class="reg-radar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.25-.34.52-.46.79a13.1 13.1 0 0 0-3.94 0c-.12-.27-.28-.54-.46-.79a.09.09 0 0 0-.07-.03c-1.5.26-2.94.71-4.27 1.33a.08.08 0 0 0-.04.03C3.58 9.48 2.97 13.5 3.27 17.48a.1.1 0 0 0 .04.07c1.8 1.32 3.54 2.12 5.25 2.65a.09.09 0 0 0 .1-.03c.4-.55.76-1.13 1.07-1.74a.08.08 0 0 0-.05-.12c-.57-.22-1.11-.48-1.64-.79a.08.08 0 0 1-.01-.13l.33-.26a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01l.33.26a.08.08 0 0 1-.01.13c-.53.31-1.07.57-1.64.79a.08.08 0 0 0-.04.12c.32.61.68 1.19 1.07 1.74a.09.09 0 0 0 .1.03c1.72-.53 3.46-1.33 5.26-2.65a.1.1 0 0 0 .04-.07c.36-4.61-.59-8.6-2.52-12.12a.07.07 0 0 0-.04-.03zM10.02 15.12c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.84 2.12-1.9 2.12zm7.02 0c-1.04 0-1.9-.95-1.9-2.12s.84-2.12 1.9-2.12c1.07 0 1.92.96 1.9 2.12 0 1.17-.83 2.12-1.9 2.12z" fill="#5865F2"/></svg></div>
+              <div class="reg-radar-name">Discord</div>
+              <div class="reg-radar-tag">War Room</div>
+              <div class="reg-radar-desc">Where the 1% leak entries before market open</div>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="reg-radar-card">
+              <div class="reg-radar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1A31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" fill="#FF0000"/></svg></div>
+              <div class="reg-radar-name">YouTube</div>
+              <div class="reg-radar-tag">Execution Vault</div>
+              <div class="reg-radar-desc">Uncut 6-figure trade mechanics</div>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="reg-radar-card">
+              <div class="reg-radar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.34 2.69.93 3.36.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.31 1.34 20.64.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" fill="#E1306C"/></svg></div>
+              <div class="reg-radar-name">Instagram</div>
+              <div class="reg-radar-tag">Genesis Intel</div>
+              <div class="reg-radar-desc">Flash leaks & gate intel. 24h expires</div>
+            </a>
+          </div>
+        </div>
+        <a href="https://discord.gg/propchampions" target="_blank" class="btn-gold-shimmer reg-terminal-cta">Enter Genesis Terminal →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-cta-info"><span class="sticky-spots" id="sticky-spots">10,000 spots left</span></div>
+  <a href="javascript:void(0)" class="btn-gold-shimmer sticky-btn" id="sticky-btn" onclick="openRegModal()">Lock In 1.25x REX Tier →</a>
+</div>
+
+<!-- FOMO SCROLL BANNER -->
+<div class="fomo-banner" id="fomo-banner">
+  <span class="fomo-banner-dot"></span>
+  <span class="fomo-banner-text"><strong id="fomo-name">A trader from London</strong> just secured Genesis clearance. <strong id="fomo-count">9,153</strong> spots remaining.</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FORTREX FX</div>
+  <div class="footer-tagline">Where traders rise.</div>
+  <div class="footer-copy">© 2026 FORTREX FX · By invitation only</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.6/build/js/intlTelInput.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+/* ============================================================
+   ENHANCED MOTION INTERACTIONS (A/B TEST VARIANT LOGIC)
+   ============================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* 1. SCROLL PROGRESS BAR */
+  function updateScrollProgress() {
+    const bar = document.getElementById('scroll-progress-bar');
+    if (!bar) return;
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    bar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  /* 2. CURSOR GLOW */
+  (function initCursorGlow() {
+    const glow = document.getElementById('cursor-glow');
+    if (!glow) return;
+    let mouseX = -500, mouseY = -500;
+    let glowX = -500, glowY = -500;
+    let active = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!active) {
+        active = true;
+        glow.classList.add('active');
+      }
+    });
+
+    window.addEventListener('mouseleave', () => {
+      active = false;
+      glow.classList.remove('active');
+    });
+
+    function renderGlow() {
+      glowX += (mouseX - glowX) * 0.15;
+      glowY += (mouseY - glowY) * 0.15;
+      glow.style.transform = 'translate3d(' + glowX + 'px, ' + glowY + 'px, 0) translate(-50%, -50%)';
+      requestAnimationFrame(renderGlow);
+    }
+    renderGlow();
+  })();
+
+  /* 3. SCROLL-TRIGGERED PARALLAX (HERO SECTION) */
+  (function initHeroParallax() {
+    const eyebrow = document.querySelector('.hero-eyebrow');
+    const headline = document.querySelector('.hero-headline');
+    const sub = document.querySelector('.hero-sub');
+    const board = document.getElementById('live-reg-board');
+    const cta = document.getElementById('hero-cta');
+    const trust = document.getElementById('hero-trust');
+    const logoGlow = document.querySelector('.hero-logo-glow');
+
+    function applyParallax() {
+      const scrollY = window.scrollY;
+      if (scrollY > 1000) return;
+
+      if (eyebrow) eyebrow.style.transform = 'translate3d(0, ' + (scrollY * 0.12) + 'px, 0)';
+      if (headline) headline.style.transform = 'translate3d(0, ' + (scrollY * 0.28) + 'px, 0)';
+      if (sub) sub.style.transform = 'translate3d(0, ' + (scrollY * 0.20) + 'px, 0)';
+      if (board) board.style.transform = 'translate3d(0, ' + (scrollY * 0.15) + 'px, 0)';
+      if (cta) cta.style.transform = 'translate3d(0, ' + (scrollY * 0.08) + 'px, 0)';
+      if (trust) trust.style.transform = 'translate3d(0, ' + (scrollY * 0.05) + 'px, 0)';
+      if (logoGlow) logoGlow.style.transform = 'translate3d(-50%, calc(-50% + ' + (scrollY * 0.35) + 'px), 0)';
+    }
+
+    window.addEventListener('scroll', applyParallax, { passive: true });
+  })();
+
+  /* 4. TYPING ANIMATION ON HERO HEADLINE */
+  (function initTypingAnimation() {
+    const headline = document.querySelector('.hero-headline');
+    if (!headline) return;
+
+    function wrapTextNodes(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent;
+        if (!text) return document.createTextNode('');
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.className = 'type-char';
+          span.style.visibility = 'hidden';
+          span.textContent = text[i];
+          frag.appendChild(span);
+        }
+        return frag;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const clone = node.cloneNode(false);
+        Array.from(node.childNodes).forEach(child => {
+          clone.appendChild(wrapTextNodes(child));
+        });
+        return clone;
+      }
+      return node.cloneNode(true);
+    }
+
+    const newContent = wrapTextNodes(headline);
+    headline.innerHTML = '';
+    headline.appendChild(newContent);
+
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    cursor.textContent = '|';
+    headline.appendChild(cursor);
+
+    const charSpans = headline.querySelectorAll('.type-char');
+    let charIndex = 0;
+
+    function typeNext() {
+      if (charIndex < charSpans.length) {
+        const span = charSpans[charIndex];
+        span.style.visibility = 'visible';
+        if (span.nextSibling) {
+          span.parentNode.insertBefore(cursor, span.nextSibling);
+        } else {
+          span.parentNode.appendChild(cursor);
+        }
+        charIndex++;
+        const delay = Math.floor(Math.random() * 25) + 25;
+        setTimeout(typeNext, delay);
+      } else {
+        setTimeout(() => {
+          cursor.classList.add('cursor-fade');
+          setTimeout(() => cursor.remove(), 1000);
+        }, 1500);
+      }
+    }
+
+    setTimeout(typeNext, 250);
+  })();
+
+  /* 5. ENHANCED SECTION TRANSITIONS */
+  (function initSectionTransitions() {
+    const sections = document.querySelectorAll('section:not(.hero-section)');
+    sections.forEach(sec => sec.classList.add('section-enhanced-transition'));
+
+    const sectionObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          sectionObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(sec => sectionObs.observe(sec));
+  })();
+
+  /* 6. MAGNETIC CTA BUTTONS */
+  (function initMagneticButtons() {
+    const magneticBtns = document.querySelectorAll('#hero-register-btn, .btn-gold-shimmer');
+    if (!magneticBtns.length) return;
+
+    let mouseX = -1000, mouseY = -1000;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function updateMagnetic() {
+      magneticBtns.forEach(btn => {
+        if (!btn || btn.offsetParent === null) return;
+        const rect = btn.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.hypot(mouseX - centerX, mouseY - centerY);
+
+        if (dist < 120) {
+          const pullX = ((mouseX - centerX) / dist) * (120 - dist) * 0.35;
+          const pullY = ((mouseY - centerY) / dist) * (120 - dist) * 0.35;
+          btn.style.transform = 'translate3d(' + pullX + 'px, ' + pullY + 'px, 0) scale(1.03)';
+          btn.style.transition = 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1)';
+        } else {
+          if (btn.style.transform && !btn.classList.contains('cta-attention-shake')) {
+            btn.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+          }
+        }
+      });
+      requestAnimationFrame(updateMagnetic);
+    }
+    updateMagnetic();
+  })();
+
+  /* 7. NUMBER COUNT-UP ANIMATION (RAPID EASE-OUT) */
+  (function initRapidCountUp() {
+    const board = document.getElementById('live-reg-board');
+    const countEl = document.getElementById('live-reg-count');
+    const barEl = document.getElementById('live-reg-bar');
+    const pctEl = document.getElementById('live-reg-pct');
+    const spotsEl = document.getElementById('live-reg-spots');
+    const stickySpots = document.getElementById('sticky-spots');
+
+    if (!board || !countEl) return;
+
+    function renderCount(val) {
+      countEl.textContent = val.toLocaleString();
+      if (barEl) barEl.style.width = (val / 10000 * 100) + '%';
+      if (pctEl) pctEl.textContent = (val / 10000 * 100).toFixed(1) + '% filled';
+      if (spotsEl) spotsEl.textContent = (10000 - val).toLocaleString() + ' spots remaining';
+      if (stickySpots) stickySpots.textContent = (10000 - val).toLocaleString() + ' spots left';
+    }
+
+    let counted = false;
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !counted) {
+        counted = true;
+        const targetVal = typeof currentLiveCount !== 'undefined' ? currentLiveCount : 847;
+        const start = performance.now();
+        const duration = 1200;
+
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 4);
+          const currentVal = Math.floor(eased * targetVal);
+          renderCount(currentVal);
+
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            renderCount(targetVal);
+            countEl.classList.add('bump');
+            setTimeout(() => countEl.classList.remove('bump'), 500);
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.2 });
+    obs.observe(board);
+  })();
+
+  /* 8. SHAKE / ATTENTION ON CTA AFTER 5 SECONDS IDLE */
+  (function initCTAAttentionShake() {
+    let idleTimer = null;
+    const heroBtn = document.getElementById('hero-register-btn');
+
+    function triggerShake() {
+      if (!heroBtn) return;
+      heroBtn.classList.remove('cta-attention-shake');
+      void heroBtn.offsetWidth;
+      heroBtn.classList.add('cta-attention-shake');
+      setTimeout(() => {
+        if (heroBtn) heroBtn.classList.remove('cta-attention-shake');
+      }, 1000);
+    }
+
+    function resetTimer() {
+      if (idleTimer) clearTimeout(idleTimer);
+      if (heroBtn) heroBtn.classList.remove('cta-attention-shake');
+      idleTimer = setTimeout(triggerShake, 5000);
+    }
+
+    ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
+      window.addEventListener(evt, resetTimer, { passive: true });
+    });
+
+    resetTimer();
+  })();
+
+  /* 9. ENHANCED FOMO BANNER TEXT FADE ROTATION */
+  (function initFOMOFadeRotation() {
+    const bannerText = document.querySelector('.fomo-banner-text');
+    if (!bannerText) return;
+
+    const observer = new MutationObserver(() => {
+      bannerText.classList.remove('fomo-text-fade-out');
+      bannerText.classList.add('fomo-text-fade-in');
+    });
+
+    observer.observe(bannerText, { childList: true, characterData: true, subtree: true });
+
+    setInterval(() => {
+      const banner = document.getElementById('fomo-banner');
+      if (banner && banner.classList.contains('visible')) {
+        bannerText.classList.add('fomo-text-fade-out');
+      }
+    }, 4850);
+  })();
+
+});
+</script>
+
+</body>
+</html>
