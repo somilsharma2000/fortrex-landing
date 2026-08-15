@@ -13,7 +13,7 @@ const revealObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .question-line, ').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .question-line').forEach(el => revealObserver.observe(el));
 
 // NAV SCROLL
 window.addEventListener('scroll', () => {
@@ -611,3 +611,40 @@ function copyCelebrateInvite() {
   if (btn) { var orig = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); }
 }
 window.copyCelebrateInvite = copyCelebrateInvite;
+
+// FOMO BANNER — scroll-triggered social proof
+(function() {
+  var banner = document.getElementById('fomo-banner');
+  if (!banner) return;
+  var names = ['A trader from London','A trader from Dubai','A trader from Singapore','A trader from New York','A trader from Tokyo','A trader from Mumbai','A trader from Frankfurt','A trader from Sydney'];
+  var currentCount = 847;
+  var spots = 10000 - currentCount;
+  
+  function updateFOMO() {
+    var nameEl = document.getElementById('fomo-name');
+    var countEl = document.getElementById('fomo-count');
+    if (nameEl) nameEl.textContent = names[Math.floor(Math.random() * names.length)];
+    if (countEl) {
+      currentCount = Math.min(currentCount + Math.floor(Math.random() * 3) + 1, 9990);
+      countEl.textContent = (10000 - currentCount).toLocaleString();
+    }
+  }
+  
+  // Show banner after scrolling past hero
+  var heroSection = document.querySelector('.hero-section');
+  if (heroSection) {
+    var heroObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting && !isRegistered) {
+          banner.classList.add('visible');
+        } else {
+          banner.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0 });
+    heroObs.observe(heroSection);
+  }
+  
+  // Rotate names every 5 seconds
+  setInterval(updateFOMO, 5000);
+})();
